@@ -3,11 +3,9 @@
 #include "util.h"
 #include "produtos.h"
 
-bool existe_produto (Produtos p, char *produto) {
-    for(size_t i=0; i<p.num ; i++){
-        if(strcmp(produto, p.validos[i]) == 0) return true;
-    }
-    return false;
+Produtos make_produtos(){
+    GHashTable* produtos = g_hash_table_new_full(g_str_hash, str_compare, free, NULL);
+    return (Produtos) {.produtos = produtos};
 }
 
 bool valida_produto (char *l) {
@@ -17,4 +15,15 @@ bool valida_produto (char *l) {
     return false;
 }
 
+bool adiciona_produto (Produtos p, char* produto){
+    if(valida_produto(produto)){
+        char l = produto[0];
+        return g_hash_table_add(p.produtos[l - 'A'], strdup(produto));
+    }
+    return false;
+}
 
+bool existe_produto (Produtos p, char* produto) {
+    char l = produto[0];
+    return g_hash_table_contains(p.produtos[l - 'A'], produto);
+}

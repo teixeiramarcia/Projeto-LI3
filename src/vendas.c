@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "vendas.h"
-
-char* strdup(char const*);
+#include "util.h"
 
 bool is_number (char *s) {
     for (int i=0; s[i]!='\0' && s[i]!='\n' && s[i]!='\r'; i++) {
@@ -29,7 +28,7 @@ bool valida_venda (char *l, Produtos p, Clientes c) {
     for (int i=0; token!=NULL; i++){
         switch (i) {
             case 0:
-                if (valida_produto(token) && existe_produto(p, token)) { //FIXME trocar || por && quando houver nova estrutura de dados
+                if (valida_produto(token) && existe_produto(p, token)) {
                     res++;
                 }
                 break;
@@ -49,7 +48,7 @@ bool valida_venda (char *l, Produtos p, Clientes c) {
                 }
                 break;
             case 4:
-                if (valida_cliente(token) && existe_cliente(c, token)) { //FIXME trocar || por && quando houver nova estrutura de dados
+                if (valida_cliente(token) && existe_cliente(c, token)) {
                     res++;
                 }
                 break;

@@ -4,13 +4,16 @@
 #include <stddef.h>
 #include <glib.h>
 
-typedef struct clientes {	
-    char **validos;
-    size_t num;
+typedef struct clientes {
+    GHashTable* clientes;
 } Clientes;
 
-bool valida_cliente (char *l);
+Clientes make_clientes();
 
-bool existe_cliente(Clientes c, char *cliente);
+bool adiciona_cliente(Clientes c, char* cliente);
+
+bool existe_cliente(Clientes c, char* cliente);
+
+bool valida_cliente (char *l);
 
 #endif
