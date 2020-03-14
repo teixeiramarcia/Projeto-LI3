@@ -1,5 +1,6 @@
 HEADERS = include
 SRC = src
+CC = gcc
 SOURCES = $(wildcard $(SRC)/*.c)
 BUILD_DIR = build
 OBJ = $(foreach o, $(patsubst $(SRC)/%.c, %.o, $(SOURCES)), $(BUILD_DIR)/$o)
@@ -22,3 +23,4 @@ clean:
 	rm -rf build
 
 print-% : ; @echo $* = $($*)
+

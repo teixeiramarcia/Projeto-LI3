@@ -4,8 +4,11 @@
 #include "produtos.h"
 
 Produtos make_produtos(){
-    GHashTable* produtos = g_hash_table_new_full(g_str_hash, str_compare, free, NULL);
-    return (Produtos) {.produtos = produtos};
+    Produtos p;
+    for(int i=0; i<(('Z'-'A')+1); i++){
+        p.produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, NULL);
+    }
+    return p;
 }
 
 bool valida_produto (char *l) {
