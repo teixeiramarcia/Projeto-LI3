@@ -4,9 +4,25 @@
 #include <stddef.h>
 #include <glib.h>
 
+typedef struct produtoCli {
+    char* prodID;
+    int quantidade;
+    double faturacao;
+} *ProdutoCli;
+
+typedef struct filiaisCli {
+    int quantidade;
+    GHashTable* produtos[12];
+} * FiliaisCli;
+
+typedef struct cliente {
+    char* clienteID;
+    FiliaisCli filiaisCli[3];
+} *Cliente;
+
 typedef struct clientes {
     GHashTable* clientes;
-} Clientes;
+} *Clientes;
 
 Clientes make_clientes();
 

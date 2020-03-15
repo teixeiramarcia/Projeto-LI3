@@ -4,17 +4,16 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <glib.h>
+#include "filiais.h"
 
 typedef struct produto {
     char* produtoID;
-    size_t n_x_comprado_f1;
-    size_t n_x_comprado_f2;
-    size_t n_x_comprado_f3;
-} Produto;
+    Filial filiais[3];
+} *Produto;
 
 typedef struct produtos{
     GHashTable* produtos[('Z'-'A')+1];
-} Produtos;
+} *Produtos;
 
 Produtos make_produtos();
 

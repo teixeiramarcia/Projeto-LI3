@@ -2,3 +2,5 @@ build
 .DS_Store
 *.un~
 *.swp
+.idea/
+cmake-build-debug/
