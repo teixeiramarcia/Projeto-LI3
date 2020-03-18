@@ -3,6 +3,6 @@
 
 #include "sgv.h"
 
-void adiciona_venda(char* venda, SGV sgv);
+void adiciona_venda(char *venda, SGV sgv);
 
 #endif

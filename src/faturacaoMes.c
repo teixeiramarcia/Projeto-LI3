@@ -1,6 +1,6 @@
 #include "faturacaoMes.h"
 
-FaturacaoMes make_faturacao_mes(){
+FaturacaoMes make_faturacao_mes() {
     FaturacaoMes fat_mes = (FaturacaoMes) malloc(sizeof(struct faturacaoMes));
     fat_mes->faturacao_promocao = 0;
     fat_mes->total_promocao = 0;

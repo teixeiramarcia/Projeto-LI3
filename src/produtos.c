@@ -2,23 +2,23 @@
 #include "util.h"
 #include "produtos.h"
 
-Produtos make_produtos(){
+Produtos make_produtos() {
     Produtos p = (Produtos) malloc(sizeof(struct produtos));
-    for(int i=0; i<(('Z'-'A')+1); i++){
+    for (int i = 0; i < (('Z' - 'A') + 1); i++) {
         p->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, NULL);
     }
     return p;
 }
 
-bool valida_produto (char *l) {
+bool valida_produto(char *l) {
     if (isupper(l[0]) && isupper(l[1])) {
-        return valida_codigo(l+2);
+        return valida_codigo(l + 2);
     }
     return false;
 }
 
-bool adiciona_produto (Produtos prod, char* produto){
-    if(valida_produto(produto) && !existe_produto(prod, produto)){
+bool adiciona_produto(Produtos prod, char *produto) {
+    if (valida_produto(produto) && !existe_produto(prod, produto)) {
         char l = produto[0];
         Produto p = (Produto) malloc(sizeof(struct produto));
         p->produtoID = strdup(produto);
@@ -32,7 +32,7 @@ bool adiciona_produto (Produtos prod, char* produto){
     return false;
 }
 
-bool existe_produto (Produtos p, char* produto) {
+bool existe_produto(Produtos p, char *produto) {
     char l = produto[0];
     return g_hash_table_contains(p->produtos[l - 'A'], produto);
 }
