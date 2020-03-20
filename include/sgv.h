@@ -12,4 +12,8 @@ typedef struct sgv {
     Produtos produtos;
 } *SGV;
 
+SGV initSGV();
+
+void destroySGV(SGV sgv);
+
 #endif

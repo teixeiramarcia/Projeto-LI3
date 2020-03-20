@@ -5,7 +5,7 @@
 
 Clientes make_clientes() {
     Clientes clientes = (Clientes) malloc(sizeof(struct clientes));
-    clientes->clientes = g_hash_table_new_full(g_str_hash, str_compare, free, NULL);
+    clientes->clientes = g_hash_table_new_full(g_str_hash, str_compare, free, (GDestroyNotify) destroy_cliente);
     return clientes;
 }
 
@@ -28,7 +28,8 @@ bool adiciona_cliente(Clientes clis, char *cliID) {
             cliente->filiaisCli[j] = (FiliaisCli) malloc(sizeof(struct filiaisCli));
             cliente->filiaisCli[j]->quantidade = 0;
             for (int i = 0; i < 12; i++) {
-                cliente->filiaisCli[j]->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, NULL);
+                cliente->filiaisCli[j]->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, free);
+
             }
         }
         return g_hash_table_insert(clis->clientes, cliente->clienteID, cliente);
@@ -36,3 +37,21 @@ bool adiciona_cliente(Clientes clis, char *cliID) {
     return false;
 }
 
+void destroy_clientes(Clientes clientes) {
+    g_hash_table_destroy(clientes->clientes);
+    free(clientes);
+}
+
+void destroy_cliente(Cliente cliente) {
+    for (int i = 0; i < 3; ++i) {
+        destroy_filiais_cli(cliente->filiaisCli[i]);
+    }
+    free(cliente);
+}
+
+void destroy_filiais_cli(FiliaisCli fcli) {
+    for (int i = 0; i < 12; ++i) {
+        g_hash_table_destroy(fcli->produtos[i]);
+    }
+    free(fcli);
+}

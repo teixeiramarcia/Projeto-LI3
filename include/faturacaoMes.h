@@ -16,4 +16,6 @@ typedef struct faturacaoMes {
 
 FaturacaoMes make_faturacao_mes();
 
+void destroy_faturacao_mes(FaturacaoMes fmes);
+
 #endif

@@ -12,4 +12,6 @@ typedef struct filial {
 
 Filial make_filial();
 
+void destroy_filial(Filial filial);
+
 #endif

@@ -5,7 +5,7 @@
 Produtos make_produtos() {
     Produtos p = (Produtos) malloc(sizeof(struct produtos));
     for (int i = 0; i < (('Z' - 'A') + 1); i++) {
-        p->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, NULL);
+        p->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, (GDestroyNotify) destroy_produto);
     }
     return p;
 }
@@ -35,4 +35,18 @@ bool adiciona_produto(Produtos prod, char *produto) {
 bool existe_produto(Produtos p, char *produto) {
     char l = produto[0];
     return g_hash_table_contains(p->produtos[l - 'A'], produto);
+}
+
+void destroy_produtos(Produtos produtos) { //FIXME
+    for (int i = 0; i < 26; i++) {
+        g_hash_table_destroy(produtos->produtos[i]);
+    }
+    free(produtos);
+}
+
+void destroy_produto(Produto produto) {
+    for (int i = 0; i < 3; ++i) {
+        destroy_filial(produto->filiais[i]);
+    }
+    free(produto);
 }

@@ -1,16 +1,7 @@
 #include <ctype.h>
 #include "sgv.h"
 #include "util.h"
-
-typedef struct venda {
-    char *codigo_produto;
-    double preco_unitario;
-    int unidades;
-    char tipo_de_compra;
-    char *codigo_cliente;
-    int mes;
-    int filial;
-} *Venda;
+#include "vendas.h"
 
 bool is_number(char *s) {
     for (int i = 0; s[i] != '\0' && s[i] != '\n' && s[i] != '\r'; i++) {
@@ -104,9 +95,11 @@ void adiciona_venda(char *venda, SGV sgv) {
     if (v->tipo_de_compra == 'P') {
         fmes->faturacao_promocao += v->preco_unitario * v->unidades;
         fmes->total_promocao += v->unidades;
+        g_ptr_array_add(fmes->vendas_promocao, v);
     } else {
         fmes->faturacao_normal += v->preco_unitario * v->unidades;
         fmes->total_normal += v->unidades;
+        g_ptr_array_add(fmes->vendas_normal, v);
     }
 
     Cliente c = g_hash_table_lookup(sgv->clientes->clientes, v->codigo_cliente);

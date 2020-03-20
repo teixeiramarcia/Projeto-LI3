@@ -17,7 +17,7 @@ link_directories(${GLIB_LIBRARY_DIRS})
 
 add_executable(LI3
         ${MyCIncludes}
-        ${MyCSources})
+        ${MyCSources} include/queries.h)
 
 add_definitions(${GLIB_CFLAGS_OTHER})
 target_link_libraries(LI3 ${GLIB_LIBRARIES})

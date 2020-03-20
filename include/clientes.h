@@ -33,4 +33,10 @@ bool existe_cliente(Clientes c, char *cliente);
 
 bool valida_cliente(char *l);
 
+void destroy_clientes(Clientes clientes);
+
+void destroy_cliente(Cliente cliente);
+
+void destroy_filiais_cli(FiliaisCli fcli);
+
 #endif

@@ -23,4 +23,8 @@ bool existe_produto(Produtos p, char *produto);
 
 bool valida_produto(char *l);
 
+void destroy_produtos(Produtos produtos);
+
+void destroy_produto(Produto produto);
+
 #endif

@@ -7,3 +7,10 @@ Filial make_filial() {
     }
     return filial;
 }
+
+void destroy_filial(Filial filial) {
+    for (int i = 0; i < 12; ++i) {
+        destroy_faturacao_mes(filial->fmes[i]);
+    }
+    free(filial);
+}
