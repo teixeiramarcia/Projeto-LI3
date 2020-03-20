@@ -1,7 +1,47 @@
 #include <ctype.h>
-#include "sgv.h"
 #include "util.h"
 #include "vendas.h"
+#include "produtos.h"
+#include "clientes.h"
+#include <stdlib.h>
+
+typedef struct venda {
+    char *codigo_produto;
+    double preco_unitario;
+    int unidades;
+    char tipo_de_compra;
+    char *codigo_cliente;
+    Month mes;
+    FilialID filial;
+} *Venda;
+
+char* venda_get_codigo_produto(Venda venda){
+    return venda->codigo_produto;
+}
+
+double venda_get_preco_unitario(Venda venda){
+    return venda->preco_unitario;
+}
+
+int venda_get_unidades(Venda venda){
+    return venda->unidades;
+}
+
+char venda_get_tipo_compra(Venda venda){
+    return venda->tipo_de_compra;
+}
+
+char* venda_get_codigo_cliente(Venda venda){
+    return venda->codigo_cliente;
+}
+
+Month venda_get_mes(Venda venda){
+    return venda->mes;
+}
+
+FilialID venda_get_filial(Venda venda){
+    return venda->filial;
+}
 
 bool is_number(char *s) {
     for (int i = 0; s[i] != '\0' && s[i] != '\n' && s[i] != '\r'; i++) {
@@ -20,7 +60,7 @@ bool is_price(char *s) {
     return res;
 }
 
-Venda valida_venda(char *l, SGV sgv) {
+Venda valida_venda(Produtos prods, Clientes clientes, char *l) {
     Venda venda = (Venda) malloc(sizeof(struct venda));
 
     int res = 0;
@@ -29,7 +69,7 @@ Venda valida_venda(char *l, SGV sgv) {
     for (int i = 0; token != NULL; i++) {
         switch (i) {
             case 0:
-                if (valida_produto(token) && existe_produto(sgv->produtos, token)) {
+                if (valida_produto(token) && existe_produto(prods, token)) {
                     res++;
                     venda->codigo_produto = token;
                 }
@@ -54,7 +94,7 @@ Venda valida_venda(char *l, SGV sgv) {
                 }
                 break;
             case 4:
-                if (valida_cliente(token) && existe_cliente(sgv->clientes, token)) {
+                if (valida_cliente(token) && existe_cliente(clientes, token)) {
                     res++;
                     venda->codigo_cliente = token;
                 }
@@ -62,13 +102,13 @@ Venda valida_venda(char *l, SGV sgv) {
             case 5:
                 if (is_number(token) && (atoi(token) >= 1 && atoi(token) <= 12)) {
                     res++;
-                    venda->mes = atoi(token);
+                    venda->mes = INT_2_MONTH(atoi(token));
                 }
                 break;
             case 6:
                 if (is_number(token) && (atoi(token) >= 1 && atoi(token) <= 3)) {
                     res++;
-                    venda->filial = atoi(token);
+                    venda->filial = INT_2_FILIAL(atoi(token));
                 }
                 break;
             default:
@@ -82,39 +122,4 @@ Venda valida_venda(char *l, SGV sgv) {
     } else return venda;
 }
 
-void adiciona_venda(char *venda, SGV sgv) {
-    Venda v = valida_venda(venda, sgv);
 
-    if (v == NULL) {
-        return;
-    }
-
-    Produto p = g_hash_table_lookup(sgv->produtos->produtos[v->codigo_produto[0] - 'A'], v->codigo_produto);
-    FaturacaoMes fmes = p->filiais[v->filial - 1]->fmes[v->mes - 1];
-
-    if (v->tipo_de_compra == 'P') {
-        fmes->faturacao_promocao += v->preco_unitario * v->unidades;
-        fmes->total_promocao += v->unidades;
-        g_ptr_array_add(fmes->vendas_promocao, v);
-    } else {
-        fmes->faturacao_normal += v->preco_unitario * v->unidades;
-        fmes->total_normal += v->unidades;
-        g_ptr_array_add(fmes->vendas_normal, v);
-    }
-
-    Cliente c = g_hash_table_lookup(sgv->clientes->clientes, v->codigo_cliente);
-    FiliaisCli a = c->filiaisCli[v->filial - 1];
-    a->quantidade += v->unidades;
-    GHashTable *b = a->produtos[v->mes - 1];
-    ProdutoCli produto = g_hash_table_lookup(b, v->codigo_produto);
-    if (produto == NULL) {
-        produto = (ProdutoCli) malloc(sizeof(struct produtoCli));
-        produto->quantidade = v->unidades;
-        produto->faturacao = v->preco_unitario * v->unidades;
-        produto->prodID = v->codigo_produto;
-        g_hash_table_insert(b, produto->prodID, produto);
-    } else {
-        produto->quantidade += v->unidades;
-        produto->faturacao += v->preco_unitario * v->unidades;
-    }
-}

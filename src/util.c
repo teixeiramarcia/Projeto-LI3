@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include "util.h"
@@ -21,4 +22,7 @@ bool valida_codigo(char *codigo) {
     return true;
 }
 
+void imprime_keys(void *key, void *value, void *user_data) {
+    printf("%s\n", (char*) key);
+}
 
