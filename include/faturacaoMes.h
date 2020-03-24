@@ -25,7 +25,7 @@ GPtrArray* faturacao_mes_get_vendas_normal(FaturacaoMes fmes);
 
 GPtrArray* faturacao_mes_get_vendas_promocao(FaturacaoMes fmes);
 
-bool faturacao_nao_faturou (FaturacaoMes fmes);
+bool faturacao_nao_faturou(FaturacaoMes fmes);
 
 void destroy_faturacao_mes(FaturacaoMes fmes);
 

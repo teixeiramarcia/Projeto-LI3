@@ -12,11 +12,11 @@ Produtos make_produtos();
 
 GHashTable* produtos_get_produtos_letra(Produtos prods, int letra);
 
-bool adiciona_produto(Produtos p, char *produto);
+bool adiciona_produto(Produtos p, char* produto);
 
-bool existe_produto(Produtos p, char *produto);
+bool existe_produto(Produtos p, char* produto);
 
-bool valida_produto(char *l);
+bool valida_produto(char* l);
 
 void update_produtos(Produtos prods, Venda venda);
 
@@ -26,7 +26,7 @@ Produto produtos_get_produto(Produtos prods, char* prodID);
 
 Filial produto_get_filial(Produto produto, FilialID branchID);
 
-Filial produtos_get_filial(Produtos prods, char *prodID, FilialID branchID);
+Filial produtos_get_filial(Produtos prods, char* prodID, FilialID branchID);
 
 void produtos_foreach_started_by(Produtos prods, char c, GHFunc func, gpointer user_data);
 

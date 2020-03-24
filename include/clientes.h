@@ -10,15 +10,15 @@
 
 Clientes make_clientes();
 
-bool adiciona_cliente(Clientes c, char *cliente);
+bool adiciona_cliente(Clientes c, char* cliente);
 
 GHashTable* clientes_get_clientes(Clientes clientes);
 
 void clientes_procurarCli(void* cliente, void* clienteID, void* resCli);
 
-bool existe_cliente(Clientes c, char *cliente);
+bool existe_cliente(Clientes c, char* cliente);
 
-bool valida_cliente(char *l);
+bool valida_cliente(char* l);
 
 void update_clientes(Clientes clientes, Venda venda);
 

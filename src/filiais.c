@@ -5,7 +5,7 @@
 
 typedef struct filial {
     FaturacaoMes fmes[12];
-} *Filial;
+} * Filial;
 
 Filial make_filial() {
     Filial filial = (Filial) malloc(sizeof(struct filial));
@@ -15,7 +15,7 @@ Filial make_filial() {
     return filial;
 }
 
-void update_filial(Filial filial, Venda venda){
+void update_filial(Filial filial, Venda venda) {
     update_faturacao_mes(filial->fmes[venda_get_mes(venda)], venda);
 }
 

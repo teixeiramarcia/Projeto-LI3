@@ -6,24 +6,24 @@
 #include "vendas.h"
 
 typedef struct produtoCli {
-    char *prodID;
+    char* prodID;
     int quantidade;
     double faturacao;
-} *ProdutoCli;
+} * ProdutoCli;
 
 typedef struct filiaisCli {
     int quantidade;
-    GHashTable *produtos[12];
-} *FiliaisCli;
+    GHashTable* produtos[12];
+} * FiliaisCli;
 
 typedef struct cliente {
-    char *clienteID;
+    char* clienteID;
     FiliaisCli filiaisCli[N_FILIAIS];
-} *Cliente;
+} * Cliente;
 
 typedef struct clientes {
-    GHashTable *clientes;
-} *Clientes;
+    GHashTable* clientes;
+} * Clientes;
 
 Clientes make_clientes() {
     Clientes clientes = (Clientes) malloc(sizeof(struct clientes));
@@ -31,27 +31,27 @@ Clientes make_clientes() {
     return clientes;
 }
 
-int filiais_cli_get_quantidade(FiliaisCli fcli){
+int filiais_cli_get_quantidade(FiliaisCli fcli) {
     return fcli->quantidade;
 }
 
-void filiais_cli_set_quantidade(FiliaisCli fcli, int qtd){
+void filiais_cli_set_quantidade(FiliaisCli fcli, int qtd) {
     int a = filiais_cli_get_quantidade(fcli);
-    fcli->quantidade = a+qtd;
+    fcli->quantidade = a + qtd;
 }
 
-bool valida_cliente(char *l) {
+bool valida_cliente(char* l) {
     if (isupper(l[0])) {
         return valida_codigo(l + 1) && (atoi(l + 1) >= 1000 && atoi(l + 1) <= 5000);
     }
     return false;
 }
 
-bool existe_cliente(Clientes c, char *cliente) {
+bool existe_cliente(Clientes c, char* cliente) {
     return g_hash_table_contains(c->clientes, cliente);
 }
 
-bool adiciona_cliente(Clientes clis, char *cliID) {
+bool adiciona_cliente(Clientes clis, char* cliID) {
     if (valida_cliente(cliID) && !existe_cliente(clis, cliID)) {
         Cliente cliente = (Cliente) malloc(sizeof(struct cliente));
         cliente->clienteID = strdup(cliID);
@@ -68,7 +68,7 @@ bool adiciona_cliente(Clientes clis, char *cliID) {
     return false;
 }
 
-GHashTable *clientes_get_clientes(Clientes clientes) {
+GHashTable* clientes_get_clientes(Clientes clientes) {
     return clientes->clientes;
 }
 
@@ -77,24 +77,25 @@ void clientes_procurarCli(void* clienteID, void* cliente, void* resCli) {
     Cliente cliente_ = (Cliente) cliente;
     int* resCli_ = (int*) resCli;
     int count = 0;
-    for (int i = 0; i< N_FILIAIS; i++){
-        if(cliente_->filiaisCli[i]->quantidade == 0) {
+    for (int i = 0; i < N_FILIAIS; i++) {
+        if (cliente_->filiaisCli[i]->quantidade == 0) {
             count++;
         }
     }
-    if(count == N_FILIAIS) {
+    if (count == N_FILIAIS) {
         (*resCli_)++;
     }
 }
 
-void update_clientes(Clientes clientes, Venda venda){
+void update_clientes(Clientes clientes, Venda venda) {
     char* codigo_cliente = venda_get_codigo_cliente(venda);
     Cliente cliente = g_hash_table_lookup(clientes->clientes, codigo_cliente);
     int qtd = filiais_cli_get_quantidade(cliente->filiaisCli[venda_get_filial(venda)]);
     int qtd_new = qtd + venda_get_unidades(venda);
     filiais_cli_set_quantidade(cliente->filiaisCli[venda_get_filial(venda)], qtd_new);
-    ProdutoCli pcli = g_hash_table_lookup(cliente->filiaisCli[venda_get_filial(venda)]->produtos[venda_get_mes(venda)], venda_get_codigo_produto(venda));
-    if(pcli == NULL){
+    ProdutoCli pcli = g_hash_table_lookup(cliente->filiaisCli[venda_get_filial(venda)]->produtos[venda_get_mes(venda)],
+                                          venda_get_codigo_produto(venda));
+    if (pcli == NULL) {
         pcli = (ProdutoCli) malloc(sizeof(struct produtoCli));
         pcli->prodID = venda_get_codigo_produto(venda);
         pcli->quantidade = venda_get_unidades(venda);
