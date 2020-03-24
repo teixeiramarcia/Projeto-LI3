@@ -11,7 +11,7 @@ int main(int argc, const char* argv[]) {
 
     //getClientsAndProductsNeverBoughtCount(sgv); //query 6
 
-    //getProductBuyers(sgv, "AF1184", 3); //query 9
+    //getProductBuyers(sgv, "AF1184", 1); //query 9
 
     destroySGV(sgv);
     return 0;
