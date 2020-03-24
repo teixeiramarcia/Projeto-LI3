@@ -1,9 +1,9 @@
-#include <stdio.h>
 #include <ctype.h>
 #include "util.h"
 #include "produtos.h"
 #include "month.h"
 #include "filialID.h"
+#include <stdio.h>
 
 typedef struct produto {
     char* produtoID;
@@ -117,9 +117,7 @@ void guarda_se_nao_foi_vendido(void* key, void* value, void* user_data) {
     for (int i = p_n_v->de_filial; i <= p_n_v->ate_filial && ja_foi_vendido == 0; i++) {
         for (int j = 0; j < N_MONTHS && ja_foi_vendido == 0; j++) {
             FaturacaoMes fmes = filial_get_faturacao_mes(produto_get_filial(produto, i), j);
-            int total_normal = faturacao_mes_get_total_normal(fmes);
-            int total_promocao = faturacao_mes_get_total_promocao(fmes);
-            if (total_normal != 0 || total_promocao != 0) {
+            if (!faturacao_nao_faturou(fmes)) {
                 ja_foi_vendido++;
             }
         }
@@ -129,4 +127,62 @@ void guarda_se_nao_foi_vendido(void* key, void* value, void* user_data) {
     }
 }
 
+typedef struct totais_vendas_faturacao {
+    int total_vendas;
+    double total_faturacao;
+    int de_mes;
+    int ate_mes;
+} * TotaisVendasFaturacao;
 
+TotaisVendasFaturacao make_totais_vendas_faturacao() {
+    TotaisVendasFaturacao t_v_f = malloc(sizeof(struct totais_vendas_faturacao));
+    t_v_f->total_vendas = 0;
+    t_v_f->total_faturacao = 0;
+    return t_v_f;
+}
+
+int t_v_f_get_total_vendas(TotaisVendasFaturacao t_v_f) {
+    return t_v_f->total_vendas;
+}
+
+double t_v_f_get_total_faturacao(TotaisVendasFaturacao t_v_f) {
+    return t_v_f->total_faturacao;
+}
+
+void t_v_f_set_total_vendas(TotaisVendasFaturacao t_v_f, int total_vendas) {
+    t_v_f->total_vendas += total_vendas;
+}
+
+void t_v_f_set_total_faturacao(TotaisVendasFaturacao t_v_f, double total_faturacao) {
+    t_v_f->total_faturacao += total_faturacao;
+}
+
+void t_v_f_set_limites(TotaisVendasFaturacao t_v_f, int minMonth, int maxMonth) {
+    t_v_f->de_mes = INT_2_MONTH(minMonth);
+    t_v_f->ate_mes = INT_2_MONTH(maxMonth);
+}
+
+int t_v_f_get_from_month(TotaisVendasFaturacao t_v_f) {
+    return t_v_f->de_mes;
+}
+
+int t_v_f_get_to_month(TotaisVendasFaturacao t_v_f) {
+    return t_v_f->ate_mes;
+}
+
+void get_totais(void* key, void* produto, void* t_v_f) {
+    Produto prod = (Produto) produto;
+    TotaisVendasFaturacao t_v_f_ = (TotaisVendasFaturacao) t_v_f;
+    int from = t_v_f_get_from_month(t_v_f_);
+    int to = t_v_f_get_to_month(t_v_f_);
+    for (int filial = 1; filial <= N_FILIAIS; ++filial) {
+        for (int mes = from; mes <= to; ++mes) {
+            FaturacaoMes fmes = filial_get_faturacao_mes(
+                    produto_get_filial(prod, INT_2_FILIAL(filial)), mes);
+            int total = faturacao_mes_get_total_promocao(fmes) + faturacao_mes_get_total_normal(fmes);
+            double faturacao = faturacao_mes_get_faturacao_promocao(fmes) + faturacao_mes_get_faturacao_normal(fmes);
+            t_v_f_set_total_vendas(t_v_f_, total);
+            t_v_f_set_total_faturacao(t_v_f_, faturacao);
+        }
+    }
+}

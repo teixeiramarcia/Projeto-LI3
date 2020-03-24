@@ -130,6 +130,46 @@ void getClientsAndProductsNeverBoughtCount(SGV sgv) {
     printf("Produtos nunca comprados: %d", g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v)));
 }
 
+//query 7 - WORKING
+void getProductsBoughtByClient(SGV sgv, char* clientID) {
+    Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
+    if (c != NULL) {
+        ProdutosCompradosCliente p_c_c = make_produtos_comprados_cliente();
+        for (int filial = 0; filial < N_FILIAIS; filial++) {
+            for (int mes = 0; mes < N_MONTHS; ++mes) {
+                FiliaisCli fcli = cliente_get_filial(c, filial);
+                GHashTable* mes_ = filiais_cli_get_mes(fcli, mes);
+                int result = get_total_compras(mes_);
+                *p_c_c_get_n_produtos_comprados(p_c_c, filial, mes) = result;
+            }
+        }
+        for (int i = 0; i < N_FILIAIS; ++i) {
+            printf("Total de compras que o cliente fez na filial %d:\n", i + 1);
+            for (int j = 0; j < N_MONTHS; ++j) {
+                printf("No mês %d\n", j + 1);
+                int compras = *p_c_c_get_n_produtos_comprados(p_c_c, i, j);
+                printf("%d\n", compras);
+            }
+        }
+    } else {
+        printf("O cliente %s não existe no sistema.\n", clientID);
+    }
+}
+
+//query 8 - WORKING
+void getSalesAndProfit(SGV sgv, int minMonth, int maxMonth) {
+    Produtos produtos = sgv->produtos;
+    TotaisVendasFaturacao t_v_f = make_totais_vendas_faturacao();
+    t_v_f_set_limites(t_v_f, minMonth, maxMonth);
+
+    for (int letra = 0; letra < ('Z' - 'A') + 1; letra++) {
+        GHashTable* produtos_letra = produtos_get_produtos_letra(produtos, letra);
+        g_hash_table_foreach(produtos_letra, get_totais, t_v_f);
+    }
+    printf("Total de vendas no intervalo de meses indicados: %d\n", t_v_f_get_total_vendas(t_v_f));
+    printf("Total faturado no intervalo de meses indicados: %f\n", t_v_f_get_total_faturacao(t_v_f));
+}
+
 //query 9 - WORKING
 void getProductBuyers(SGV sgv, char* prodID, int branchID) {
     GHashTable* vendas_n = g_hash_table_new(g_str_hash, str_compare);

@@ -31,6 +31,10 @@ Clientes make_clientes() {
     return clientes;
 }
 
+FiliaisCli cliente_get_filial(Cliente c, int branch) {
+    return c->filiaisCli[branch];
+}
+
 int filiais_cli_get_quantidade(FiliaisCli fcli) {
     return fcli->quantidade;
 }
@@ -38,6 +42,10 @@ int filiais_cli_get_quantidade(FiliaisCli fcli) {
 void filiais_cli_set_quantidade(FiliaisCli fcli, int qtd) {
     int a = filiais_cli_get_quantidade(fcli);
     fcli->quantidade = a + qtd;
+}
+
+GHashTable* filiais_cli_get_mes(FiliaisCli fcli, int mes) {
+    return fcli->produtos[mes];
 }
 
 bool valida_cliente(char* l) {
@@ -72,6 +80,10 @@ GHashTable* clientes_get_clientes(Clientes clientes) {
     return clientes->clientes;
 }
 
+Cliente clientes_get_cliente(GHashTable* clientes, char* clienteID) {
+    return g_hash_table_lookup(clientes, clienteID);
+}
+
 void clientes_procurarCli(void* clienteID, void* cliente, void* resCli) {
     (void) clienteID;
     Cliente cliente_ = (Cliente) cliente;
@@ -100,6 +112,8 @@ void update_clientes(Clientes clientes, Venda venda) {
         pcli->prodID = venda_get_codigo_produto(venda);
         pcli->quantidade = venda_get_unidades(venda);
         pcli->faturacao = venda_get_preco_unitario(venda) * venda_get_unidades(venda);
+        g_hash_table_insert(cliente->filiaisCli[venda_get_filial(venda)]->produtos[venda_get_mes(venda)], pcli->prodID,
+                            pcli);
     } else {
         pcli->quantidade += venda_get_unidades(venda);
         pcli->faturacao += venda_get_preco_unitario(venda) * venda_get_unidades(venda);
@@ -123,4 +137,28 @@ void destroy_cliente(Cliente cliente) {
         destroy_filiais_cli(cliente->filiaisCli[i]);
     }
     free(cliente);
+}
+
+typedef struct produtos_comprados_cliente {
+    int n_produtos_comprados[N_FILIAIS][N_MONTHS];
+} * ProdutosCompradosCliente;
+
+ProdutosCompradosCliente make_produtos_comprados_cliente() {
+    return malloc(sizeof(struct produtos_comprados_cliente));
+}
+
+int* p_c_c_get_n_produtos_comprados(ProdutosCompradosCliente p_c_c, int filial, int month) { //FIXME
+    return &p_c_c->n_produtos_comprados[filial][month];
+}
+
+void get_quantidade(void* key, void* produto, void* result) {
+    ProdutoCli pcli = (ProdutoCli) produto;
+    int* res = (int*) result;
+    *res += pcli->quantidade;
+}
+
+int get_total_compras(GHashTable* mes) {
+    int result = 0;
+    g_hash_table_foreach(mes, get_quantidade, &result);
+    return result;
 }

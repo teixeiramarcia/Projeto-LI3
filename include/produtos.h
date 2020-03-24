@@ -42,4 +42,14 @@ void destroy_produtos(Produtos produtos);
 
 void destroy_produto(Produto produto);
 
+TotaisVendasFaturacao make_totais_vendas_faturacao();
+
+int t_v_f_get_total_vendas(TotaisVendasFaturacao t_v_f);
+
+double t_v_f_get_total_faturacao(TotaisVendasFaturacao t_v_f);
+
+void t_v_f_set_limites(TotaisVendasFaturacao t_v_f, int minMonth, int maxMonth);
+
+void get_totais(void* key, void* produto, void* t_v_f);
+
 #endif

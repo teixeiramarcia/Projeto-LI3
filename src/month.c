@@ -1,7 +1,7 @@
 #include "month.h"
 #include <stddef.h>
 
-Month const MONTHS[12] = {
+Month const MONTHS[N_MONTHS] = {
         janeiro,
         fevereiro,
         marco,

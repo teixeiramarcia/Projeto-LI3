@@ -4,6 +4,7 @@
 #include "produtos.h"
 #include "clientes.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct venda {
     char* codigo_produto;
@@ -56,7 +57,7 @@ bool is_number(char* s) {
 }
 
 bool is_price(char* s) {
-    char* rest = s;
+    char* rest = strdup(s);
 
     bool res = is_number(strtok_r(rest, ".", &rest));
     res &= is_number(strtok_r(rest, ".", &rest));
