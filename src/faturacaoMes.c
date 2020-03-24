@@ -49,7 +49,7 @@ double faturacao_mes_get_faturacao_normal(FaturacaoMes fmes){
     return fmes->faturacao_normal;
 }
 
-int faturacao_get_total_normal(FaturacaoMes fmes){
+int faturacao_mes_get_total_normal(FaturacaoMes fmes){
     return fmes->total_normal;
 }
 

@@ -7,7 +7,7 @@
 
 typedef struct produto {
     char *produtoID;
-    Filial filiais[sizeof(FILIAIS)];
+    Filial filiais[N_FILIAIS];
 } *Produto;
 
 typedef struct produtos {
@@ -22,15 +22,15 @@ Produtos make_produtos() {
     return p;
 }
 
+GHashTable* produtos_get_produtos_letra(Produtos prods, int letra) {
+    return prods->produtos[letra];
+}
+
 bool valida_produto(char *l) {
     if (isupper(l[0]) && isupper(l[1])) {
         return valida_codigo(l + 2);
     }
     return false;
-}
-
-char* produto_get_poductID(Produto prod){
-    return prod->produtoID;
 }
 
 Filial produto_get_filial(Produto prod, FilialID branchID){
@@ -49,111 +49,6 @@ Filial produtos_get_filial(Produtos prods, char* prodID, FilialID branchID){
     return produto_get_filial(produtos_get_produto(prods, prodID), branchID);
 }
 
-typedef struct produtos_e_totais_1filial {
-    FilialID branchID;
-    GHashTable* produtos;
-    int total;
-} *ProdutosETotais1Filial;
-
-GHashTable *produtos_e_totais_1filial_get_produtos(ProdutosETotais1Filial p_e_t_1f) {
-    return p_e_t_1f->produtos;
-}
-
-int produtos_e_totais_1filial_get_total(ProdutosETotais1Filial p_e_t_1f) {
-    return p_e_t_1f->total;
-}
-
-void verifica_produto_nao_comprado_1filial(void* key, void* value, void* produtos_e_totais_1filial) {
-    char* key_ = (char*) key;
-    Produto value_ = (Produto) value;
-    ProdutosETotais1Filial produtos_e_totais_1filial_ = (ProdutosETotais1Filial) produtos_e_totais_1filial;
-    for (int i = 0; i < sizeof(MONTHS); i++) {
-        Filial filial = value_->filiais[(produtos_e_totais_1filial_->branchID)];
-        FaturacaoMes fmes = filial_get_faturacao_mes(filial, MONTHS[i]);
-        if(faturacao_nao_faturou(fmes)){
-            g_hash_table_add(produtos_e_totais_1filial_->produtos, key_);
-            produtos_e_totais_1filial_->total++;
-        }
-    }
-}
-
-typedef struct produtos_e_totais {
-    GHashTable* produtos_filial[sizeof(FILIAIS)];
-    int total;
-} *ProdutosETotais;
-
-int produtos_e_totais_get_total(ProdutosETotais p_e_t) {
-    return p_e_t->total;
-}
-
-void verifica_produto_nao_comprado_todas(void* key, void* value, void* p_e_t){
-    char* key_ = (char*) key;
-    Produto value_ = (Produto) value;
-    ProdutosETotais p_e_t_ = (ProdutosETotais) p_e_t;
-    for (int filial = 0; filial < sizeof(FILIAIS); filial++)
-        for (int month = 0; month < sizeof(MONTHS); month++) {
-            int total_promocao = faturacao_mes_get_total_promocao(
-                    filial_get_faturacao_mes(produto_get_filial(value_, FILIAIS[filial]), month/*MONTHS[month]*/));
-            int total_normal = faturacao_get_total_normal(
-                    filial_get_faturacao_mes(produto_get_filial(value_, FILIAIS[filial]), MONTHS[month]));
-            if (total_promocao == 0 && total_normal == 0) {
-                g_hash_table_add(p_e_t_->produtos_filial[FILIAIS[filial]], key_);
-                p_e_t_->total++;
-            }
-        }
-}
-
-typedef struct produtos_e_totais_helper {
-    GPtrArray* prods;
-    ProdutosETotais p_e_t;
-} *ProdutosETotaisHelper;
-
-GPtrArray *produtos_e_totais_helper_get_produtos(ProdutosETotaisHelper p_e_t_h) {
-    return p_e_t_h->prods;
-}
-
-ProdutosETotais produtos_e_totais_helper_get_produtos_e_totais(ProdutosETotaisHelper p_e_t_h) {
-    return p_e_t_h->p_e_t;
-}
-
-void intersection(void* key, void* value, void* res){
-    (void) value;
-    char* key_ = (char*) key;
-    ProdutosETotaisHelper res_ = (ProdutosETotaisHelper) res;
-    GHashTable* prods_f2 = res_->p_e_t->produtos_filial[1];
-    GHashTable* prods_f3 = res_->p_e_t->produtos_filial[2];
-    if(g_hash_table_contains(prods_f2, key_) && g_hash_table_contains(prods_f3, key_)){
-        g_ptr_array_add(res_->prods, key_);
-    }
-}
-
-ProdutosETotaisHelper produtos_foreach_never_bought_t(Produtos prods) {
-    ProdutosETotais produtos_e_totais = malloc(sizeof(struct produtos_e_totais));
-    for (int filial = 0; filial < sizeof(FILIAIS); ++filial) {
-        produtos_e_totais->produtos_filial[FILIAIS[filial]] = g_hash_table_new(g_str_hash, str_compare);
-    }
-    for (int j = 0; j < ('Z'-'A')+1; ++j) {
-        g_hash_table_foreach(prods->produtos[j], verifica_produto_nao_comprado_todas, produtos_e_totais);
-    }
-    ProdutosETotaisHelper result = malloc(sizeof(struct produtos_e_totais_helper));
-    result->prods = g_ptr_array_new();
-    result->p_e_t = produtos_e_totais;
-    g_hash_table_foreach(produtos_e_totais->produtos_filial[0], intersection, result);
-    return result;
-}
-
-ProdutosETotais1Filial produtos_foreach_never_bought_1f(Produtos prods, FilialID branchID) {
-    ProdutosETotais1Filial produtos_e_totais_1filial = malloc(sizeof(struct produtos_e_totais_1filial));
-    produtos_e_totais_1filial->produtos = g_hash_table_new(g_str_hash, str_compare);
-    produtos_e_totais_1filial->total = 0;
-    produtos_e_totais_1filial->branchID = branchID;
-    for (int i = 0; i < ('Z'-'A')+1; ++i) {
-        g_hash_table_foreach(prods->produtos[i], verifica_produto_nao_comprado_1filial, produtos_e_totais_1filial);
-    }
-    return produtos_e_totais_1filial;
-}
-
-
 void update_produtos(Produtos prods, Venda venda){
     Produto prod = g_hash_table_lookup(prods->produtos[venda_get_codigo_produto(venda)[0] - 'A'], venda_get_codigo_produto(venda));
     update_filial(prod->filiais[venda_get_filial(venda)], venda);
@@ -164,7 +59,7 @@ bool adiciona_produto(Produtos prod, char *produto) {
         char l = produto[0];
         Produto p = (Produto) malloc(sizeof(struct produto));
         p->produtoID = strdup(produto);
-        for (int i = 0; i < sizeof(FILIAIS); ++i) {
+        for (int i = 0; i < N_FILIAIS; ++i) {
             p->filiais[i] = make_filial();
         }
 
@@ -186,8 +81,51 @@ void destroy_produtos(Produtos produtos) {
 }
 
 void destroy_produto(Produto produto) {
-    for (int i = 0; i < sizeof(FILIAIS); ++i) {
+    for (int i = 0; i < N_FILIAIS; ++i) {
         destroy_filial(produto->filiais[i]);
     }
     free(produto);
 }
+
+typedef struct produtos_nunca_vendidos {
+    int de_filial;
+    int ate_filial;
+    GHashTable* produtos_n_vendidos;
+} *ProdutosNuncaVendidos;
+
+ProdutosNuncaVendidos make_produtos_nunca_vendidos() {
+    ProdutosNuncaVendidos p_n_v = malloc(sizeof(struct produtos_nunca_vendidos));
+    p_n_v->produtos_n_vendidos = g_hash_table_new(g_str_hash, str_compare);
+    return p_n_v;
+}
+
+GHashTable* p_n_v_get_produtos_n_vendidos(ProdutosNuncaVendidos p_n_v) {
+    return p_n_v->produtos_n_vendidos;
+}
+
+void set_de_e_ate_filial_p_n_v(ProdutosNuncaVendidos p_n_v, int from_branch, int to_branch) {
+    p_n_v->de_filial = from_branch;
+    p_n_v->ate_filial = to_branch;
+}
+
+void guarda_se_nao_foi_vendido(void* key, void* value, void* user_data){
+    char* productID = (char*) key;
+    Produto produto = (Produto) value;
+    ProdutosNuncaVendidos p_n_v = (ProdutosNuncaVendidos) user_data;
+    int ja_foi_vendido = 0;
+    for (int i = p_n_v->de_filial; i <= p_n_v->ate_filial && ja_foi_vendido == 0; i++) {
+        for (int j = 0; j < N_MONTHS && ja_foi_vendido == 0; j++) {
+            FaturacaoMes fmes = filial_get_faturacao_mes(produto_get_filial(produto, i), j);
+            int total_normal = faturacao_mes_get_total_normal(fmes);
+            int total_promocao = faturacao_mes_get_total_promocao(fmes);
+            if(total_normal != 0 || total_promocao != 0){
+                ja_foi_vendido++;
+            }
+        }
+    }
+    if(ja_foi_vendido == 0) {
+        g_hash_table_add(p_n_v->produtos_n_vendidos, productID);
+    }
+}
+
+

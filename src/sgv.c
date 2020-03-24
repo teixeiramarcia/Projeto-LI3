@@ -96,45 +96,46 @@ void getProductsStartedByLetter(SGV sgv, char letter){
     produtos_foreach_started_by(sgv->produtos, letter, imprime_keys, NULL);
 }
 
-//query 4
-void getProductsNeverBought(SGV sgv, int branchID){ //FIXME
+//query 4 - WORKING
+void getProductsNeverBought(SGV sgv, int branchID) { //FIXME
     assert(branchID >= 0 && branchID < 4);
-    FilialID branch = INT_2_FILIAL(branchID);
-    if(branch == filial_todas){
-        ProdutosETotaisHelper p_e_t = produtos_foreach_never_bought_t(sgv->produtos);
-        printf("Produtos nunca comprados em todas as filiais:\n");
-        g_ptr_array_foreach(produtos_e_totais_helper_get_produtos(p_e_t), (GFunc) imprime_keys, NULL);
-        int total = produtos_e_totais_get_total(produtos_e_totais_helper_get_produtos_e_totais(p_e_t));
-        printf("Total de produtos nunca vendidos em todas as filiais: %d\n", total);
+    Produtos prods = sgv->produtos;
+    ProdutosNuncaVendidos p_n_v = make_produtos_nunca_vendidos();
+    if(branchID == 0){
+        printf("Produtos que nunca foram comprados em nenhuma filial:\n");
+        set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(1), INT_2_FILIAL(3));
     } else {
-        ProdutosETotais1Filial p_e_t_1f = produtos_foreach_never_bought_1f(sgv->produtos, branch);
-        printf("Produtos nunca comprados na filial %d:\n", branchID);
-        g_hash_table_foreach(produtos_e_totais_1filial_get_produtos(p_e_t_1f), imprime_keys, NULL);
-        printf("Total de produtos nunca comprados na filial %d: %d\n", branchID, produtos_e_totais_1filial_get_total(p_e_t_1f));
+        printf("Produtos que nunca foram comprados na filial %d:\n", branchID);
+        set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(branchID), INT_2_FILIAL(branchID));
     }
+    for (int i = 0; i < ('Z' - 'A') + 1; i++) {
+        GHashTable* produtos_letra = produtos_get_produtos_letra(prods, i);
+        g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
+    }
+    g_hash_table_foreach(p_n_v_get_produtos_n_vendidos(p_n_v), imprime_keys, NULL);
+    printf("Número total: %d", g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v)));
 }
 
-//query 6
-void getClientsandProductsNeverBoughtCount(SGV sgv){
+//query 6 - WORKING
+void getClientsAndProductsNeverBoughtCount(SGV sgv){
     int resCli = 0;
     g_hash_table_foreach(clientes_get_clientes(sgv->clientes), clientes_procurarCli, &resCli);
-    ProdutosETotaisHelper p_e_t_h = produtos_foreach_never_bought_t(sgv->produtos);
+    ProdutosNuncaVendidos p_n_v = make_produtos_nunca_vendidos();
+    set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(1), INT_2_FILIAL(3));
+    for (int i = 0; i < ('Z' - 'A') + 1; i++) {
+        GHashTable* produtos_letra = produtos_get_produtos_letra(sgv->produtos, i);
+        g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
+    }
     printf("Clientes que nunca fizeram compras: %d\n", resCli);
-    int total_produtos = produtos_e_totais_get_total(produtos_e_totais_helper_get_produtos_e_totais(p_e_t_h));
-    printf("Produtos nunca comprados: %d\n", total_produtos);
-
+    printf("Produtos nunca comprados: %d", g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v)));
 }
 
-//query 9 - FIXME
-void guarda_cliente(Venda venda, GHashTable* vendas_n){
-    g_hash_table_add(vendas_n, venda_get_codigo_cliente(venda));
-}
-
-void getProductBuyers(SGV sgv, char* prodID, int branchID){
+//query 9 - WORKING
+void getProductBuyers(SGV sgv, char* prodID, int branchID) {
     GHashTable* vendas_n = g_hash_table_new(g_str_hash, str_compare);
     GHashTable* vendas_p = g_hash_table_new(g_str_hash, str_compare);
-    for(size_t month = 0; month < sizeof(MONTHS); month++){
-        Filial filial = produtos_get_filial(sgv->produtos, prodID, branchID);
+    for(size_t month = 0; month < N_MONTHS; month++){
+        Filial filial = produtos_get_filial(sgv->produtos, prodID, INT_2_FILIAL(branchID));
         FaturacaoMes fmes = filial_get_faturacao_mes(filial, MONTHS[month]);
         GPtrArray* vendas_normal = faturacao_mes_get_vendas_normal(fmes);
         GPtrArray* vendas_promocao = faturacao_mes_get_vendas_promocao(fmes);

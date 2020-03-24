@@ -5,12 +5,17 @@
 #include <stddef.h>
 #include <glib.h>
 #include "faturacaoMes.h"
+#include "vendas.h"
+#include "types.h"
+#include "month.h"
 
-typedef struct filial {
-    FaturacaoMes fmes[12];
-} *Filial;
+typedef struct filial* Filial;
 
 Filial make_filial();
+
+void update_filial(Filial filial, Venda venda);
+
+FaturacaoMes filial_get_faturacao_mes(Filial filial, Month month);
 
 void destroy_filial(Filial filial);
 

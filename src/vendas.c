@@ -42,6 +42,9 @@ Month venda_get_mes(Venda venda){
 FilialID venda_get_filial(Venda venda){
     return venda->filial;
 }
+void guarda_cliente(Venda venda, GHashTable* vendas_n) {
+    g_hash_table_add(vendas_n, venda_get_codigo_cliente(venda));
+}
 
 bool is_number(char *s) {
     for (int i = 0; s[i] != '\0' && s[i] != '\n' && s[i] != '\r'; i++) {

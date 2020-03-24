@@ -15,5 +15,3 @@ Month const MONTHS[12] = {
         novembro,
         dezembro
 };
-
-size_t const N_MONTHS = sizeof(MONTHS);

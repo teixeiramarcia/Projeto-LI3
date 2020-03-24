@@ -13,4 +13,6 @@ int str_compare(void const *a, void const *b);
 
 bool valida_codigo(char *codigo);
 
+void imprime_keys(void* key, void* value, void* user_data);
+
 #endif

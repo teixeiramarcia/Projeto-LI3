@@ -4,17 +4,28 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <glib.h>
+#include "vendas.h"
+#include "types.h"
 
-typedef struct faturacaoMes {
-    double faturacao_promocao;
-    int total_promocao;
-    double faturacao_normal;
-    int total_normal;
-    GPtrArray *vendas_promocao;
-    GPtrArray *vendas_normal;
-} *FaturacaoMes;
+typedef struct faturacaoMes* FaturacaoMes;
 
 FaturacaoMes make_faturacao_mes();
+
+void update_faturacao_mes(FaturacaoMes fmes, Venda venda);
+
+double faturacao_mes_get_faturacao_promocao(FaturacaoMes fmes);
+
+int faturacao_mes_get_total_promocao(FaturacaoMes fmes);
+
+double faturacao_mes_get_faturacao_normal(FaturacaoMes fmes);
+
+int faturacao_mes_get_total_normal(FaturacaoMes fmes);
+
+GPtrArray* faturacao_mes_get_vendas_normal(FaturacaoMes fmes);
+
+GPtrArray* faturacao_mes_get_vendas_promocao(FaturacaoMes fmes);
+
+bool faturacao_nao_faturou (FaturacaoMes fmes);
 
 void destroy_faturacao_mes(FaturacaoMes fmes);
 
