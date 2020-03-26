@@ -21,6 +21,9 @@ int main(int argc, const char* argv[]) {
 
     //getProductBuyers(sgv, "NR1091", 3); //query 9
 
+    //getTopSoldProducts(sgv, 1); //query 11
+
+
     destroySGV(sgv);
     return 0;
 }

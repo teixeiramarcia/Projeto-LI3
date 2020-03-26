@@ -3,7 +3,7 @@
 #include "produtos.h"
 #include "month.h"
 #include "filialID.h"
-#include <stdio.h>
+
 
 typedef struct produto {
     char* produtoID;
@@ -53,6 +53,10 @@ void update_produtos(Produtos prods, Venda venda) {
     Produto prod = g_hash_table_lookup(prods->produtos[venda_get_codigo_produto(venda)[0] - 'A'],
                                        venda_get_codigo_produto(venda));
     update_filial(prod->filiais[venda_get_filial(venda)], venda);
+}
+
+char* produto_get_productID(Produto prod){
+    return prod->produtoID;
 }
 
 bool adiciona_produto(Produtos prod, char* produto) {
@@ -186,3 +190,30 @@ void get_totais(void* key, void* produto, void* t_v_f) {
         }
     }
 }
+
+
+void swap_produto_menos_vendido(GPtrArray* top_produtos, int tamanho, Produto produto_novo) {
+    for (int i = 0; i < tamanho; i++) {
+        Produto produto = g_ptr_array_index(top_produtos, i);
+        int vendas_produto = get_vendas_produto(produto);
+        int vendas_novo_produto = get_vendas_produto(produto_novo);
+        if(vendas_produto < vendas_novo_produto) {
+            g_ptr_array_remove_index_fast(top_produtos, i);
+            g_ptr_array_add(top_produtos, produto_novo);
+            produto_novo = produto;
+        }
+    }
+}
+
+void adiciona_produtos(void* key, void* value, void* user_data) {
+    Produto produto = (Produto) value;
+    TopProdutos top_produtos = (TopProdutos) user_data;
+    if(top_produtos->tamanho_atual < top_produtos->limite){
+        g_ptr_array_add(top_produtos->produtos, produto);
+        top_produtos->tamanho_atual++;
+    } else {
+        swap_produto_menos_vendido(top_produtos->produtos, top_produtos->tamanho_atual, produto);
+    }
+}
+
+

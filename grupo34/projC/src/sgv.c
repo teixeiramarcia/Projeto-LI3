@@ -91,15 +91,22 @@ SGV loadSGVFromFiles(SGV sgv, char const* filesFolderPath) {
 }
 
 //query 2 - WORKING
-void getProductsStartedByLetter(SGV sgv, char letter) {
+Query2 getProductsStartedByLetter(SGV sgv, char letter) {
+    Query2 q2 = malloc(sizeof(struct query_2));
+    q2->produtos_letra = g_hash_table_new(g_str_hash, str_compare);
+    produtos_foreach_started_by(sgv->produtos, letter, add_product_id, q2->produtos_letra);
     printf("Produtos começados pela letra %c\n", letter);
     produtos_foreach_started_by(sgv->produtos, letter, imprime_keys, NULL);
+    return q2;
 }
 
 //query 4 - WORKING
-void getProductsNeverBought(SGV sgv, int branchID) { //FIXME
+Query4 getProductsNeverBought(SGV sgv, int branchID) {
     assert(branchID >= 0 && branchID < 4);
+    Query4 q4 = malloc(sizeof(struct query_4));
+    q4->total_produtos_nao_comprados = 0;
     Produtos prods = sgv->produtos;
+    q4->produtos_nunca_comprados = g_hash_table_new(g_str_hash, str_compare);
     ProdutosNuncaVendidos p_n_v = make_produtos_nunca_vendidos();
     if (branchID == 0) {
         printf("Produtos que nunca foram comprados em nenhuma filial:\n");
@@ -108,16 +115,22 @@ void getProductsNeverBought(SGV sgv, int branchID) { //FIXME
         printf("Produtos que nunca foram comprados na filial %d:\n", branchID);
         set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(branchID), INT_2_FILIAL(branchID));
     }
-    for (int i = 0; i < ('Z' - 'A') + 1; i++) {
+    for (int i = 0; i < ('Z'-'A') + 1; i++) {
         GHashTable* produtos_letra = produtos_get_produtos_letra(prods, i);
         g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
     }
-    g_hash_table_foreach(p_n_v_get_produtos_n_vendidos(p_n_v), imprime_keys, NULL);
-    printf("Número total: %d", g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v)));
+    GHashTable* produtos_nao_vendidos = p_n_v_get_produtos_n_vendidos(p_n_v);
+    int total = g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v));
+    g_hash_table_foreach(produtos_nao_vendidos, add_product_id, q4->produtos_nunca_comprados);
+    q4->total_produtos_nao_comprados = total;
+    g_hash_table_foreach(produtos_nao_vendidos, imprime_keys, NULL);
+    printf("Número total: %d", total);
+    return q4;
 }
 
 //query 6 - WORKING
-void getClientsAndProductsNeverBoughtCount(SGV sgv) {
+Query6 getClientsAndProductsNeverBoughtCount(SGV sgv) {
+    Query6 q6 = malloc(sizeof(struct query_6));
     int resCli = 0;
     g_hash_table_foreach(clientes_get_clientes(sgv->clientes), clientes_procurarCli, &resCli);
     ProdutosNuncaVendidos p_n_v = make_produtos_nunca_vendidos();
@@ -126,8 +139,12 @@ void getClientsAndProductsNeverBoughtCount(SGV sgv) {
         GHashTable* produtos_letra = produtos_get_produtos_letra(sgv->produtos, i);
         g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
     }
+
+    q6->total_clientes_que_nunca_compraram = resCli;
+    q6->total_produtos_nunca_comprados = g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v));
     printf("Clientes que nunca fizeram compras: %d\n", resCli);
     printf("Produtos nunca comprados: %d", g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v)));
+    return q6;
 }
 
 //query 7 - WORKING
@@ -157,7 +174,8 @@ void getProductsBoughtByClient(SGV sgv, char* clientID) {
 }
 
 //query 8 - WORKING
-void getSalesAndProfit(SGV sgv, int minMonth, int maxMonth) {
+Query8 getSalesAndProfit(SGV sgv, int minMonth, int maxMonth) {
+    Query8 q8 = malloc(sizeof(struct query_8));
     Produtos produtos = sgv->produtos;
     TotaisVendasFaturacao t_v_f = make_totais_vendas_faturacao();
     t_v_f_set_limites(t_v_f, minMonth, maxMonth);
@@ -166,12 +184,16 @@ void getSalesAndProfit(SGV sgv, int minMonth, int maxMonth) {
         GHashTable* produtos_letra = produtos_get_produtos_letra(produtos, letra);
         g_hash_table_foreach(produtos_letra, get_totais, t_v_f);
     }
+    q8->total_vendas_meses = t_v_f_get_total_vendas(t_v_f);
+    q8->total_faturado_meses = t_v_f_get_total_faturacao(t_v_f);
     printf("Total de vendas no intervalo de meses indicados: %d\n", t_v_f_get_total_vendas(t_v_f));
     printf("Total faturado no intervalo de meses indicados: %f\n", t_v_f_get_total_faturacao(t_v_f));
+    return q8;
 }
 
 //query 9 - WORKING
-void getProductBuyers(SGV sgv, char* prodID, int branchID) {
+Query9 getProductBuyers(SGV sgv, char* prodID, int branchID) {
+    Query9 q9 = malloc(sizeof(struct query_9));
     GHashTable* vendas_n = g_hash_table_new(g_str_hash, str_compare);
     GHashTable* vendas_p = g_hash_table_new(g_str_hash, str_compare);
     for (size_t month = 0; month < N_MONTHS; month++) {
@@ -182,12 +204,40 @@ void getProductBuyers(SGV sgv, char* prodID, int branchID) {
         g_ptr_array_foreach(vendas_normal, (GFunc) guarda_cliente, vendas_n);
         g_ptr_array_foreach(vendas_promocao, (GFunc) guarda_cliente, vendas_p);
     }
+    q9->clientes_que_compraram_produto_N_filial = g_hash_table_new(g_str_hash, str_compare);
+    q9->clientes_que_compraram_produto_P_filial = g_hash_table_new(g_str_hash, str_compare);
     printf("Clientes que compraram o produto %s na filial %d:\n", prodID, branchID);
     printf("Em época normal:\n");
     g_hash_table_foreach(vendas_n, imprime_keys, NULL);
+    g_hash_table_foreach(vendas_n, add_client_id, q9->clientes_que_compraram_produto_N_filial);
     printf("Número total de clientes: %d\n", g_hash_table_size(vendas_n));
+    q9->total_clientes_N = g_hash_table_size(vendas_n);
     printf("Em época promocional:\n");
     g_hash_table_foreach(vendas_p, imprime_keys, NULL);
+    g_hash_table_foreach(vendas_n, add_client_id, q9->clientes_que_compraram_produto_P_filial);
     printf("Número total de clientes: %d\n", g_hash_table_size(vendas_p));
-
+    q9->total_clientes_P = g_hash_table_size(vendas_n);
+    return q9;
 }
+
+//query 11 - WORKING
+Query11 getTopSoldProducts(SGV sgv, int limit) {
+    TopProdutos top_produtos = make_top_produtos(limit);
+    Produtos produtos = sgv->produtos;
+    for (int letra = 0; letra < ('Z' - 'A') + 1; ++letra) {
+        g_hash_table_foreach(produtos_get_produtos_letra(produtos, letra), adiciona_produtos, top_produtos);
+    }
+    GPtrArray* prods = top_produtos_get_produtos(top_produtos);
+
+    g_ptr_array_sort(prods, produtos_comparator);
+    printf("Top %d produtos vendidos:\n", limit);
+    g_ptr_array_foreach(prods, imprime_keys_for_ptr_array, NULL);
+}
+
+
+
+
+
+
+
+
