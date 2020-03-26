@@ -191,6 +191,43 @@ void get_totais(void* key, void* produto, void* t_v_f) {
     }
 }
 
+typedef struct top_produtos{
+    GPtrArray* produtos;
+    int limite;
+    int tamanho_atual;
+} *TopProdutos;
+
+TopProdutos make_top_produtos(int limit) {
+    TopProdutos top_produtos = malloc(sizeof(struct top_produtos));
+    top_produtos->produtos = g_ptr_array_new();
+    top_produtos->limite = limit;
+    top_produtos->tamanho_atual = 0;
+    return top_produtos;
+}
+
+GPtrArray* top_produtos_get_produtos(TopProdutos top_produtos) {
+    return top_produtos->produtos;
+}
+
+int get_vendas_produto(Produto produto) {
+    int vendas = 0;
+    for (int filial = 0; filial < N_FILIAIS; ++filial) {
+        Filial filial_p = produto_get_filial(produto, filial);
+        for (int mes = 0; mes < N_MONTHS; ++mes) {
+            FaturacaoMes fmes = filial_get_faturacao_mes(filial_p, mes);
+            vendas += faturacao_mes_get_total_normal(fmes) + faturacao_mes_get_total_promocao(fmes);
+        }
+    }
+    return vendas;
+}
+
+int produtos_comparator(void const* prod_1, void const* prod_2) {
+    Produto p1 = *((Produto *) prod_1);
+    Produto p2 = *((Produto *) prod_2);
+    int vendas_p1 = get_vendas_produto(p1);
+    int vendas_p2 = get_vendas_produto(p2);
+    return vendas_p2 - vendas_p1;
+}
 
 void swap_produto_menos_vendido(GPtrArray* top_produtos, int tamanho, Produto produto_novo) {
     for (int i = 0; i < tamanho; i++) {
