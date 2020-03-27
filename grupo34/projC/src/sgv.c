@@ -173,7 +173,14 @@ Query4 getProductsNeverBought(SGV sgv, int branchID) {
 }
 
 //query 5
-
+Query5 getClientsOfAllBranches(SGV sgv){
+    Query5 q5 = malloc(sizeof(struct query_5));
+    q5->clientes = g_hash_table_new(g_str_hash, str_compare);
+    GHashTable* clis = clientes_get_clientes(sgv->clientes);
+    g_hash_table_foreach(clis, cliente_fez_compra_todas_filiais, q5->clientes);
+    g_hash_table_foreach(q5->clientes, imprime_keys, NULL);
+    return q5;
+}
 
 //query 6 - WORKING
 Query6 getClientsAndProductsNeverBoughtCount(SGV sgv) {

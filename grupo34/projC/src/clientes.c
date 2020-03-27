@@ -162,3 +162,19 @@ int get_total_compras(GHashTable* mes) {
     g_hash_table_foreach(mes, get_quantidade, &result);
     return result;
 }
+
+void cliente_fez_compras_todas_filiais(void* key, void* value, void* user_data){
+    char*clienteID = (char*) key;
+    Cliente cliente = (Cliente) value;
+    GHashTable* clientes_resultado = (GHashTable*) user_data;
+    int r = 0;
+    for(int i=0; i<N_FILIAIS; i++){
+        FiliaisCli fcli = cliente_get_filial(cliente, i);
+        if(filiais_cli_get_quantidade(fcli) != 0){
+            r++;
+        }
+    }
+    if(r == 3){
+        g_hash_table_add(clientes_resultado, clienteID);
+    }
+}
