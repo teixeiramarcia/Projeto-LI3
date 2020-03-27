@@ -36,7 +36,7 @@ typedef struct query_4 {
 } * Query4;
 
 typedef struct query_5 {
-
+    GHashTable* clientes;
 } * Query5;
 
 typedef struct query_6 {

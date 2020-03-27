@@ -40,4 +40,6 @@ int* p_c_c_get_n_produtos_comprados(ProdutosCompradosCliente p_c_c, int filial, 
 
 int get_total_compras(GHashTable* mes);
 
+void cliente_fez_compras_todas_filiais(void* key, void* value, void* user_data);
+
 #endif

@@ -163,7 +163,7 @@ int get_total_compras(GHashTable* mes) {
     return result;
 }
 
-void cliente_fez_compras_todas_filiais(void* key, void* value, void* user_data){
+void cliente_fez_compras_todas_filiais(void* key, void* value, void* user_data) {
     char*clienteID = (char*) key;
     Cliente cliente = (Cliente) value;
     GHashTable* clientes_resultado = (GHashTable*) user_data;
