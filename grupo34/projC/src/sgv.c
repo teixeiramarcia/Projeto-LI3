@@ -120,9 +120,9 @@ Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month){ //FIXME fa
         for(int i=0; i<N_FILIAIS; i++){
             printf("Para a filial %d\n", i+1);
             printf("Faturação em modo normal: %f\n", q3->faturacao_normal[i]);
-            printf("Vendas em modo normal: %f\n", q3->vendas_normal[i]);
+            printf("Vendas em modo normal: %d\n", q3->vendas_normal[i]);
             printf("Faturação em modo promoção: %f\n", q3->faturacao_promocao[i]);
-            printf("Vendas em modo promoção: %f\n", q3->vendas_promocao[i]);
+            printf("Vendas em modo promoção: %d\n", q3->vendas_promocao[i]);
         }
     }else{
         double faturacao_total_normal = 0;
