@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main(int argc, const char* argv[]) {
-    if(argc < 2) {
+    if (argc < 2) {
         printf("provide Data folder\n");
         return 1;
     }

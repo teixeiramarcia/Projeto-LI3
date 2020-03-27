@@ -19,55 +19,55 @@ SGV loadSGVFromFiles(SGV sgv, char const* filesFolderPath);
 
 void destroySGV(SGV sgv);
 
-typedef struct query_2{
+typedef struct query_2 {
     GHashTable* produtos_letra;
-} *Query2;
+} * Query2;
 
-typedef struct query_3{
+typedef struct query_3 {
 
-} *Query3;
+} * Query3;
 
-typedef struct query_4{
+typedef struct query_4 {
     GHashTable* produtos_nunca_comprados;
     int total_produtos_nao_comprados;
-} *Query4;
+} * Query4;
 
-typedef struct query_5{
+typedef struct query_5 {
 
-} *Query5;
+} * Query5;
 
-typedef struct query_6{
+typedef struct query_6 {
     int total_clientes_que_nunca_compraram;
     int total_produtos_nunca_comprados;
-} *Query6;
+} * Query6;
 
-typedef struct query_7{ //FIXME ainda com void return
+typedef struct query_7 { //FIXME ainda com void return
 
-} *Query7;
+} * Query7;
 
-typedef struct query_8{
+typedef struct query_8 {
     int total_vendas_meses;
     double total_faturado_meses;
-} *Query8;
+} * Query8;
 
-typedef struct query_9{
+typedef struct query_9 {
     GHashTable* clientes_que_compraram_produto_N_filial;
     int total_clientes_N;
     GHashTable* clientes_que_compraram_produto_P_filial;
     int total_clientes_P;
-} *Query9;
+} * Query9;
 
-typedef struct query_10{
+typedef struct query_10 {
 
-} *Query10;
+} * Query10;
 
-typedef struct query_11{
+typedef struct query_11 {
     GPtrArray* top_n;
-} *Query11;
+} * Query11;
 
-typedef struct query_12{
+typedef struct query_12 {
 
-} *Query12;
+} * Query12;
 
 //queries
 

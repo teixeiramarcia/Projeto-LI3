@@ -56,11 +56,11 @@ typedef struct top_produtos* TopProdutos;
 
 TopProdutos make_top_produtos(int limit);
 
-GPtrArray* top_produtos_get_produtos (TopProdutos top_produtos);
+GPtrArray* top_produtos_get_produtos(TopProdutos top_produtos);
 
-int produtos_comparator (void const* p1, void const* p2);
+int produtos_comparator(void const* p1, void const* p2);
 
-void adiciona_produtos (void* key, void* value, void* user_data);
+void adiciona_produtos(void* key, void* value, void* user_data);
 
 
 #endif

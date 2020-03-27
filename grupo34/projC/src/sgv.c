@@ -115,7 +115,7 @@ Query4 getProductsNeverBought(SGV sgv, int branchID) {
         printf("Produtos que nunca foram comprados na filial %d:\n", branchID);
         set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(branchID), INT_2_FILIAL(branchID));
     }
-    for (int i = 0; i < ('Z'-'A') + 1; i++) {
+    for (int i = 0; i < ('Z' - 'A') + 1; i++) {
         GHashTable* produtos_letra = produtos_get_produtos_letra(prods, i);
         g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
     }

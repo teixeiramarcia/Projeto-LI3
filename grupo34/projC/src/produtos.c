@@ -55,7 +55,7 @@ void update_produtos(Produtos prods, Venda venda) {
     update_filial(prod->filiais[venda_get_filial(venda)], venda);
 }
 
-char* produto_get_productID(Produto prod){
+char* produto_get_productID(Produto prod) {
     return prod->produtoID;
 }
 
@@ -191,11 +191,11 @@ void get_totais(void* key, void* produto, void* t_v_f) {
     }
 }
 
-typedef struct top_produtos{
+typedef struct top_produtos {
     GPtrArray* produtos;
     int limite;
     int tamanho_atual;
-} *TopProdutos;
+} * TopProdutos;
 
 TopProdutos make_top_produtos(int limit) {
     TopProdutos top_produtos = malloc(sizeof(struct top_produtos));
@@ -222,8 +222,8 @@ int get_vendas_produto(Produto produto) {
 }
 
 int produtos_comparator(void const* prod_1, void const* prod_2) {
-    Produto p1 = *((Produto *) prod_1);
-    Produto p2 = *((Produto *) prod_2);
+    Produto p1 = *((Produto*) prod_1);
+    Produto p2 = *((Produto*) prod_2);
     int vendas_p1 = get_vendas_produto(p1);
     int vendas_p2 = get_vendas_produto(p2);
     return vendas_p2 - vendas_p1;
@@ -234,7 +234,7 @@ void swap_produto_menos_vendido(GPtrArray* top_produtos, int tamanho, Produto pr
         Produto produto = g_ptr_array_index(top_produtos, i);
         int vendas_produto = get_vendas_produto(produto);
         int vendas_novo_produto = get_vendas_produto(produto_novo);
-        if(vendas_produto < vendas_novo_produto) {
+        if (vendas_produto < vendas_novo_produto) {
             g_ptr_array_remove_index_fast(top_produtos, i);
             g_ptr_array_add(top_produtos, produto_novo);
             produto_novo = produto;
@@ -245,7 +245,7 @@ void swap_produto_menos_vendido(GPtrArray* top_produtos, int tamanho, Produto pr
 void adiciona_produtos(void* key, void* value, void* user_data) {
     Produto produto = (Produto) value;
     TopProdutos top_produtos = (TopProdutos) user_data;
-    if(top_produtos->tamanho_atual < top_produtos->limite){
+    if (top_produtos->tamanho_atual < top_produtos->limite) {
         g_ptr_array_add(top_produtos->produtos, produto);
         top_produtos->tamanho_atual++;
     } else {
