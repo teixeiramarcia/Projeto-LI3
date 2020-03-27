@@ -100,6 +100,50 @@ Query2 getProductsStartedByLetter(SGV sgv, char letter) {
     return q2;
 }
 
+//query 3
+Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month){ //FIXME fazer ifs do utilizador
+    Query3 q3 = malloc(sizeof(struct query_3));    
+    Produtos prods = sgv->produtos;
+    char letra = productID[0];
+    GHashTable* produtos = prods[letra - 'A'];
+    Produto produto = g_hash_table_lookup(productID);
+    for(int i=0; i<N_FILIAIS; i++){
+        Filial filial = produtos_get_filial(produto, i);
+        FaturacaoMes fmes = filial_get_faturacao_mes(filial, INT_2_MONTH(month));
+        q3->faturacao_normal[i] = faturacao_mes_get_faturacao_normal(fmes);
+        q3->vendas_normal[i] = faturacao_mes_get_vendas_normal(fmes);
+        q3->faturacao_promocao[i] = faturacao_mes_get_faturacao_promocao(fmes);
+        q3->vendas_promocao[i] = faturacao_mes_get_vendas_promocao(fmes);
+    }
+    printf("Faturação e Vendas do produto %s:\n", productID);
+    if(/*cliente quiser resultados filial*/){
+        for(int i=0; i<N_FILIAIS; i++){
+            printf("Para a filial %d\n", i+1);
+            printf("Faturação em modo normal: %f\n", q3->faturacao_normal[i]);
+            printf("Vendas em modo normal: %f\n", q3->vendas_normal[i]);
+            printf("Faturação em modo promoção: %f\n", q3->faturacao_promocao[i]);
+            printf("Vendas em modo promoção: %f\n", q3->vendas_promocao[i]);
+        }
+    }else{
+        double faturacao_total_normal = 0;
+        int vendas_total_normal = 0;
+        double faturacao_total_promocao = 0;
+        int vendas_total_promocao = 0;
+        for(int j=0; j<N_FILIAIS; j++){
+            faturacao_total_normal += q3->faturacao_normal[j];
+            vendas_total_normal += q3->vendas_normal[j];
+            faturacao_total_promocao += q3->faturacao_normal[j];
+            vendas_total_promocao += q3->vendas_normal[j];
+        }
+        printf("Valores totais:\n");
+        printf("Faturação total em modo normal: %f\n", faturacao_total_normal);
+        printf("Vendas totais em modo normal: %f\n", vendas_total_normal);
+        printf("Faturação total em modo promoção: %f\n", faturacao_total_promocao);
+        printf("Vendas totais em modo promoção: %f\n", vendas_total_promocao);
+    }
+    return q3;
+} 
+
 //query 4 - WORKING
 Query4 getProductsNeverBought(SGV sgv, int branchID) {
     assert(branchID >= 0 && branchID < 4);
@@ -222,6 +266,7 @@ Query9 getProductBuyers(SGV sgv, char* prodID, int branchID) {
 
 //query 11 - WORKING
 Query11 getTopSoldProducts(SGV sgv, int limit) {
+    Query11 q11 = malloc(sizeof(struct query_11));
     TopProdutos top_produtos = make_top_produtos(limit);
     Produtos produtos = sgv->produtos;
     for (int letra = 0; letra < ('Z' - 'A') + 1; ++letra) {
@@ -232,6 +277,7 @@ Query11 getTopSoldProducts(SGV sgv, int limit) {
     g_ptr_array_sort(prods, produtos_comparator);
     printf("Top %d produtos vendidos:\n", limit);
     g_ptr_array_foreach(prods, imprime_keys_for_ptr_array, NULL);
+    return q11;
 }
 
 

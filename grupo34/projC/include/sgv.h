@@ -24,7 +24,10 @@ typedef struct query_2 {
 } * Query2;
 
 typedef struct query_3 {
-
+    double faturacao_normal[N_FILIAIS];
+    double faturacao_promocao[N_FILIAIS];
+    int vendas_normal[N_FILIAIS];
+    int vendas_promocao[N_FILIAIS];
 } * Query3;
 
 typedef struct query_4 {
@@ -72,6 +75,8 @@ typedef struct query_12 {
 //queries
 
 Query2 getProductsStartedByLetter(SGV sgv, char letter); //query 2
+
+Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month); //query3
 
 Query4 getProductsNeverBought(SGV sgv, int branchID); //query 4
 
