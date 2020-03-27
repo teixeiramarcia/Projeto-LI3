@@ -11,9 +11,11 @@ int main(int argc, const char* argv[]) {
 
     //getProductsStartedByLetter(sgv, 'A'); //query 2
 
-    //getProductSalesAndProfit(sgv, productID, month); //query 3 FIXME testar
+    //getProductSalesAndProfit(sgv, "NR1091", 6); //query 3
 
     //getProductsNeverBought(sgv, 0); //query 4
+
+    //getClientsOfAllBranches(sgv); //query 5
 
     //getClientsAndProductsNeverBoughtCount(sgv); //query 6
 
@@ -24,7 +26,6 @@ int main(int argc, const char* argv[]) {
     //getProductBuyers(sgv, "NR1091", 3); //query 9
 
     //getTopSoldProducts(sgv, 1); //query 11
-
 
     destroySGV(sgv);
     return 0;

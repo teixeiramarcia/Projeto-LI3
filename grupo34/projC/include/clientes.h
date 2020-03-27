@@ -10,6 +10,8 @@
 
 Clientes make_clientes();
 
+char* cliente_get_cliente_id(Cliente cliente);
+
 FiliaisCli cliente_get_filial(Cliente c, int branch);
 
 int filiais_cli_get_quantidade(FiliaisCli fcli);
@@ -41,5 +43,7 @@ int* p_c_c_get_n_produtos_comprados(ProdutosCompradosCliente p_c_c, int filial, 
 int get_total_compras(GHashTable* mes);
 
 void cliente_fez_compras_todas_filiais(void* key, void* value, void* user_data);
+
+int clientes_comparator(void const* cli1, void const* cli2);
 
 #endif

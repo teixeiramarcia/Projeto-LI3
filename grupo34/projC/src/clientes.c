@@ -31,6 +31,10 @@ Clientes make_clientes() {
     return clientes;
 }
 
+char* cliente_get_cliente_id(Cliente cliente) {
+    return cliente->clienteID;
+}
+
 FiliaisCli cliente_get_filial(Cliente c, int branch) {
     return c->filiaisCli[branch];
 }
@@ -164,17 +168,29 @@ int get_total_compras(GHashTable* mes) {
 }
 
 void cliente_fez_compras_todas_filiais(void* key, void* value, void* user_data) {
-    char*clienteID = (char*) key;
+    char* clienteID = (char*) key;
     Cliente cliente = (Cliente) value;
-    GHashTable* clientes_resultado = (GHashTable*) user_data;
+    GPtrArray* clientes_resultado = (GPtrArray*) user_data;
     int r = 0;
-    for(int i=0; i<N_FILIAIS; i++){
+    for (int i = 0; i < N_FILIAIS; i++) {
         FiliaisCli fcli = cliente_get_filial(cliente, i);
-        if(filiais_cli_get_quantidade(fcli) != 0){
+        if (filiais_cli_get_quantidade(fcli) != 0) {
             r++;
         }
     }
-    if(r == 3){
-        g_hash_table_add(clientes_resultado, clienteID);
+    if (r == 3) {
+        g_ptr_array_add(clientes_resultado, clienteID);
     }
+}
+
+int clientes_comparator(void const* cli1, void const* cli2) {
+    char* clienteID1 = *((char**) cli1);
+    char* clienteID2 = *((char**) cli2);
+    for (int i = 0; i < 5; ++i) {
+        int dif = clienteID1[i] - clienteID2[i];
+        if (dif != 0) {
+            return dif;
+        }
+    }
+    return 0;
 }

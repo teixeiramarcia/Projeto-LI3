@@ -36,7 +36,7 @@ typedef struct query_4 {
 } * Query4;
 
 typedef struct query_5 {
-    GHashTable* clientes;
+    GPtrArray* clientes;
 } * Query5;
 
 typedef struct query_6 {
@@ -76,9 +76,11 @@ typedef struct query_12 {
 
 Query2 getProductsStartedByLetter(SGV sgv, char letter); //query 2
 
-Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month); //query3
+Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month); //query 3
 
 Query4 getProductsNeverBought(SGV sgv, int branchID); //query 4
+
+Query5 getClientsOfAllBranches(SGV sgv); //query 5
 
 Query6 getClientsAndProductsNeverBoughtCount(SGV sgv); //query 6
 

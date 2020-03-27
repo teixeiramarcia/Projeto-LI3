@@ -4,6 +4,7 @@
 #include "types.h"
 #include "util.h"
 #include "produtos.h"
+#include "clientes.h"
 
 int str_compare(void const* a, void const* b) {
     char const* _a = (char const*) a;
@@ -26,6 +27,11 @@ bool valida_codigo(char* codigo) {
 
 void imprime_keys(void* key, void* value, void* user_data) {
     printf("%s\n", (char*) key);
+}
+
+void imprime_just_keys_clientes(void* data, void* user_data) {
+    char* clienteID = (char*) data;
+    printf("%s\n", (clienteID));
 }
 
 void adiciona_clientes_filial(void* data, void* user_data) {

@@ -100,36 +100,42 @@ Query2 getProductsStartedByLetter(SGV sgv, char letter) {
     return q2;
 }
 
-//query 3
-Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month){ //FIXME fazer ifs do utilizador
-    Query3 q3 = malloc(sizeof(struct query_3));    
+//query 3 - WORKING
+Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) { //FIXME fazer ifs do utilizador
+    Query3 q3 = malloc(sizeof(struct query_3));
+    for (int filial = 0; filial < N_FILIAIS; ++filial) {
+        q3->faturacao_normal[filial] = 0;
+        q3->vendas_normal[filial] = 0;
+        q3->faturacao_promocao[filial] = 0;
+        q3->vendas_promocao[filial] = 0;
+    }
     Produtos prods = sgv->produtos;
     char letra = productID[0];
     GHashTable* produtos = produtos_get_produtos_letra(prods, (letra - 'A'));
     Produto produto = g_hash_table_lookup(produtos, productID);
-    for(int i=0; i<N_FILIAIS; i++){
+    for (int i = 0; i < N_FILIAIS; i++) {
         Filial filial = produto_get_filial(produto, i);
         FaturacaoMes fmes = filial_get_faturacao_mes(filial, INT_2_MONTH(month));
-        q3->faturacao_normal[i] = faturacao_mes_get_faturacao_normal(fmes);
-        q3->vendas_normal[i] = faturacao_mes_get_total_normal(fmes);
-        q3->faturacao_promocao[i] = faturacao_mes_get_faturacao_promocao(fmes);
-        q3->vendas_promocao[i] = faturacao_mes_get_total_promocao(fmes);
+        q3->faturacao_normal[i] += faturacao_mes_get_faturacao_normal(fmes);
+        q3->vendas_normal[i] += faturacao_mes_get_total_normal(fmes);
+        q3->faturacao_promocao[i] += faturacao_mes_get_faturacao_promocao(fmes);
+        q3->vendas_promocao[i] += faturacao_mes_get_total_promocao(fmes);
     }
     printf("Faturação e Vendas do produto %s:\n", productID);
-    if(/*cliente quiser resultados filial*/productID == productID){
-        for(int i=0; i<N_FILIAIS; i++){
-            printf("Para a filial %d\n", i+1);
+    if (/*cliente quiser resultados filial*/0) {
+        for (int i = 0; i < N_FILIAIS; i++) {
+            printf("Para a filial %d\n", i + 1);
             printf("Faturação em modo normal: %f\n", q3->faturacao_normal[i]);
             printf("Vendas em modo normal: %d\n", q3->vendas_normal[i]);
             printf("Faturação em modo promoção: %f\n", q3->faturacao_promocao[i]);
             printf("Vendas em modo promoção: %d\n", q3->vendas_promocao[i]);
         }
-    }else{
+    } else {
         double faturacao_total_normal = 0;
         int vendas_total_normal = 0;
         double faturacao_total_promocao = 0;
         int vendas_total_promocao = 0;
-        for(int j=0; j<N_FILIAIS; j++){
+        for (int j = 0; j < N_FILIAIS; j++) {
             faturacao_total_normal += q3->faturacao_normal[j];
             vendas_total_normal += q3->vendas_normal[j];
             faturacao_total_promocao += q3->faturacao_normal[j];
@@ -142,7 +148,7 @@ Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month){ //FIXME fa
         printf("Vendas totais em modo promoção: %d\n", vendas_total_promocao);
     }
     return q3;
-} 
+}
 
 //query 4 - WORKING
 Query4 getProductsNeverBought(SGV sgv, int branchID) {
@@ -172,13 +178,15 @@ Query4 getProductsNeverBought(SGV sgv, int branchID) {
     return q4;
 }
 
-//query 5
-Query5 getClientsOfAllBranches(SGV sgv){
+//query 5 - WORKING
+Query5 getClientsOfAllBranches(SGV sgv) {
     Query5 q5 = malloc(sizeof(struct query_5));
-    q5->clientes = g_hash_table_new(g_str_hash, str_compare);
+    q5->clientes = g_ptr_array_new();
     GHashTable* clis = clientes_get_clientes(sgv->clientes);
     g_hash_table_foreach(clis, cliente_fez_compras_todas_filiais, q5->clientes);
-    g_hash_table_foreach(q5->clientes, imprime_keys, NULL);
+    g_ptr_array_sort(q5->clientes, clientes_comparator);
+    printf("Clientes que fizeram compras em todas as filiais:\n");
+    g_ptr_array_foreach(q5->clientes, imprime_just_keys_clientes, NULL);
     return q5;
 }
 
