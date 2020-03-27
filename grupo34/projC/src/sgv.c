@@ -137,9 +137,9 @@ Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month){ //FIXME fa
         }
         printf("Valores totais:\n");
         printf("Faturação total em modo normal: %f\n", faturacao_total_normal);
-        printf("Vendas totais em modo normal: %f\n", vendas_total_normal);
+        printf("Vendas totais em modo normal: %d\n", vendas_total_normal);
         printf("Faturação total em modo promoção: %f\n", faturacao_total_promocao);
-        printf("Vendas totais em modo promoção: %f\n", vendas_total_promocao);
+        printf("Vendas totais em modo promoção: %d\n", vendas_total_promocao);
     }
     return q3;
 } 
@@ -171,6 +171,9 @@ Query4 getProductsNeverBought(SGV sgv, int branchID) {
     printf("Número total: %d", total);
     return q4;
 }
+
+//query 5
+
 
 //query 6 - WORKING
 Query6 getClientsAndProductsNeverBoughtCount(SGV sgv) {
