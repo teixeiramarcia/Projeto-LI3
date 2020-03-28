@@ -96,17 +96,25 @@ void destroy_produto(Produto produto) {
 typedef struct produtos_nunca_vendidos {
     int de_filial;
     int ate_filial;
-    GHashTable* produtos_n_vendidos;
+    GHashTable* produtos_n_vendidos[N_FILIAIS];
+    GHashTable* produtos_n_vendidos_global;
 } * ProdutosNuncaVendidos;
 
 ProdutosNuncaVendidos make_produtos_nunca_vendidos() {
     ProdutosNuncaVendidos p_n_v = malloc(sizeof(struct produtos_nunca_vendidos));
-    p_n_v->produtos_n_vendidos = g_hash_table_new(g_str_hash, str_compare);
+    p_n_v->produtos_n_vendidos_global = g_hash_table_new(g_str_hash, str_compare);
+    for (int filial = 0; filial < N_FILIAIS; ++filial) {
+        p_n_v->produtos_n_vendidos[filial] = g_hash_table_new(g_str_hash, str_compare);
+    }
     return p_n_v;
 }
 
-GHashTable* p_n_v_get_produtos_n_vendidos(ProdutosNuncaVendidos p_n_v) {
-    return p_n_v->produtos_n_vendidos;
+GHashTable* p_n_v_get_produtos_n_vendidos_global(ProdutosNuncaVendidos p_n_v) {
+    return p_n_v->produtos_n_vendidos_global;
+}
+
+GHashTable* p_n_v_get_produtos_n_vendidos(ProdutosNuncaVendidos p_n_v, int filial) {
+    return p_n_v->produtos_n_vendidos[filial];
 }
 
 void set_de_e_ate_filial_p_n_v(ProdutosNuncaVendidos p_n_v, int from_branch, int to_branch) {
@@ -114,7 +122,7 @@ void set_de_e_ate_filial_p_n_v(ProdutosNuncaVendidos p_n_v, int from_branch, int
     p_n_v->ate_filial = to_branch;
 }
 
-void guarda_se_nao_foi_vendido(void* key, void* value, void* user_data) {
+void guarda_se_nao_foi_vendido_global(void* key, void* value, void* user_data) {
     char* productID = (char*) key;
     Produto produto = (Produto) value;
     ProdutosNuncaVendidos p_n_v = (ProdutosNuncaVendidos) user_data;
@@ -128,7 +136,25 @@ void guarda_se_nao_foi_vendido(void* key, void* value, void* user_data) {
         }
     }
     if (ja_foi_vendido == 0) {
-        g_hash_table_add(p_n_v->produtos_n_vendidos, productID);
+        g_hash_table_add(p_n_v->produtos_n_vendidos_global, productID);
+    }
+}
+
+void guarda_se_nao_foi_vendido(void* key, void* value, void* user_data) {
+    char* productID = (char*) key;
+    Produto produto = (Produto) value;
+    ProdutosNuncaVendidos p_n_v = (ProdutosNuncaVendidos) user_data;
+    for (int i = p_n_v->de_filial; i <= p_n_v->ate_filial; i++) {
+        int ja_foi_vendido = 0;
+        for (int j = 0; j < N_MONTHS && ja_foi_vendido == 0; j++) {
+            FaturacaoMes fmes = filial_get_faturacao_mes(produto_get_filial(produto, i), j);
+            if (!faturacao_nao_faturou(fmes)) {
+                ja_foi_vendido++;
+            }
+        }
+        if (ja_foi_vendido == 0) {
+            g_hash_table_add(p_n_v->produtos_n_vendidos[i], productID);
+        }
     }
 }
 
@@ -253,5 +279,3 @@ void adiciona_produtos(void* key, void* value, void* user_data) {
         swap_produto_menos_vendido(top_produtos->produtos, top_produtos->tamanho_atual, produto);
     }
 }
-
-

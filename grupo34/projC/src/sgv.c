@@ -323,10 +323,3 @@ Query11 getTopSoldProducts(SGV sgv, int limit) {
     return q11;
 }
 
-
-
-
-
-
-
-
