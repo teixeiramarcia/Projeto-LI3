@@ -63,8 +63,9 @@ bool existe_cliente(Clientes c, char* cliente) {
     return g_hash_table_contains(c->clientes, cliente);
 }
 
-bool adiciona_cliente(Clientes clis, char* cliID) {
+bool adiciona_cliente(Clientes clis, char* cliID, int* validos) {
     if (valida_cliente(cliID) && !existe_cliente(clis, cliID)) {
+        (*validos)++;
         Cliente cliente = (Cliente) malloc(sizeof(struct cliente));
         cliente->clienteID = strdup(cliID);
         for (int j = 0; j < N_FILIAIS; ++j) {

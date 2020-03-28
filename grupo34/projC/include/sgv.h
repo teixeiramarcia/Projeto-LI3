@@ -11,7 +11,7 @@
 
 typedef struct sgv* SGV;
 
-void sgv_adiciona_venda(SGV sgv, Venda venda);
+void sgv_adiciona_venda(SGV sgv, Venda venda, int* validos);
 
 SGV initSGV();
 

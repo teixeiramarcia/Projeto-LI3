@@ -59,8 +59,9 @@ char* produto_get_productID(Produto prod) {
     return prod->produtoID;
 }
 
-bool adiciona_produto(Produtos prod, char* produto) {
+bool adiciona_produto(Produtos prod, char* produto, int* validos) {
     if (valida_produto(produto) && !existe_produto(prod, produto)) {
+        (*validos)++;
         char l = produto[0];
         Produto p = (Produto) malloc(sizeof(struct produto));
         p->produtoID = strdup(produto);

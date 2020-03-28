@@ -15,37 +15,50 @@ typedef struct sgv {
 Clientes read_clientes_with_fgets(FILE* file) {
     char code[CODE_SIZE];
     Clientes c = make_clientes();
+    int validos = 0;
+    int linhas = 0;
     while (fgets(code, CODE_SIZE, file)) {
         char* b = strtok(code, "\r\n");
-        adiciona_cliente(c, b);
+        adiciona_cliente(c, b, &validos);
+        linhas++;
     }
+    printf("Foi lido o ficheiro Clientes.txt, foram lidas %d linhas e eram validos %d clientes\n", linhas, validos);
     return c;
 }
 
 Produtos read_produtos_with_fgets(FILE* file) {
     char code[CODE_SIZE];
     Produtos p = make_produtos();
+    int validos = 0;
+    int linhas = 0;
     while (fgets(code, CODE_SIZE, file)) {
         char* c = strtok(code, "\r\n");
-        adiciona_produto(p, c);
+        adiciona_produto(p, c, &validos);
+        linhas++;
     }
+    printf("Foi lido o ficheiro Produto.txt, foram lidas %d linhas e eram validos %d produtos\n", linhas, validos);
     return p;
 }
 
 
 void read_vendas_with_fgets(FILE* file, SGV sgv) {
     char code[CODE_SIZE];
+    int validos = 0;
+    int linhas = 0;
     while (fgets(code, CODE_SIZE, file)) {
         char* c = strtok(code, "\r\n");
         Venda venda = valida_venda(sgv->produtos, sgv->clientes, c);
-        sgv_adiciona_venda(sgv, venda);
+        sgv_adiciona_venda(sgv, venda, &validos);
+        linhas++;
     }
+    printf("Foi lido o ficheiro Vendas_1M.txt, foram lidas %d linhas e eram validos %d vendas\n", linhas, validos);
 }
 
-void sgv_adiciona_venda(SGV sgv, Venda v) {
+void sgv_adiciona_venda(SGV sgv, Venda v, int* validos) {
     if (v == NULL) {
         return;
     }
+    (*validos)++;
     update_produtos(sgv->produtos, v);
     update_clientes(sgv->clientes, v);
 }

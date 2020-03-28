@@ -18,7 +18,7 @@ int filiais_cli_get_quantidade(FiliaisCli fcli);
 
 GHashTable* filiais_cli_get_mes(FiliaisCli fcli, int mes);
 
-bool adiciona_cliente(Clientes c, char* cliente);
+bool adiciona_cliente(Clientes c, char* cliente, int* validos);
 
 GHashTable* clientes_get_clientes(Clientes clientes);
 

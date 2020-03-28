@@ -12,7 +12,7 @@ Produtos make_produtos();
 
 GHashTable* produtos_get_produtos_letra(Produtos prods, int letra);
 
-bool adiciona_produto(Produtos p, char* produto);
+bool adiciona_produto(Produtos p, char* produto, int* validos);
 
 bool existe_produto(Produtos p, char* produto);
 
