@@ -12,6 +12,14 @@ typedef struct sgv {
     Produtos produtos;
 } * SGV;
 
+Produtos sgv_get_produtos(SGV sgv){
+    return sgv->produtos;
+}
+
+Clientes sgv_get_clientes(SGV sgv){
+    return sgv->clientes;
+}
+
 Clientes read_clientes_with_fgets(FILE* file) {
     char code[CODE_SIZE];
     Clientes c = make_clientes();
@@ -187,7 +195,7 @@ Query4 getProductsNeverBought(SGV sgv, int branchID) {
     g_hash_table_foreach(produtos_nao_vendidos, add_product_id, q4->produtos_nunca_comprados);
     q4->total_produtos_nao_comprados = total;
     g_hash_table_foreach(produtos_nao_vendidos, imprime_keys, NULL);
-    printf("Número total: %d", total);
+    printf("Número total: %d\n", total);
     return q4;
 }
 
@@ -218,7 +226,7 @@ Query6 getClientsAndProductsNeverBoughtCount(SGV sgv) {
     q6->total_clientes_que_nunca_compraram = resCli;
     q6->total_produtos_nunca_comprados = g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v));
     printf("Clientes que nunca fizeram compras: %d\n", resCli);
-    printf("Produtos nunca comprados: %d", g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v)));
+    printf("Produtos nunca comprados: %d\n", g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v)));
     return q6;
 }
 
