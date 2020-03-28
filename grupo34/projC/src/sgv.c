@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -10,17 +9,22 @@
 typedef struct sgv {
     Clientes clientes;
     Produtos produtos;
+    Query13 q13;
 } * SGV;
 
-Produtos sgv_get_produtos(SGV sgv){
+Produtos sgv_get_produtos(SGV sgv) {
     return sgv->produtos;
 }
 
-Clientes sgv_get_clientes(SGV sgv){
+Clientes sgv_get_clientes(SGV sgv) {
     return sgv->clientes;
 }
 
-Clientes read_clientes_with_fgets(FILE* file) {
+Query13 sgv_get_query_13(SGV sgv) {
+    return sgv->q13;
+}
+
+Clientes read_clientes_with_fgets(FILE* file, Query13 q13) {
     char code[CODE_SIZE];
     Clientes c = make_clientes();
     int validos = 0;
@@ -30,11 +34,16 @@ Clientes read_clientes_with_fgets(FILE* file) {
         adiciona_cliente(c, b, &validos);
         linhas++;
     }
-    printf("Foi lido o ficheiro Clientes.txt, foram lidas %d linhas e eram validos %d clientes\n", linhas, validos);
+    printf("\n\n");
+    printf("Foi lido o ficheiro \"Clientes.txt\":\n");
+    printf("Linhas lidas: %d\n", linhas);
+    printf("Clientes válidos: %d\n\n", validos);
+    q13->linhas_lidas_clientes = linhas;
+    q13->linhas_validas_clientes = validos;
     return c;
 }
 
-Produtos read_produtos_with_fgets(FILE* file) {
+Produtos read_produtos_with_fgets(FILE* file, Query13 q13) {
     char code[CODE_SIZE];
     Produtos p = make_produtos();
     int validos = 0;
@@ -44,12 +53,16 @@ Produtos read_produtos_with_fgets(FILE* file) {
         adiciona_produto(p, c, &validos);
         linhas++;
     }
-    printf("Foi lido o ficheiro Produto.txt, foram lidas %d linhas e eram validos %d produtos\n", linhas, validos);
+    printf("Foi lido o ficheiro \"Produtos.txt\":\n");
+    printf("Linhas lidas: %d\n", linhas);
+    printf("Clientes válidos: %d\n\n", validos);
+    q13->linhas_lidas_produtos = linhas;
+    q13->linhas_validas_produtos = validos;
     return p;
 }
 
 
-void read_vendas_with_fgets(FILE* file, SGV sgv) {
+void read_vendas_with_fgets(FILE* file, SGV sgv, Query13 q13) {
     char code[CODE_SIZE];
     int validos = 0;
     int linhas = 0;
@@ -59,7 +72,11 @@ void read_vendas_with_fgets(FILE* file, SGV sgv) {
         sgv_adiciona_venda(sgv, venda, &validos);
         linhas++;
     }
-    printf("Foi lido o ficheiro Vendas_1M.txt, foram lidas %d linhas e eram validos %d vendas\n", linhas, validos);
+    printf("Foi lido o ficheiro \"Vendas.txt\":\n");
+    printf("Linhas lidas: %d\n", linhas);
+    printf("Clientes válidos: %d\n\n", validos);
+    q13->linhas_lidas_vendas = linhas;
+    q13->linhas_validas_vendas = validos;
 }
 
 void sgv_adiciona_venda(SGV sgv, Venda v, int* validos) {
@@ -87,26 +104,29 @@ void destroySGV(SGV sgv) {
 }
 
 SGV loadSGVFromFiles(SGV sgv, char const* filesFolderPath) {
+    Query13 q13 = malloc(sizeof(struct query_13));
     char* result = malloc(strlen(filesFolderPath) + strlen("/Clientes.txt") + 1);
     strcpy(result, filesFolderPath);
     strcat(result, "/Clientes.txt");
     FILE* clientes_file = fopen(result, "r");
-    sgv->clientes = read_clientes_with_fgets(clientes_file);
+    sgv->clientes = read_clientes_with_fgets(clientes_file, q13);
     fclose(clientes_file);
 
     result = malloc(strlen(filesFolderPath) + strlen("/Produtos.txt") + 1);
     strcpy(result, filesFolderPath);
     strcat(result, "/Produtos.txt");
     FILE* produtos_file = fopen(result, "r");
-    sgv->produtos = read_produtos_with_fgets(produtos_file);
+    sgv->produtos = read_produtos_with_fgets(produtos_file, q13);
     fclose(produtos_file);
 
     result = malloc(strlen(filesFolderPath) + strlen("/Vendas_1M.txt") + 1);
     strcpy(result, filesFolderPath);
     strcat(result, "/Vendas_1M.txt");
     FILE* vendas_file = fopen(result, "r");
-    read_vendas_with_fgets(vendas_file, sgv);
+    read_vendas_with_fgets(vendas_file, sgv, q13);
     fclose(vendas_file);
+
+    sgv->q13 = q13;
 
     return sgv;
 }
@@ -116,15 +136,13 @@ Query2 getProductsStartedByLetter(SGV sgv, char letter) {
     Query2 q2 = malloc(sizeof(struct query_2));
     q2->produtos_letra = g_hash_table_new(g_str_hash, str_compare);
     produtos_foreach_started_by(sgv->produtos, letter, add_product_id, q2->produtos_letra);
-    printf("Produtos começados pela letra %c\n", letter);
-    produtos_foreach_started_by(sgv->produtos, letter, imprime_keys, NULL);
     return q2;
 }
 
 //query 3 - WORKING
 Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) { //FIXME fazer ifs do utilizador
     Query3 q3 = malloc(sizeof(struct query_3));
-    for (int filial = 0; filial < N_FILIAIS; ++filial) {
+    for (int filial = 0; filial < N_FILIAIS; filial++) {
         q3->faturacao_normal[filial] = 0;
         q3->vendas_normal[filial] = 0;
         q3->faturacao_promocao[filial] = 0;
@@ -173,29 +191,36 @@ Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) { //FIXME f
 
 //query 4 - WORKING
 Query4 getProductsNeverBought(SGV sgv, int branchID) {
-    assert(branchID >= 0 && branchID < 4);
-    Query4 q4 = malloc(sizeof(struct query_4));
-    q4->total_produtos_nao_comprados = 0;
     Produtos prods = sgv->produtos;
-    q4->produtos_nunca_comprados = g_hash_table_new(g_str_hash, str_compare);
+    Query4 q4 = malloc(sizeof(struct query_4));
     ProdutosNuncaVendidos p_n_v = make_produtos_nunca_vendidos();
+    set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(1), INT_2_FILIAL(3));
     if (branchID == 0) {
-        printf("Produtos que nunca foram comprados em nenhuma filial:\n");
-        set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(1), INT_2_FILIAL(3));
+        for (int filial = 0; filial < N_FILIAIS; ++filial) {
+            q4->total_produtos_nao_comprados[filial] = 0;
+            q4->produtos_nunca_comprados[filial] = g_hash_table_new(g_str_hash, str_compare);
+        }
+        for (int letra = 0; letra < ('Z' - 'A') + 1; ++letra) {
+            GHashTable* produtos_letra = produtos_get_produtos_letra(prods, letra);
+            g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
+        }
+        GHashTable* produtos_nao_vendidos_filial[N_FILIAIS];
+        int total[3];
+        for (int filial = 0; filial < N_FILIAIS; ++filial) {
+            produtos_nao_vendidos_filial[filial] = p_n_v_get_produtos_n_vendidos(p_n_v, filial);
+            total[filial] = g_hash_table_size(produtos_nao_vendidos_filial[filial]);
+            g_hash_table_foreach(produtos_nao_vendidos_filial[filial], add_product_id,
+                    q4->produtos_nunca_comprados[filial]);
+            q4->total_produtos_nao_comprados[filial] = total[filial];
+        }
     } else {
-        printf("Produtos que nunca foram comprados na filial %d:\n", branchID);
-        set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(branchID), INT_2_FILIAL(branchID));
+        for (int letra = 0; letra < ('Z' - 'A') + 1; ++letra) {
+            GHashTable* produtos_letra = produtos_get_produtos_letra(prods, letra);
+            g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido_global, p_n_v);
+        }
+        q4->produtos_nunca_comprados_global = p_n_v_get_produtos_n_vendidos_global(p_n_v);
+        q4->total_produtos_nao_comprados_global = g_hash_table_size(q4->produtos_nunca_comprados_global);
     }
-    for (int i = 0; i < ('Z' - 'A') + 1; i++) {
-        GHashTable* produtos_letra = produtos_get_produtos_letra(prods, i);
-        g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
-    }
-    GHashTable* produtos_nao_vendidos = p_n_v_get_produtos_n_vendidos(p_n_v);
-    int total = g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v));
-    g_hash_table_foreach(produtos_nao_vendidos, add_product_id, q4->produtos_nunca_comprados);
-    q4->total_produtos_nao_comprados = total;
-    g_hash_table_foreach(produtos_nao_vendidos, imprime_keys, NULL);
-    printf("Número total: %d\n", total);
     return q4;
 }
 
@@ -206,8 +231,6 @@ Query5 getClientsOfAllBranches(SGV sgv) {
     GHashTable* clis = clientes_get_clientes(sgv->clientes);
     g_hash_table_foreach(clis, cliente_fez_compras_todas_filiais, q5->clientes);
     g_ptr_array_sort(q5->clientes, clientes_comparator);
-    printf("Clientes que fizeram compras em todas as filiais:\n");
-    g_ptr_array_foreach(q5->clientes, imprime_just_keys_clientes, NULL);
     return q5;
 }
 
@@ -222,38 +245,30 @@ Query6 getClientsAndProductsNeverBoughtCount(SGV sgv) {
         GHashTable* produtos_letra = produtos_get_produtos_letra(sgv->produtos, i);
         g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
     }
-
     q6->total_clientes_que_nunca_compraram = resCli;
     q6->total_produtos_nunca_comprados = g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v));
-    printf("Clientes que nunca fizeram compras: %d\n", resCli);
-    printf("Produtos nunca comprados: %d\n", g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v)));
     return q6;
 }
 
 //query 7 - WORKING
 void getProductsBoughtByClient(SGV sgv, char* clientID) {
+    Query7 q7 = malloc(sizeof(struct query_7));
     Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
-    if (c != NULL) {
-        ProdutosCompradosCliente p_c_c = make_produtos_comprados_cliente();
-        for (int filial = 0; filial < N_FILIAIS; filial++) {
-            for (int mes = 0; mes < N_MONTHS; ++mes) {
-                FiliaisCli fcli = cliente_get_filial(c, filial);
-                GHashTable* mes_ = filiais_cli_get_mes(fcli, mes);
-                int result = get_total_compras(mes_);
-                *p_c_c_get_n_produtos_comprados(p_c_c, filial, mes) = result;
-            }
+    ProdutosCompradosCliente p_c_c = make_produtos_comprados_cliente();
+    for (int filial = 0; filial < N_FILIAIS; filial++) {
+        for (int mes = 0; mes < N_MONTHS; ++mes) {
+            FiliaisCli fcli = cliente_get_filial(c, filial);
+            GHashTable* mes_ = filiais_cli_get_mes(fcli, mes);
+            int result = get_total_compras(mes_);
+            *p_c_c_get_n_produtos_comprados(p_c_c, filial, mes) = result;
         }
-        for (int i = 0; i < N_FILIAIS; ++i) {
-            printf("Total de compras que o cliente fez na filial %d:\n", i + 1);
-            for (int j = 0; j < N_MONTHS; ++j) {
-                printf("No mês %d\n", j + 1);
-                int compras = *p_c_c_get_n_produtos_comprados(p_c_c, i, j);
-                printf("%d\n", compras);
-            }
-        }
-    } else {
-        printf("O cliente %s não existe no sistema.\n", clientID);
     }
+    for (int i = 0; i < N_FILIAIS; ++i) {
+        for (int j = 0; j < N_MONTHS; ++j) {
+            q7->n_produtos_comprados[i][j] = *p_c_c_get_n_produtos_comprados(p_c_c, i, j);
+        }
+    }
+    return q7;
 }
 
 //query 8 - WORKING
@@ -269,8 +284,6 @@ Query8 getSalesAndProfit(SGV sgv, int minMonth, int maxMonth) {
     }
     q8->total_vendas_meses = t_v_f_get_total_vendas(t_v_f);
     q8->total_faturado_meses = t_v_f_get_total_faturacao(t_v_f);
-    printf("Total de vendas no intervalo de meses indicados: %d\n", t_v_f_get_total_vendas(t_v_f));
-    printf("Total faturado no intervalo de meses indicados: %f\n", t_v_f_get_total_faturacao(t_v_f));
     return q8;
 }
 
@@ -289,16 +302,9 @@ Query9 getProductBuyers(SGV sgv, char* prodID, int branchID) {
     }
     q9->clientes_que_compraram_produto_N_filial = g_hash_table_new(g_str_hash, str_compare);
     q9->clientes_que_compraram_produto_P_filial = g_hash_table_new(g_str_hash, str_compare);
-    printf("Clientes que compraram o produto %s na filial %d:\n", prodID, branchID);
-    printf("Em época normal:\n");
-    g_hash_table_foreach(vendas_n, imprime_keys, NULL);
     g_hash_table_foreach(vendas_n, add_client_id, q9->clientes_que_compraram_produto_N_filial);
-    printf("Número total de clientes: %d\n", g_hash_table_size(vendas_n));
     q9->total_clientes_N = g_hash_table_size(vendas_n);
-    printf("Em época promocional:\n");
-    g_hash_table_foreach(vendas_p, imprime_keys, NULL);
     g_hash_table_foreach(vendas_n, add_client_id, q9->clientes_que_compraram_produto_P_filial);
-    printf("Número total de clientes: %d\n", g_hash_table_size(vendas_p));
     q9->total_clientes_P = g_hash_table_size(vendas_n);
     return q9;
 }
@@ -312,10 +318,8 @@ Query11 getTopSoldProducts(SGV sgv, int limit) {
         g_hash_table_foreach(produtos_get_produtos_letra(produtos, letra), adiciona_produtos, top_produtos);
     }
     GPtrArray* prods = top_produtos_get_produtos(top_produtos);
-
     g_ptr_array_sort(prods, produtos_comparator);
-    printf("Top %d produtos vendidos:\n", limit);
-    g_ptr_array_foreach(prods, imprime_keys_for_ptr_array, NULL);
+    q11->top_n = prods;
     return q11;
 }
 
