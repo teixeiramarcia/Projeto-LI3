@@ -30,11 +30,13 @@ Filial produtos_get_filial(Produtos prods, char* prodID, FilialID branchID);
 
 void produtos_foreach_started_by(Produtos prods, char c, GHFunc func, gpointer user_data);
 
+void guarda_se_nao_foi_vendido_global(void* key, void* value, void* user_data);
+
 void guarda_se_nao_foi_vendido(void* key, void* value, void* user_data);
 
-ProdutosNuncaVendidos make_produtos_nunca_vendidos();
+GHashTable* p_n_v_get_produtos_n_vendidos_global(ProdutosNuncaVendidos p_n_v);
 
-GHashTable* p_n_v_get_produtos_n_vendidos(ProdutosNuncaVendidos p_n_v);
+GHashTable* p_n_v_get_produtos_n_vendidos(ProdutosNuncaVendidos p_n_v, int filial);
 
 void set_de_e_ate_filial_p_n_v(ProdutosNuncaVendidos p_n_v, int from_branch, int to_branch);
 

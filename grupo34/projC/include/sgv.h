@@ -35,8 +35,10 @@ typedef struct query_3 {
 } * Query3;
 
 typedef struct query_4 {
-    GHashTable* produtos_nunca_comprados;
-    int total_produtos_nao_comprados;
+    GHashTable* produtos_nunca_comprados[N_FILIAIS];
+    GHashTable* produtos_nunca_comprados_global;
+    int total_produtos_nao_comprados[N_FILIAIS];
+    int total_produtos_nao_comprados_global;
 } * Query4;
 
 typedef struct query_5 {
@@ -48,8 +50,8 @@ typedef struct query_6 {
     int total_produtos_nunca_comprados;
 } * Query6;
 
-typedef struct query_7 { //FIXME ainda com void return
-
+typedef struct query_7 {
+    int n_produtos_comprados[N_FILIAIS][N_MONTHS];
 } * Query7;
 
 typedef struct query_8 {
@@ -76,6 +78,17 @@ typedef struct query_12 {
 
 } * Query12;
 
+typedef struct query_13 {
+    int linhas_lidas_clientes;
+    int linhas_validas_clientes;
+    int linhas_lidas_produtos;
+    int linhas_validas_produtos;
+    int linhas_lidas_vendas;
+    int linhas_validas_vendas;
+} *Query13;
+
+Query13 sgv_get_query_13(SGV sgv);
+
 //queries
 
 Query2 getProductsStartedByLetter(SGV sgv, char letter); //query 2
@@ -88,7 +101,7 @@ Query5 getClientsOfAllBranches(SGV sgv); //query 5
 
 Query6 getClientsAndProductsNeverBoughtCount(SGV sgv); //query 6
 
-void getProductsBoughtByClient(SGV sgv, char* clientID); //query 7
+Query7 getProductsBoughtByClient(SGV sgv, char* clientID); //query 7
 
 Query8 getSalesAndProfit(SGV sgv, int minMonth, int maxMonth); // query 8
 

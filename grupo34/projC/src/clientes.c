@@ -152,7 +152,7 @@ ProdutosCompradosCliente make_produtos_comprados_cliente() {
     return malloc(sizeof(struct produtos_comprados_cliente));
 }
 
-int* p_c_c_get_n_produtos_comprados(ProdutosCompradosCliente p_c_c, int filial, int month) { //FIXME
+int* p_c_c_get_n_produtos_comprados(ProdutosCompradosCliente p_c_c, int filial, int month) { 
     return &p_c_c->n_produtos_comprados[filial][month];
 }
 
