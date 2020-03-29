@@ -44,6 +44,8 @@ void destroy_produtos(Produtos produtos);
 
 void destroy_produto(Produto produto);
 
+ProdutosNuncaVendidos make_produtos_nunca_vendidos();
+
 TotaisVendasFaturacao make_totais_vendas_faturacao();
 
 int t_v_f_get_total_vendas(TotaisVendasFaturacao t_v_f);

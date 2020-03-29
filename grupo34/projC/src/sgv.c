@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -210,7 +211,7 @@ Query4 getProductsNeverBought(SGV sgv, int branchID) {
             produtos_nao_vendidos_filial[filial] = p_n_v_get_produtos_n_vendidos(p_n_v, filial);
             total[filial] = g_hash_table_size(produtos_nao_vendidos_filial[filial]);
             g_hash_table_foreach(produtos_nao_vendidos_filial[filial], add_product_id,
-                    q4->produtos_nunca_comprados[filial]);
+                                 q4->produtos_nunca_comprados[filial]);
             q4->total_produtos_nao_comprados[filial] = total[filial];
         }
     } else {
@@ -246,12 +247,12 @@ Query6 getClientsAndProductsNeverBoughtCount(SGV sgv) {
         g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido, p_n_v);
     }
     q6->total_clientes_que_nunca_compraram = resCli;
-    q6->total_produtos_nunca_comprados = g_hash_table_size(p_n_v_get_produtos_n_vendidos(p_n_v));
+    q6->total_produtos_nunca_comprados = g_hash_table_size(p_n_v_get_produtos_n_vendidos_global(p_n_v));
     return q6;
 }
 
 //query 7 - WORKING
-void getProductsBoughtByClient(SGV sgv, char* clientID) {
+Query7 getProductsBoughtByClient(SGV sgv, char* clientID) {
     Query7 q7 = malloc(sizeof(struct query_7));
     Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
     ProdutosCompradosCliente p_c_c = make_produtos_comprados_cliente();

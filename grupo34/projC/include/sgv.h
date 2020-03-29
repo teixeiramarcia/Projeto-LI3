@@ -85,7 +85,7 @@ typedef struct query_13 {
     int linhas_validas_produtos;
     int linhas_lidas_vendas;
     int linhas_validas_vendas;
-} *Query13;
+} * Query13;
 
 Query13 sgv_get_query_13(SGV sgv);
 
