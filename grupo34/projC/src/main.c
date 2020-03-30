@@ -5,16 +5,16 @@
 
 
 void query2(SGV sgv) {
-    printf("----Listagem de produtos começados por uma determinada letra e respetiva contagem----\n");
     char letra[2];
     bool flagInput1 = true;
     char flagCycle[2];
     flagCycle[0] = 'a';
-    system("clear");
     printf("Indique a letra que pretende procurar:\n");
     while (flagInput1) {
         scanf("%s", letra);
         if (isalpha(letra[0])) {
+            system("clear");
+            printf("----Listagem de produtos começados por uma determinada letra e respetiva contagem----\n");
             flagInput1 = false;
             Query2 q2 = getProductsStartedByLetter(sgv, toupper(letra[0]));
             g_hash_table_foreach(q2->produtos_letra, imprime_keys, NULL);
@@ -39,7 +39,6 @@ void query3(SGV sgv) {
     char codigoP[7];
     char tipo[2];
     Produtos p = sgv_get_produtos(sgv);
-    system("clear");
     printf("Escreva o mês que deseja procurar:\n");
     while (flagInput1) {
         scanf("%s", tmp);
@@ -59,6 +58,7 @@ void query3(SGV sgv) {
                         while (flagInput3) {
                             scanf("%s", tipo);
                             if (toupper(tipo[0]) == 'G' || toupper(tipo[0]) == 'F') {
+                                system("clear");
                                 flagInput3 = false;
                                 getProductSalesAndProfit(sgv, codigoP, mes);
 
@@ -79,13 +79,11 @@ void query3(SGV sgv) {
 }
 
 void query4(SGV sgv) {
-    printf("----Listagem e total de produtos que nunca foram comprados----\n");
     char flagCycle[2];
     flagCycle[0] = 'a';
     bool flagInput1 = true;
     char tmp[2];
     int tipo;
-    system("clear");
     printf("Opções:\n");
     printf("Resultados globais - insira 0\n");
     printf("Resultados segregados por filiais - insira 3\n");
@@ -95,6 +93,8 @@ void query4(SGV sgv) {
             tipo = atoi(tmp);
             if (tipo == 0 || tipo == 3) {
                 flagInput1 = false;
+                system("clear");
+                printf("----Listagem e total de produtos que nunca foram comprados----\n");
                 Query4 q4 = getProductsNeverBought(sgv, tipo);
                 if (tipo == 0) {
                     printf("Produtos nunca comprados:\n");
@@ -118,10 +118,10 @@ void query4(SGV sgv) {
 }
 
 void query5(SGV sgv) {
-    printf("----Listagem de clientes que efetuaram compras em todas as filiais----\n");
     char flagCycle[2];
     flagCycle[0] = 'a';
     system("clear");
+    printf("----Listagem de clientes que efetuaram compras em todas as filiais----\n");
     Query5 q5 = getClientsOfAllBranches(sgv);
     g_ptr_array_foreach(q5->clientes, imprime_just_keys_clientes, NULL);
     printf("\n");
@@ -133,10 +133,10 @@ void query5(SGV sgv) {
 }
 
 void query6(SGV sgv) {
-    printf("----Contagem de clientes que nunca efetuaram compras e de produtos que nunca foram comprados----\n");
     char flagCycle[2];
     flagCycle[0] = 'a';
     system("clear");
+    printf("----Contagem de clientes que nunca efetuaram compras e de produtos que nunca foram comprados----\n");
     Query6 q6 = getClientsAndProductsNeverBoughtCount(sgv);
     printf("Total de clientes que nunca efetuaram compras: %d\n", q6->total_clientes_que_nunca_compraram);
     printf("Total de produtos que nunca foram comprados: %d\n", q6->total_produtos_nunca_comprados);
@@ -149,18 +149,18 @@ void query6(SGV sgv) {
 }
 
 void query7(SGV sgv) {
-    printf("----Contagem de compras efetuadas por um cliente, separadas por meses e filiais----\n");
     char flagCycle[2];
     flagCycle[0] = 'a';
     bool flagInput1 = true;
     char codigoC[6];
     Clientes c = sgv_get_clientes(sgv);
-    system("clear");
     printf("Insira o código do cliente:\n");
     while (flagInput1) {
         scanf("%s", codigoC);
         if (valida_cliente(codigoC) && existe_cliente(c, codigoC)) {
             flagInput1 = false;
+            system("clear");
+            printf("----Contagem de compras efetuadas por um cliente, separadas por meses e filiais----\n");
             Query7 q7 = getProductsBoughtByClient(sgv, codigoC);
             //FIXME falta fazer os prints
             printf("Q -> voltar ao menu principal\n");
@@ -173,7 +173,6 @@ void query7(SGV sgv) {
 }
 
 void query8(SGV sgv) { //FIXME texto dos else's
-    printf("----Contagem de vendas e faturação total do SGV num intervalo de meses----\n");
     char flagCycle[2];
     flagCycle[0] = 'a';
     char tmp[3];
@@ -181,7 +180,6 @@ void query8(SGV sgv) { //FIXME texto dos else's
     int umes;
     bool flagInput1 = true;
     bool flagInput2 = true;
-    system("clear");
     printf("Insira o mês que pretende que seja o limite inferior:\n");
     while (flagInput1) {
         scanf("%s", tmp);
@@ -196,6 +194,8 @@ void query8(SGV sgv) { //FIXME texto dos else's
                         umes = atoi(tmp);
                         if (umes >= pmes && umes < 13) {
                             flagInput2 = false;
+                            system("clear");
+                            printf("----Contagem de vendas e faturação total do SGV num intervalo de meses----\n");
                             Query8 q8 = getSalesAndProfit(sgv, pmes, umes);
                             //FIXME falta fazer os prints
                             printf("Q -> voltar ao menu principal\n");
@@ -212,7 +212,6 @@ void query8(SGV sgv) { //FIXME texto dos else's
 }
 
 void query9(SGV sgv) { //FIXME texto dos else's
-    printf("----Total de clientes que compraram um determinado produto numa determinada filial----\n");
     char flagCycle[2];
     flagCycle[0] = 'a';
     bool flagInput1 = true;
@@ -221,7 +220,6 @@ void query9(SGV sgv) { //FIXME texto dos else's
     char codigoP[7];
     int filial;
     Produtos p = sgv_get_produtos(sgv);
-    system("clear");
     printf("Insira o código do produto:\n");
     while (flagInput1) {
         scanf("%s", codigoP);
@@ -234,6 +232,8 @@ void query9(SGV sgv) { //FIXME texto dos else's
                     filial = atoi(tmp);
                     if (filial > 0 && filial < 4) {
                         flagInput2 = false;
+                        system("clear");
+                        printf("----Total de clientes que compraram um determinado produto numa determinada filial----\n");
                         Query9 q9 = getProductBuyers(sgv, codigoP, filial);
                         //FIXME falta fazer os prints
                         printf("Q -> voltar ao menu principal\n");
@@ -259,7 +259,6 @@ void query10(SGV sgv) {
     bool flagInput1 = true;
     bool flagInput2 = true;
     Clientes c = sgv_get_clientes(sgv);
-    system("clear");
     printf("Escreva o codigo do cliente\n");
     while (flagInput1) {
         scanf("%s", codigoC);
@@ -274,6 +273,7 @@ void query10(SGV sgv) {
 
                     if (mes > 0 && mes < 13) {
                         flagInput2 = false;
+                        system("clear");
                         printf("Ainda estamos a tratar, tente mais tarde\n");
 
                         printf("Prima Q para voltar ao Menu Principal\n");
@@ -294,7 +294,6 @@ void query11(SGV sgv) {
     char tmp[3];
     int limit;
     bool flagInput1 = true;
-    system("clear");
     printf("Escreva de quantos produtos quer a informação\n");
     while (flagInput1) {
         scanf("%s", tmp);
@@ -303,6 +302,7 @@ void query11(SGV sgv) {
 
             if (limit > 0) {
                 flagInput1 = false;
+                system("clear");
                 getTopSoldProducts(sgv, limit);
 
                 printf("Prima Q para voltar ao Menu Principal\n");
@@ -380,7 +380,7 @@ int main(int argc, const char* argv[]) {
     char opcaoQ1[2];
     opcaoQ1[0] = 'a';
     char tmp[2];
-    int opcao = 13;
+    int opcao = 14;
     while (flagCycle) {
         printf("\n------------------------------------------------------ Sistema de Gestão de Vendas ------------------------------------------------------\n");
         printf("Escolha uma opção:\n");
@@ -448,6 +448,9 @@ int main(int argc, const char* argv[]) {
                 break;
             case 12:
                 query12(sgv);
+                break;
+            case 13:
+                query13(sgv);
                 break;
             case 0:
                 flagCycle = false;
