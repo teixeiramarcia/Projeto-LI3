@@ -1,6 +1,7 @@
 #include <ctype.h>
 #include "util.h"
 #include "produtos.h"
+#include "clientes.h"
 #include "month.h"
 #include "filialID.h"
 
@@ -278,4 +279,60 @@ void adiciona_produtos(void* key, void* value, void* user_data) {
     } else {
         swap_produto_menos_vendido(top_produtos->produtos, top_produtos->tamanho_atual, produto);
     }
+}
+
+typedef struct informacao_produto{
+    char* codigo_produto;
+    int numero_compradores;
+    int numero_vendido_filial[N_FILIAIS];
+} *InformacaoProduto;
+
+char* i_p_get_codigo_produto(InformacaoProduto i_p) {
+    return i_p->codigo_produto;
+}
+
+int i_p_get_numero_compradores(InformacaoProduto i_p) {
+    return i_p->numero_compradores;
+}
+
+int i_p_get_numero_vendido_filial(InformacaoProduto i_p, int filial) {
+    return i_p->numero_vendido_filial[filial];
+}
+
+InformacaoProduto make_informacao_produto(char* codigo_produto){
+    InformacaoProduto i_p = malloc(sizeof(struct informacao_produto));
+    i_p->codigo_produto = codigo_produto;
+    i_p->numero_compradores = 0;
+    for (int filial = 0; filial < N_FILIAIS; filial++) {
+        i_p->numero_vendido_filial[filial] = 0;
+    }
+    return i_p;
+}
+
+void add_client_to(void* value, void* user_data) {
+    Venda venda = (Venda) value;
+    GHashTable* compradores = (GHashTable*) user_data;
+    char* clientID = venda_get_codigo_cliente(venda);
+    g_hash_table_add(compradores, clientID);
+}
+
+void set_info_produtos(void* value, void* user_data) {
+    Produto produto = (Produto) value;
+    InformacaoProduto i_p = make_informacao_produto(produto_get_productID(produto));
+    GPtrArray* produtos_resultado = (GPtrArray*) user_data;
+    GHashTable* compradores = g_hash_table_new(g_str_hash, str_compare);
+    for (int filial = 0; filial < N_FILIAIS; filial++) {
+        for (int mes = 0; mes < N_MONTHS; mes++) {
+            FaturacaoMes fmes = filial_get_faturacao_mes(produto_get_filial(produto, filial), mes);
+            GPtrArray* vendas_N = faturacao_mes_get_vendas_normal(fmes);
+            GPtrArray* vendas_P = faturacao_mes_get_vendas_promocao(fmes);
+            g_ptr_array_foreach(vendas_N, add_client_to, compradores);
+            g_ptr_array_foreach(vendas_P, add_client_to, compradores);
+            int unidades_vendidas_N = faturacao_mes_get_total_normal(fmes);
+            int unidades_vendidas_P = faturacao_mes_get_total_promocao(fmes);
+            i_p->numero_vendido_filial[filial] += unidades_vendidas_N + unidades_vendidas_P;
+        }
+    }
+    i_p->numero_compradores = g_hash_table_size(compradores);
+    g_ptr_array_add(produtos_resultado, i_p);
 }

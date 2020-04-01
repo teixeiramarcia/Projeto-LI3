@@ -321,7 +321,9 @@ Query11 getTopSoldProducts(SGV sgv, int limit) {
     }
     GPtrArray* prods = top_produtos_get_produtos(top_produtos);
     g_ptr_array_sort(prods, produtos_comparator);
-    q11->top_n = prods;
+    GPtrArray* produtos_resultado = g_ptr_array_new();
+    g_ptr_array_foreach(prods, set_info_produtos, produtos_resultado);
+    q11->top_n = produtos_resultado;
     return q11;
 }
 

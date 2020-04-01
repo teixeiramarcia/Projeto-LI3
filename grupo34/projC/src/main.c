@@ -312,8 +312,9 @@ void query11(SGV sgv) {
             if (limit > 0) {
                 flagInput1 = false;
                 system("clear");
-                getTopSoldProducts(sgv, limit);
-
+                printf("----Listagem dos N produtos mais vendidos----\n");
+                Query11 q11 = getTopSoldProducts(sgv, limit);
+                g_ptr_array_foreach(q11->top_n, imprime_info, NULL);
                 printf("Prima Q para voltar ao Menu Principal\n");
                 while (toupper(flagCycle[0]) != 'Q') {
                     scanf("%s", flagCycle);

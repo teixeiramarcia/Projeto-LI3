@@ -66,5 +66,12 @@ int produtos_comparator(void const* p1, void const* p2);
 
 void adiciona_produtos(void* key, void* value, void* user_data);
 
+void set_info_produtos (void* value, void* user_data);
+
+char* i_p_get_codigo_produto(InformacaoProduto i_p);
+
+int i_p_get_numero_compradores(InformacaoProduto i_p);
+
+int i_p_get_numero_vendido_filial(InformacaoProduto i_p, int filial);
 
 #endif
