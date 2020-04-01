@@ -172,7 +172,7 @@ void query7(SGV sgv) {
     system("clear");
 }
 
-void query8(SGV sgv) { //FIXME texto dos else's
+void query8(SGV sgv) { 
     char flagCycle[2];
     flagCycle[0] = 'a';
     char tmp[3];
@@ -187,7 +187,7 @@ void query8(SGV sgv) { //FIXME texto dos else's
             pmes = atoi(tmp);
             if (pmes > 0 && pmes < 13) {
                 flagInput1 = false;
-                printf("Escreva o ultimo mes\n");
+                printf("Insira o mês que pretende que seja o limite superior:\n");
                 while (flagInput2) {
                     scanf("%s", tmp);
                     if (isdigit(tmp[0])) {
@@ -197,21 +197,22 @@ void query8(SGV sgv) { //FIXME texto dos else's
                             system("clear");
                             printf("----Contagem de vendas e faturação total do SGV num intervalo de meses----\n");
                             Query8 q8 = getSalesAndProfit(sgv, pmes, umes);
-                            //FIXME falta fazer os prints
+                            printf("Total de vendas no intervalo de meses indicado: %d\n", q8->total_vendas_meses);
+                            printf("Faturação total no intervalo de meses indicado: %f\n", q8->total_faturado_meses);
                             printf("Q -> voltar ao menu principal\n");
                             while (toupper(flagCycle[0]) != 'Q') {
                                 scanf("%s", flagCycle);
                             }
-                        } else printf("Escreva um mes entre o primeiro e 12 \n");
-                    } else printf("Escreva um mes entre o primeiro e 12 \n");
+                        } else printf("Insira um mês posterior ao que definiu como limite inferior\n");
+                    } else printf("Insira um dígito compreendido entre 1 e 12\n");
                 }
-            } else printf("Escreva um mes entre 1 e 12 \n");
-        } else printf("Escreva um mes entre 1 e 12 \n");
+            } else printf("Insira um mês válido\n");
+        } else printf("Insira um dígito compreendido entre 1 e 12\n");
     }
     system("clear");
 }
 
-void query9(SGV sgv) { //FIXME texto dos else's
+void query9(SGV sgv) { 
     char flagCycle[2];
     flagCycle[0] = 'a';
     bool flagInput1 = true;
@@ -235,15 +236,23 @@ void query9(SGV sgv) { //FIXME texto dos else's
                         system("clear");
                         printf("----Total de clientes que compraram um determinado produto numa determinada filial----\n");
                         Query9 q9 = getProductBuyers(sgv, codigoP, filial);
-                        //FIXME falta fazer os prints
+                        printf("Na filial %d\n", filial);
+                        printf("Em modo normal:\n");
+                        printf("Clientes que efetuaram compras em modo normal:\n");
+                        g_hash_table_foreach(q9->clientes_que_compraram_produto_N_filial, imprime_keys, NULL);
+                        printf("Número total de clientes que compraram o produto indicado: %d\n", q9->total_clientes_N);
+                        printf("Em modo promoção:\n");
+                        printf("Clientes que efetuaram compras em modo promoção:\n");
+                        g_hash_table_foreach(q9->clientes_que_compraram_produto_P_filial, imprime_keys, NULL);
+                        printf("Número total de clientes que compraram o produto indicado: %d\n", q9->total_clientes_P);
                         printf("Q -> voltar ao menu principal\n");
-                        while (toupper(flagCycle[0]) != 'Q') {
+                        while(toupper(flagCycle[0]) != 'Q') {
                             scanf("%s", flagCycle);
                         }
-                    } else printf("Escreva um valor entre 1 e 3\n");
-                } else printf("Escreva um valor entre 1 e 3\n");
+                    } else printf("Indique uma filial entre 1 e 3\n");
+                } else printf("Insira uma filial válida\n");
             }
-        } else printf("Escreva um codigo com duas letras maiusculas e quatro numeros que exista no sistema\n");
+        } else printf("Insira um código (que exista no sistema), sendo este composto por duas maiúsculas e quatro dígitos\n");
     }
     system("clear");
 }

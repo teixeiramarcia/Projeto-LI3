@@ -105,6 +105,7 @@ void destroySGV(SGV sgv) {
 }
 
 SGV loadSGVFromFiles(SGV sgv, char const* filesFolderPath) {
+    printf("\n------------------------------------------- Carregamento de dados e resultados da verificação -------------------------------------------\n");
     Query13 q13 = malloc(sizeof(struct query_13));
     char* result = malloc(strlen(filesFolderPath) + strlen("/Clientes.txt") + 1);
     strcpy(result, filesFolderPath);
