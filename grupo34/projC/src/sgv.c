@@ -311,14 +311,14 @@ Query9 getProductBuyers(SGV sgv, char* prodID, int branchID) {
     return q9;
 }
 
-//query10
+//query10 - WORKING
 Query10 getClientFavoriteProducts(SGV sgv, char* clientID, int month){
     Query10 q10 = malloc(sizeof(struct query_10));
-    Cliente c = clientes_get_cliente(sgv->clientes, clientID);
+    Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
     GHashTable* produtos_resultado = g_hash_table_new_full(g_str_hash, str_compare, free, free);
     for (int filial = 0; filial < N_FILIAIS; filial++) {
         FiliaisCli filial_cli = cliente_get_filial(c, filial);
-        GHashTable* produtos_mes = filiais_cli_get_mes(filial_cli, INT_TO_MONTH(month));
+        GHashTable* produtos_mes = filiais_cli_get_mes(filial_cli, INT_2_MONTH(month));
         g_hash_table_foreach(produtos_mes, get_produto_quantidade, produtos_resultado);
     }
     q10->produtos_por_quantidade = g_ptr_array_new();
