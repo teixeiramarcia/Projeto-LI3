@@ -257,8 +257,6 @@ void query9(SGV sgv) {
     system("clear");
 }
 
-//FIXME falta rever
-
 void query10(SGV sgv) {
     char flagCycle[2];
     flagCycle[0] = 'a';
@@ -268,24 +266,23 @@ void query10(SGV sgv) {
     bool flagInput1 = true;
     bool flagInput2 = true;
     Clientes c = sgv_get_clientes(sgv);
-    printf("Escreva o codigo do cliente\n");
+    printf("Insira o código do cliente\n");
     while (flagInput1) {
         scanf("%s", codigoC);
         if (valida_cliente(codigoC) && existe_cliente(c, codigoC)) {
             flagInput1 = false;
-            printf("Escreva o mês\n");
+            printf("Insira o mês que pretende\n");
             while (flagInput2) {
                 scanf("%s", tmp);
-
                 if (isdigit(tmp[0])) {
                     mes = atoi(tmp);
-
                     if (mes > 0 && mes < 13) {
                         flagInput2 = false;
                         system("clear");
-                        printf("Ainda estamos a tratar, tente mais tarde\n");
-
-                        printf("Prima Q para voltar ao Menu Principal\n");
+                        printf("----Listagem de produtos comprados por um cliente num determinado mês por ordem decrescente de quantidade----\n");
+                        Query10 q10 = getClientFavoriteProducts(sgv, codigoC, mes);
+                        g_ptr_array_foreach(q10->produtos_por_quantidade, imprime_keys_for_ptr_array, NULL);
+                        printf("Q -> voltar ao menu principal\n");
                         while (toupper(flagCycle[0]) != 'Q') {
                             scanf("%s", flagCycle);
                         }
@@ -303,7 +300,7 @@ void query11(SGV sgv) {
     char tmp[3];
     int limit;
     bool flagInput1 = true;
-    printf("Escreva de quantos produtos quer a informação\n");
+    printf("Insira a quantidade de produtos dos quais pretende obter informação\n");
     while (flagInput1) {
         scanf("%s", tmp);
         if (isdigit(tmp[0])) {
@@ -315,12 +312,12 @@ void query11(SGV sgv) {
                 printf("----Listagem dos N produtos mais vendidos----\n");
                 Query11 q11 = getTopSoldProducts(sgv, limit);
                 g_ptr_array_foreach(q11->top_n, imprime_info, NULL);
-                printf("Prima Q para voltar ao Menu Principal\n");
+                printf("Q -> voltar ao menu principal\n");
                 while (toupper(flagCycle[0]) != 'Q') {
                     scanf("%s", flagCycle);
                 }
-            } else printf("Escreva um numero maior que 0\n");
-        } else printf("Escreva um numero maior que 0\n");
+            } else printf("Insira um número superior a 0\n");
+        } else printf("Insira um dígito válido\n");
     }
     system("clear");
 }
@@ -363,8 +360,6 @@ void query12(SGV sgv) {
     system("clear");
 }
 
-//FIXME até aqui
-
 void query13(SGV sgv) {
     printf("----Leitura  e verificação dos ficheiros de dados----\n\n");
     Query13 q13 = sgv_get_query_13(sgv);
@@ -403,7 +398,7 @@ int main(int argc, const char* argv[]) {
         printf("7 - Contagem de compras efetuadas por um cliente, separadas por meses e filiais\n");
         printf("8 - Contagem de vendas e faturação total do SGV num intervalo de meses\n");
         printf("9 - Total de clientes que compraram um determinado produto numa determinada filial\n");
-        printf("10 - Listagem de produtos comprados por um cliente num determinado mês por ordem decerscente de quantidade\n");
+        printf("10 - Listagem de produtos comprados por um cliente num determinado mês por ordem decrescente de quantidade\n");
         printf("11 - Listagem dos N produtos mais vendidos\n");
         printf("12 - Lista dos N produtos em que um determinado cliente gastou mais dinheiro\n");
         printf("13 - Leitura  e verificação dos ficheiros de dados\n\n");

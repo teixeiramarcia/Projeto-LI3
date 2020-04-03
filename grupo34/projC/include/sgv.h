@@ -67,7 +67,7 @@ typedef struct query_9 {
 } * Query9;
 
 typedef struct query_10 {
-
+    GPtrArray* produtos_por_quantidade;
 } * Query10;
 
 typedef struct query_11 {
@@ -106,6 +106,8 @@ Query7 getProductsBoughtByClient(SGV sgv, char* clientID); //query 7
 Query8 getSalesAndProfit(SGV sgv, int minMonth, int maxMonth); // query 8
 
 Query9 getProductBuyers(SGV sgv, char* prodID, int branchID); //query 9
+
+Query10 getClientFavoriteProducts(SGV sgv, char* clientID, int month); //query 10
 
 Query11 getTopSoldProducts(SGV sgv, int limit); //query 11
 

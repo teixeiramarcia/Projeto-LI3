@@ -195,3 +195,41 @@ int clientes_comparator(void const* cli1, void const* cli2) {
     }
     return 0;
 }
+
+typedef struct produto_quantidade{
+    char* productID;
+    int quantidade;
+} * ProdutoQuantidade; 
+
+char* p_q_get_ID (ProdutoQuantidade p_q){
+    return p_q->productID;
+}
+
+void get_produto_quantidade (void* key, void* value, void* user_data){
+    char* productID = (char*) key;
+    ProdutoCli produto = (ProdutoCli) value;
+    GHashTable* resultado = (GHashTable*) user_data;
+    if(!g_hash_table_contains(resultado, productID)){
+        ProdutoQuantidade p_q = malloc(sizeof(struct produto_quantidade));
+        p_q->productID = productID;
+        p_q->quantidade = produto->quantidade;
+        g_hash_table_insert(resultado, productID, p_q);
+    } else {
+        ProdutoQuantidade p_q = g_hash_table_lookup(resultado, productID);
+        p_q->quantidade += produto->quantidade;
+    }
+}
+
+void adiciona_produto_quantidade (void* key, void* value, void* user_data){
+    ProdutoQuantidade p_q = (ProdutoQuantidade) value;
+    GPtrArray* resultado = (GPtrArray*) user_data;
+    g_ptr_array_add(resultado, p_q);
+}
+
+int produtos_cli_comparator (void const* prod_1, void const* prod_2) {
+    ProdutoQuantidade produto_1 = *((ProdutoQuantidade*) prod_1);
+    ProdutoQuantidade produto_2 = *((ProdutoQuantidade*) prod_2);
+    int quantidade_1 = produto_1->quantidade;
+    int quantidade_2 = produto_2->quantidade;
+    return quantidade_2 - quantidade_1;
+}

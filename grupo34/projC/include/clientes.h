@@ -46,4 +46,12 @@ void cliente_fez_compras_todas_filiais(void* key, void* value, void* user_data);
 
 int clientes_comparator(void const* cli1, void const* cli2);
 
+char* p_q_get_ID (ProdutoQuantidade p_q);
+
+void get_produto_quantidade (void* key, void* value, void* user_data);
+
+void adiciona_produto_quantidade (void* key, void* value, void* user_data);
+
+int produtos_cli_comparator (void const* prod_1, void const* prod_2);
+
 #endif
