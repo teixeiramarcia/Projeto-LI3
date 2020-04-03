@@ -66,3 +66,7 @@ void imprime_info(void* value, void* user_data) {
     }
 }
 
+void imprime_just_keys_produtos_cli(void* data, void* user_data) {
+    char* productID = (char*) data;
+    printf("%s\n", (productID));
+}

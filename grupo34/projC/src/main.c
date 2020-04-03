@@ -148,7 +148,7 @@ void query6(SGV sgv) {
     system("clear");
 }
 
-void query7(SGV sgv) {
+void query7(SGV sgv) { //FIXME fazer a tabela
     char flagCycle[2];
     flagCycle[0] = 'a';
     bool flagInput1 = true;
@@ -286,10 +286,10 @@ void query10(SGV sgv) {
                         while (toupper(flagCycle[0]) != 'Q') {
                             scanf("%s", flagCycle);
                         }
-                    } else printf("Escreva um valor entre 1 e 12\n");
-                } else printf("Escreva um valor entre 1 e 12\n");
+                    } else printf("Insira um mês válido\n");
+                } else printf("Insira um dígito entre 1 e 12\n");
             }
-        } else printf("Escreva um codigo com uma letra maiuscula e quatro numeros que exista no sistema\n");
+        } else printf("Insira um código (que exista no sistema), sendo este composto por uma maiúscula e quatro dígitos\n");
     }
     system("clear");
 }
@@ -332,30 +332,28 @@ void query12(SGV sgv) {
     bool flagInput2 = true;
     Clientes c = sgv_get_clientes(sgv);
     system("clear");
-    printf("Escreva o codigo do cliente\n");
+    printf("Insira o código do cliente\n");
     while (flagInput1) {
         scanf("%s", codigoC);
         if (valida_cliente(codigoC) && existe_cliente(c, codigoC)) {
             flagInput1 = false;
-            printf("Escreva de quantos produtos quer a informação\n");
+            printf("Insira a quantidade de produtos dos quais pretende a informação\n");
             while (flagInput2) {
                 scanf("%s", tmp);
-
                 if (isdigit(tmp[0])) {
                     limit = atoi(tmp);
-
                     if (limit > 0) {
                         flagInput2 = false;
-                        printf("Ainda estamos a tratar, tente mais tarde\n");
-
-                        printf("Prima Q para voltar ao Menu Principal\n");
+                        Query12 q12 = getClientTopProfitProducts(sgv, codigoC, limit);
+                        g_ptr_array_foreach(q12->top_n, imprime_just_keys_produtos_cli, NULL);
+                        printf("Q -> voltar ao menu principal\n");
                         while (toupper(flagCycle[0]) != 'Q') {
                             scanf("%s", flagCycle);
                         }
-                    } else printf("Escreva um numero maior que 0\n");
-                } else printf("Escreva um numero maior que 0\n");
+                    } else printf("Insira um limite válido\n");
+                } else printf("Insira um dígito válido\n");
             }
-        } else printf("Escreva um codigo com uma letra maiusculas e quatro numeros que exista no sistema\n");
+        } else printf("Insira um código (que exista no sistema), sendo este composto por uma maiúscula e quatro dígitos\n");
     }
     system("clear");
 }

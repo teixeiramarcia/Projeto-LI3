@@ -343,3 +343,23 @@ Query11 getTopSoldProducts(SGV sgv, int limit) {
     return q11;
 }
 
+//query12
+Query12 getClientTopProfitProducts(SGV sgv, char* clientID, int limit){
+    Query12 q12 = malloc(sizeof(struct query_12));
+    TopProdutosCliente top_produtos = make_top_produtos_cliente(limit);
+    Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
+    for (int filial = 0; filial < N_FILIAIS; filial++) {
+        for (int mes = 0; mes < N_MONTHS; mes++) {
+            FiliaisCli filial_cli = cliente_get_filial(c, filial);
+            GHashTable* produtos_mes = filiais_cli_get_mes(filial_cli, INT_2_MONTH(mes));
+            g_hash_table_foreach(produtos_mes, adiciona_produtos_q12, top_produtos);           
+        }
+    }
+    GPtrArray* prods = top_produtos_cliente_get_top_produtos(top_produtos);
+    g_ptr_array_sort(prods, produtos_cliente_comparator);
+    GPtrArray* resultado = g_ptr_array_new();
+    g_ptr_array_foreach(prods, set_info_produtos_cliente, resultado);
+    q12->top_n = resultado;
+    return q12;
+}
+

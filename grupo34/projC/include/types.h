@@ -16,6 +16,7 @@ typedef struct produtos_comprados_cliente* ProdutosCompradosCliente;
 typedef struct totais_vendas_faturacao* TotaisVendasFaturacao;
 typedef struct produto_total_vendas_e_clientes* ProdutoTotalVendasEClientes;
 typedef struct informacao_produto* InformacaoProduto;
-typedef struct produto_quantidade* ProdutoQuantidade; 
+typedef struct produto_quantidade* ProdutoQuantidade;
+typedef struct top_produtos_cliente* TopProdutosCliente;
 
 #endif

@@ -233,3 +233,59 @@ int produtos_cli_comparator (void const* prod_1, void const* prod_2) {
     int quantidade_2 = produto_2->quantidade;
     return quantidade_2 - quantidade_1;
 }
+
+typedef struct top_produtos_cliente {
+    GPtrArray* produtos;
+    int limite;
+    int tamanho_atual;
+} * TopProdutosCliente;
+
+TopProdutosCliente make_top_produtos_cliente(int limite){
+    TopProdutosCliente t_p_c = malloc(sizeof(struct top_produtos_cliente));
+    t_p_c->produtos = g_ptr_array_new();
+    t_p_c->limite = limite;
+    t_p_c->tamanho_atual = 0;
+    return t_p_c;
+}
+
+GPtrArray* top_produtos_cliente_get_top_produtos(TopProdutosCliente t_p_c){
+    return t_p_c->produtos;
+}
+
+void swap_produto_menor_faturacao(GPtrArray* top_produtos, int tamanho, ProdutoCli produto_novo) {
+    for (int i = 0; i < tamanho; i++) {
+        ProdutoCli produto_cli = g_ptr_array_index(top_produtos, i);
+        int faturacao_produto = produto_cli->faturacao;
+        int faturacao_novo_produto = produto_novo->faturacao;
+        if (faturacao_produto < faturacao_novo_produto) {
+            g_ptr_array_remove_index_fast(top_produtos, i);
+            g_ptr_array_add(top_produtos, produto_novo);
+            produto_novo = produto_cli;
+        }   
+    }
+}
+
+void adiciona_produtos_q12(void* key, void* value, void* user_data) {
+    ProdutoCli prod_cli = (ProdutoCli) value;
+    TopProdutosCliente resultado = (TopProdutosCliente) user_data;
+    if(resultado->tamanho_atual < resultado->limite) {
+        g_ptr_array_add(resultado->produtos, prod_cli);
+        resultado->tamanho_atual++;
+    } else {
+        swap_produto_menor_faturacao(resultado->produtos, resultado->tamanho_atual, prod_cli);
+    }
+}
+
+int produtos_cliente_comparator(void const* prod_1, void const* prod_2) {
+    ProdutoCli p1 = *((ProdutoCli*) prod_1);
+    ProdutoCli p2 = *((ProdutoCli*) prod_2);
+    int faturacao_p1 = p1->faturacao;
+    int faturacao_p2 = p2->faturacao;
+    return faturacao_p2 - faturacao_p1;
+}
+
+void set_info_produtos_cliente(void* value, void* user_data) {
+    ProdutoCli produto = (ProdutoCli) value;
+    GPtrArray* resultado = (GPtrArray*) user_data;
+    g_ptr_array_add(resultado, produto->prodID);
+}

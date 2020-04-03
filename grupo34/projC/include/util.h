@@ -25,4 +25,6 @@ void add_client_id(void* cliID, void* value, void* user_data);
 
 void imprime_info(void* value, void* user_data);
 
+void imprime_just_keys_produtos_cli(void* data, void* user_data);
+
 #endif

@@ -54,4 +54,16 @@ void adiciona_produto_quantidade (void* key, void* value, void* user_data);
 
 int produtos_cli_comparator (void const* prod_1, void const* prod_2);
 
+TopProdutosCliente make_top_produtos_cliente(int limite);
+
+GPtrArray* top_produtos_cliente_get_top_produtos(TopProdutosCliente t_p_c);
+
+void swap_produto_menor_faturacao(GPtrArray* top_produtos, int tamanho, ProdutoCli produto_novo);
+
+void adiciona_produtos_q12(void* key, void* value, void* user_data);
+
+int produtos_cliente_comparator(void const* prod_1, void const* prod_2);
+
+void set_info_produtos_cliente(void* value, void* user_data);
+
 #endif

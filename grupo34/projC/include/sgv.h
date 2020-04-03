@@ -75,7 +75,7 @@ typedef struct query_11 {
 } * Query11;
 
 typedef struct query_12 {
-
+    GPtrArray* top_n;
 } * Query12;
 
 typedef struct query_13 {
@@ -110,5 +110,7 @@ Query9 getProductBuyers(SGV sgv, char* prodID, int branchID); //query 9
 Query10 getClientFavoriteProducts(SGV sgv, char* clientID, int month); //query 10
 
 Query11 getTopSoldProducts(SGV sgv, int limit); //query 11
+
+Query12 getClientTopProfitProducts(SGV sgv, char* clientID, int limit); //query 12
 
 #endif
