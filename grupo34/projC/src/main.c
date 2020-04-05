@@ -9,10 +9,19 @@ void query2(SGV sgv) {
     bool flagInput1 = true;
     char flagCycle[2];
     flagCycle[0] = 'a';
+    char aux;
+    int i;
     printf("Indique a letra que pretende procurar:\n");
     printf("-> ");
     while (flagInput1) {
-        scanf("%s", letra);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if((i+1) < 2){
+                letra[i] = aux;
+                i++;
+            }
+        }
+        letra[i] = '\0';
         if (isalpha(letra[0])) {
             system("clear");
             printf("----Listagem de produtos começados por uma determinada letra e respetiva contagem----\n");
@@ -25,9 +34,17 @@ void query2(SGV sgv) {
             printf("Q -> voltar ao menu principal\n\n");
             printf("-> ");
             while (toupper(flagCycle[0]) != 'Q') {
-                scanf("%s", flagCycle);
+                i = 0;
+                while ((aux = fgetc(stdin)) != '\n'){
+                    if((i+1) < 2){
+                        flagCycle[i] = aux;
+                        i++;
+                    }
+                }
+                flagCycle[i] = '\0';
             }
         } else {
+            printf("1: %s\n", letra);
             printf("\n");
             printf("Input inválido.\n Indique uma letra:\n");
             printf("-> ");
@@ -45,12 +62,21 @@ void query3(SGV sgv) {
     char tmp[3];
     int mes;
     char codigoP[7];
+    char aux;
     char tipo[2];
+    int i;
     Produtos p = sgv_get_produtos(sgv);
     printf("Insira o mês que pretende consultar:\n");
     printf("-> ");
     while (flagInput1) {
-        scanf("%s", tmp);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if ((i+1) < 3){
+                tmp[i] = aux;
+                i++;
+            }
+        }
+        tmp[i] = '\0';
         if (isdigit(tmp[0])) {
             mes = atoi(tmp);
             if (mes > 0 && mes < 13) {
@@ -59,14 +85,28 @@ void query3(SGV sgv) {
                 printf("Insira o código do produto que pretende consultar:\n");
                 printf("-> ");
                 while (flagInput2) {
-                    scanf("%s", codigoP);
+                    i = 0;
+                    while ((aux = fgetc(stdin)) != '\n'){
+                        if ((i+1) < 7){
+                            codigoP[i] = aux;
+                            i++;
+                        }
+                    }
+                    codigoP[i] = '\0';
                     if (valida_produto(codigoP) && existe_produto(p, codigoP)) {
                         flagInput2 = false;
                         printf("\n");
                         printf("Insira G se pretende obter resultados globais ou F se pretende obter filial a filial:\n");
                         printf("-> ");
                         while (flagInput3) {
-                            scanf("%s", tipo);
+                            i = 0;
+                            while ((aux = fgetc(stdin)) != '\n'){
+                                if ((i+1) < 2){
+                                    tipo[i] = aux;
+                                    i++;
+                                }
+                            }
+                            tipo[i] = '\0';
                             if (toupper(tipo[0]) == 'G' || toupper(tipo[0]) == 'F') {
                                 char type = tipo[0];
                                 system("clear");
@@ -107,7 +147,14 @@ void query3(SGV sgv) {
                                 printf("Q -> voltar ao menu principal\n\n");
                                 printf("-> ");
                                 while (toupper(flagCycle[0]) != 'Q') {
-                                    scanf("%s", flagCycle);
+                                    i = 0;
+                                    while ((aux = fgetc(stdin)) != '\n'){
+                                        if((i+1) < 2){
+                                            flagCycle[i] = aux;
+                                            i++;
+                                        }
+                                    }
+                                    flagCycle[i] = '\0';
                                 }
                             } else {
                                 printf("\n");
@@ -141,12 +188,21 @@ void query4(SGV sgv) {
     bool flagInput1 = true;
     char tmp[2];
     int tipo;
+    char aux;
+    int i;
     printf("Resultados globais - Insira 0:\n");
     printf("Resultados segregados por filiais - Insira 3:\n");
     printf("\n");
     printf("-> ");
     while (flagInput1) {
-        scanf("%s", tmp);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if ((i+1) < 2){
+                tmp[i] = aux;
+                i++;
+            }
+        }
+        tmp[i] = '\0';
         if (isdigit(tmp[0])) {
             tipo = atoi(tmp);
             if (tipo == 0 || tipo == 3) {
@@ -172,7 +228,14 @@ void query4(SGV sgv) {
                 printf("Q -> voltar ao menu principal\n\n");
                 printf("-> ");
                 while (toupper(flagCycle[0]) != 'Q') {
-                    scanf("%s", flagCycle);
+                    i = 0;
+                    while ((aux = fgetc(stdin)) != '\n'){
+                        if((i+1) < 2){
+                            flagCycle[i] = aux;
+                            i++;
+                        }
+                    }
+                    flagCycle[i] = '\0';
                 }
             } else {
                 printf("\n");
@@ -191,6 +254,8 @@ void query4(SGV sgv) {
 void query5(SGV sgv) {
     char flagCycle[2];
     flagCycle[0] = 'a';
+    char aux;
+    int i;
     system("clear");
     printf("----Listagem de clientes que efetuaram compras em todas as filiais----\n");
     printf("\n");
@@ -200,7 +265,14 @@ void query5(SGV sgv) {
     printf("Q -> voltar ao menu principal\n\n");
     printf("-> ");
     while (toupper(flagCycle[0]) != 'Q') {
-        scanf("%s", flagCycle);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if((i+1) < 2){
+                flagCycle[i] = aux;
+                i++;
+            }
+        }
+        flagCycle[i] = '\0';
     }
     system("clear");
 }
@@ -208,6 +280,8 @@ void query5(SGV sgv) {
 void query6(SGV sgv) {
     char flagCycle[2];
     flagCycle[0] = 'a';
+    char aux;
+    int i;
     system("clear");
     printf("----Contagem de clientes que nunca efetuaram compras e de produtos que nunca foram comprados----\n\n");
     Query6 q6 = getClientsAndProductsNeverBoughtCount(sgv);
@@ -217,7 +291,14 @@ void query6(SGV sgv) {
     printf("Q -> voltar ao menu principal\n\n");
     printf("-> ");
     while (toupper(flagCycle[0]) != 'Q') {
-        scanf("%s", flagCycle);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if((i+1) < 2){
+                flagCycle[i] = aux;
+                i++;
+            }
+        }
+        flagCycle[i] = '\0';
     }
     system("clear");
 }
@@ -227,10 +308,19 @@ void query7(SGV sgv) { //FIXME fazer a tabela - ainda não imprime resultados
     flagCycle[0] = 'a';
     bool flagInput1 = true;
     char codigoC[6];
+    char aux;
+    int i;
     Clientes c = sgv_get_clientes(sgv);
     printf("Insira o código do cliente:\n");
     while (flagInput1) {
-        scanf("%s", codigoC);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if((i+1) < 6){
+                codigoC[i] = aux;
+                i++;
+            }
+        }
+        codigoC[i] = '\0';
         if (valida_cliente(codigoC) && existe_cliente(c, codigoC)) {
             flagInput1 = false;
             system("clear");
@@ -239,7 +329,14 @@ void query7(SGV sgv) { //FIXME fazer a tabela - ainda não imprime resultados
             printf("Q -> voltar ao menu principal\n\n");
             printf("-> ");
             while (toupper(flagCycle[0]) != 'Q') {
-                scanf("%s", flagCycle);
+                i = 0;
+                while ((aux = fgetc(stdin)) != '\n'){
+                    if((i+1) < 2){
+                        flagCycle[i] = aux;
+                        i++;
+                    }
+                }
+                flagCycle[i] = '\0';
             }
         } else {
             printf("\n");
@@ -258,10 +355,19 @@ void query8(SGV sgv) {
     int umes;
     bool flagInput1 = true;
     bool flagInput2 = true;
+    char aux;
+    int i;
     printf("Insira o mês que pretende que seja o limite inferior:\n");
     printf("-> ");
     while (flagInput1) {
-        scanf("%s", tmp);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if ((i+1) < 3){
+                tmp[i] = aux;
+                i++;
+            }
+        }
+        tmp[i] = '\0';
         if (isdigit(tmp[0])) {
             pmes = atoi(tmp);
             if (pmes > 0 && pmes < 13) {
@@ -270,7 +376,14 @@ void query8(SGV sgv) {
                 printf("Insira o mês que pretende que seja o limite superior:\n");
                 printf("-> ");
                 while (flagInput2) {
-                    scanf("%s", tmp);
+                    i = 0;
+                    while ((aux = fgetc(stdin)) != '\n' && (i+1) < 3){
+                        if ((i+1) < 3){
+                            tmp[i] = aux;
+                            i++;
+                        }
+                    }
+                    tmp[i] = '\0';
                     if (isdigit(tmp[0])) {
                         umes = atoi(tmp);
                         if (umes >= pmes && umes < 13) {
@@ -283,7 +396,14 @@ void query8(SGV sgv) {
                             printf("Q -> voltar ao menu principal\n\n");
                             printf("-> ");
                             while (toupper(flagCycle[0]) != 'Q') {
-                                scanf("%s", flagCycle);
+                                i = 0;
+                                while ((aux = fgetc(stdin)) != '\n'){
+                                    if((i+1) < 2){
+                                        flagCycle[i] = aux;
+                                        i++;
+                                    }
+                                }
+                                flagCycle[i] = '\0';
                             }
                         } else {
                             printf("\n");
@@ -318,18 +438,34 @@ void query9(SGV sgv) {
     char tmp[2];
     char codigoP[7];
     int filial;
+    char aux;
+    int i;
     Produtos p = sgv_get_produtos(sgv);
     printf("Insira o código do produto que pretende consultar:\n");
     printf("-> ");
     while (flagInput1) {
-        scanf("%s", codigoP);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if ((i+1) < 7){
+                codigoP[i] = aux;
+                i++;
+            }
+        }
+        codigoP[i] = '\0';
         if (valida_produto(codigoP) && existe_produto(p, codigoP)) {
             flagInput1 = false;
             printf("\n");
             printf("Insira o número da filial:\n");
             printf("-> ");
             while (flagInput2) {
-                scanf("%s", tmp);
+                i = 0;
+                while ((aux = fgetc(stdin)) != '\n'){
+                    if ((i+1) < 2){
+                        tmp[i] = aux;
+                        i++;
+                    }
+                }
+                tmp[i] = '\0';
                 if (isdigit(tmp[0])) {
                     filial = atoi(tmp);
                     if (filial > 0 && filial < 4) {
@@ -351,7 +487,14 @@ void query9(SGV sgv) {
                         printf("Q -> voltar ao menu principal\n\n");
                         printf("-> ");
                         while (toupper(flagCycle[0]) != 'Q') {
-                            scanf("%s", flagCycle);
+                            i = 0;
+                            while ((aux = fgetc(stdin)) != '\n'){
+                                if((i+1) < 2){
+                                    flagCycle[i] = aux;
+                                    i++;
+                                }
+                            }
+                            flagCycle[i] = '\0';
                         }
                     } else {
                         printf("\n");
@@ -381,17 +524,33 @@ void query10(SGV sgv) {
     int mes;
     bool flagInput1 = true;
     bool flagInput2 = true;
+    char aux;
+    int i;
     Clientes c = sgv_get_clientes(sgv);
     printf("Insira o código do cliente que pretende consultar:\n");
     printf("-> ");
     while (flagInput1) {
-        scanf("%s", codigoC);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if ((i+1) < 6){
+                codigoC[i] = aux;
+                i++;
+            }
+        }
+        codigoC[i] = '\0';
         if (valida_cliente(codigoC) && existe_cliente(c, codigoC)) {
             flagInput1 = false;
             printf("\n");
             printf("Insira o mês que pretende consultar:\n");
             while (flagInput2) {
-                scanf("%s", tmp);
+                i = 0;
+                while ((aux = fgetc(stdin)) != '\n'){
+                    if ((i+1) < 3){
+                        tmp[i] = aux;
+                        i++;
+                    }
+                }
+                tmp[i] = '\0';
                 if (isdigit(tmp[0])) {
                     mes = atoi(tmp);
                     if (mes > 0 && mes < 13) {
@@ -405,7 +564,14 @@ void query10(SGV sgv) {
                         printf("Q -> voltar ao menu principal\n\n");
                         printf("-> ");
                         while (toupper(flagCycle[0]) != 'Q') {
-                            scanf("%s", flagCycle);
+                            i = 0;
+                            while ((aux = fgetc(stdin)) != '\n'){
+                                if((i+1) < 2){
+                                    flagCycle[i] = aux;
+                                    i++;
+                                }
+                            }
+                            flagCycle[i] = '\0';
                         }
                     } else {
                         printf("\n");
@@ -433,10 +599,19 @@ void query11(SGV sgv) {
     char tmp[3];
     int limit;
     bool flagInput1 = true;
+    char aux;
+    int i;
     printf("Insira a quantidade de produtos dos quais pretende obter informação:\n");
     printf("-> ");
     while (flagInput1) {
-        scanf("%s", tmp);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if ((i+1) < 3){
+                tmp[i] = aux;
+                i++;
+            }
+        }
+        tmp[i] = '\0';
         if (isdigit(tmp[0])) {
             limit = atoi(tmp);
             if (limit > 0) {
@@ -450,7 +625,14 @@ void query11(SGV sgv) {
                 printf("Q -> voltar ao menu principal\n\n");
                 printf("-> ");
                 while (toupper(flagCycle[0]) != 'Q') {
-                    scanf("%s", flagCycle);
+                    i = 0;
+                    while ((aux = fgetc(stdin)) != '\n'){
+                        if((i+1) < 2){
+                            flagCycle[i] = aux;
+                            i++;
+                        }
+                    }
+                    flagCycle[i] = '\0';
                 }
             } else {
                 printf("\n");
@@ -474,19 +656,35 @@ void query12(SGV sgv) {
     int limit;
     bool flagInput1 = true;
     bool flagInput2 = true;
+    char aux;
+    int i;
     Clientes c = sgv_get_clientes(sgv);
     system("clear");
     printf("Insira o código do cliente que pretende consultar:\n");
     printf("-> ");
     while (flagInput1) {
-        scanf("%s", codigoC);
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if((i+1) < 6){
+                codigoC[i] = aux;
+                i++;
+            }
+        }
+        codigoC[i] = '\0';
         if (valida_cliente(codigoC) && existe_cliente(c, codigoC)) {
             flagInput1 = false;
             printf("\n");
             printf("Insira a quantidade de produtos dos quais pretende a informação:\n");
             printf("-> ");
             while (flagInput2) {
-                scanf("%s", tmp);
+                i = 0;
+                while ((aux = fgetc(stdin)) != '\n'){
+                    if ((i+1) < 3){
+                        tmp[i] = aux;
+                        i++;
+                    }
+                }
+                tmp[i] = '\0';
                 if (isdigit(tmp[0])) {
                     limit = atoi(tmp);
                     if (limit > 0) {
@@ -499,7 +697,14 @@ void query12(SGV sgv) {
                         printf("Q -> voltar ao menu principal\n\n");
                         printf("-> ");
                         while (toupper(flagCycle[0]) != 'Q') {
-                            scanf("%s", flagCycle);
+                            i = 0;
+                            while ((aux = fgetc(stdin)) != '\n'){
+                                if((i+1) < 2){
+                                    flagCycle[i] = aux;
+                                    i++;
+                                }
+                            }
+                            flagCycle[i] = '\0';
                         }
                     } else {
                         printf("\n");
@@ -522,6 +727,10 @@ void query12(SGV sgv) {
 }
 
 void query13(SGV sgv) { //FIXME por a funcionar como as outras (só imprime o menu outra vez se se carregar em Q)
+    char flagCycle[2];
+    flagCycle[0] = 'a';
+    char aux;
+    int i;
     printf("----Leitura  e verificação dos ficheiros de dados----\n\n");
     Query13 q13 = sgv_get_query_13(sgv);
     printf("  Foi lido o ficheiro \"Clientes.txt\":\n");
@@ -535,6 +744,16 @@ void query13(SGV sgv) { //FIXME por a funcionar como as outras (só imprime o me
     printf("  Foi lido o ficheiro \"Vendas.txt\":\n");
     printf("    Linhas lidas: %d\n", q13->linhas_lidas_vendas);
     printf("    Clientes válidos: %d\n\n", q13->linhas_validas_vendas);
+    while (toupper(flagCycle[0]) != 'Q') {
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if((i+1) < 2){
+                flagCycle[i] = aux;
+                i++;
+            }
+        }
+        flagCycle[i] = '\0';
+    }
 }
 
 int main(int argc, const char* argv[]) {
@@ -548,8 +767,10 @@ int main(int argc, const char* argv[]) {
     loadSGVFromFiles(sgv, argv[1]);
     char opcaoQ1[2];
     opcaoQ1[0] = 'a';
-    char tmp[2];
+    char tmp[3];
     int opcao = 14;
+    char aux;
+    int i;
     while (flagCycle) {
         printf("\n------------------------------------------------------ Sistema de Gestão de Vendas ------------------------------------------------------\n\n");
         printf("Escolha uma opção:\n\n");
@@ -568,9 +789,17 @@ int main(int argc, const char* argv[]) {
         printf("13 - Leitura  e verificação dos ficheiros de dados\n\n");
         printf("0 - Sair do programa\n");
         printf("\n\n\n");
+        strcpy(tmp,"a");
         printf("Input -->  ");
-        scanf("%s", tmp);
-        if (isdigit(tmp[0])) {
+        i = 0;
+        while ((aux = fgetc(stdin)) != '\n'){
+            if(i+1 < 3){
+                tmp[i] = aux;
+                i++;
+            }
+        }
+        tmp[i] = '\0';
+        if (isdigit(tmp[0])){
             opcao = atoi(tmp);
         }
         printf("\n");
@@ -583,10 +812,19 @@ int main(int argc, const char* argv[]) {
                 printf("\n");
                 printf("Q -> voltar ao menu principal\n\n");
                 printf("-> ");
+                strcpy(opcaoQ1,"a");
                 while (toupper(opcaoQ1[0]) != 'Q') {
-                    scanf("%s", opcaoQ1);
+                    i = 0;
+                    while ((aux = fgetc(stdin)) != '\n'){
+                        if((i+1) < 2){
+                            opcaoQ1[i] = aux;
+                            i++;
+                        }
+                    }
+                    opcaoQ1[i] = '\0';
                 }
                 system("clear");
+                printf("%s\n",tmp);
                 break;
             case 2:
                 query2(sgv);
@@ -628,6 +866,7 @@ int main(int argc, const char* argv[]) {
                 flagCycle = false;
                 break;
             default:
+                printf("%s\n",tmp);
                 printf("Por favor escolha um numero entre 0 e 13:\n\n");
                 printf("-> ");
                 break;
