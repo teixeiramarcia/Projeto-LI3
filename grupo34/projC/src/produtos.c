@@ -266,6 +266,7 @@ void swap_produto_menos_vendido(GPtrArray* top_produtos, int tamanho, Produto pr
             g_ptr_array_remove_index_fast(top_produtos, i);
             g_ptr_array_add(top_produtos, produto_novo);
             produto_novo = produto;
+            i--;
         }
     }
 }
