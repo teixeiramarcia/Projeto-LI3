@@ -94,6 +94,17 @@ void destroy_produto(Produto produto) {
     free(produto);
 }
 
+void conta_vendas (void* value, void* user_data) {
+    int* resultado = (int*) user_data;
+    *resultado += 1;
+}
+
+int for_each_conta_vendas(GPtrArray* vendas) {
+    int resultado = 0;
+    g_ptr_array_foreach(vendas, conta_vendas, &resultado);
+    return resultado;
+}
+
 typedef struct produtos_nunca_vendidos {
     int de_filial;
     int ate_filial;
@@ -145,17 +156,22 @@ void guarda_se_nao_foi_vendido(void* key, void* value, void* user_data) {
     char* productID = (char*) key;
     Produto produto = (Produto) value;
     ProdutosNuncaVendidos p_n_v = (ProdutosNuncaVendidos) user_data;
+    int ja_foi_vendido_geral = 0;
     for (int i = p_n_v->de_filial; i <= p_n_v->ate_filial; i++) {
         int ja_foi_vendido = 0;
         for (int j = 0; j < N_MONTHS && ja_foi_vendido == 0; j++) {
             FaturacaoMes fmes = filial_get_faturacao_mes(produto_get_filial(produto, i), j);
             if (!faturacao_nao_faturou(fmes)) {
                 ja_foi_vendido++;
+                ja_foi_vendido_geral++;
             }
         }
         if (ja_foi_vendido == 0) {
             g_hash_table_add(p_n_v->produtos_n_vendidos[i], productID);
         }
+    }
+    if (ja_foi_vendido_geral == 0) {
+        g_hash_table_add(p_n_v->produtos_n_vendidos_global, productID);
     }
 }
 
@@ -255,6 +271,18 @@ int produtos_comparator(void const* prod_1, void const* prod_2) {
     int vendas_p1 = get_vendas_produto(p1);
     int vendas_p2 = get_vendas_produto(p2);
     return vendas_p2 - vendas_p1;
+}
+
+int produtos_comparator_id(void const* prod1, void const* prod2) {
+    char* productID1 = *((char**) prod1);
+    char* productID2 = *((char**) prod2);
+    for (int i = 0; i < 5; ++i) {
+        int dif = productID1[i] - productID2[i];
+        if (dif != 0) {
+            return dif;
+        }
+    }
+    return 0;
 }
 
 void swap_produto_menos_vendido(GPtrArray* top_produtos, int tamanho, Produto produto_novo) {

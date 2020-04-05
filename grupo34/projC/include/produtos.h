@@ -44,6 +44,8 @@ void destroy_produtos(Produtos produtos);
 
 void destroy_produto(Produto produto);
 
+int for_each_conta_vendas(GPtrArray* vendas);
+
 ProdutosNuncaVendidos make_produtos_nunca_vendidos();
 
 TotaisVendasFaturacao make_totais_vendas_faturacao();
@@ -63,6 +65,8 @@ TopProdutos make_top_produtos(int limit);
 GPtrArray* top_produtos_get_produtos(TopProdutos top_produtos);
 
 int produtos_comparator(void const* p1, void const* p2);
+
+int produtos_comparator_id(void const* prod1, void const* prod2);
 
 void adiciona_produtos(void* key, void* value, void* user_data);
 

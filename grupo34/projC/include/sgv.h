@@ -35,8 +35,8 @@ typedef struct query_3 {
 } * Query3;
 
 typedef struct query_4 {
-    GHashTable* produtos_nunca_comprados[N_FILIAIS];
-    GHashTable* produtos_nunca_comprados_global;
+    GPtrArray* produtos_nunca_comprados[N_FILIAIS];
+    GPtrArray* produtos_nunca_comprados_global;
     int total_produtos_nao_comprados[N_FILIAIS];
     int total_produtos_nao_comprados_global;
 } * Query4;

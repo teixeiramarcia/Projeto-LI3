@@ -36,9 +36,9 @@ Clientes read_clientes_with_fgets(FILE* file, Query13 q13) {
         linhas++;
     }
     printf("\n\n");
-    printf("Foi lido o ficheiro \"Clientes.txt\":\n");
-    printf("Linhas lidas: %d\n", linhas);
-    printf("Clientes válidos: %d\n\n", validos);
+    printf("  Foi lido o ficheiro \"Clientes.txt\":\n");
+    printf("    Linhas lidas: %d\n", linhas);
+    printf("    Clientes válidos: %d\n\n", validos);
     q13->linhas_lidas_clientes = linhas;
     q13->linhas_validas_clientes = validos;
     return c;
@@ -54,9 +54,9 @@ Produtos read_produtos_with_fgets(FILE* file, Query13 q13) {
         adiciona_produto(p, c, &validos);
         linhas++;
     }
-    printf("Foi lido o ficheiro \"Produtos.txt\":\n");
-    printf("Linhas lidas: %d\n", linhas);
-    printf("Clientes válidos: %d\n\n", validos);
+    printf("  Foi lido o ficheiro \"Produtos.txt\":\n");
+    printf("    Linhas lidas: %d\n", linhas);
+    printf("    Clientes válidos: %d\n\n", validos);
     q13->linhas_lidas_produtos = linhas;
     q13->linhas_validas_produtos = validos;
     return p;
@@ -73,9 +73,9 @@ void read_vendas_with_fgets(FILE* file, SGV sgv, Query13 q13) {
         sgv_adiciona_venda(sgv, venda, &validos);
         linhas++;
     }
-    printf("Foi lido o ficheiro \"Vendas.txt\":\n");
-    printf("Linhas lidas: %d\n", linhas);
-    printf("Clientes válidos: %d\n\n", validos);
+    printf("  Foi lido o ficheiro \"Vendas.txt\":\n");
+    printf("    Linhas lidas: %d\n", linhas);
+    printf("    Clientes válidos: %d\n\n", validos);
     q13->linhas_lidas_vendas = linhas;
     q13->linhas_validas_vendas = validos;
 }
@@ -142,7 +142,7 @@ Query2 getProductsStartedByLetter(SGV sgv, char letter) {
 }
 
 //query 3 - WORKING
-Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) { //FIXME fazer ifs do utilizador
+Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) {
     Query3 q3 = malloc(sizeof(struct query_3));
     for (int filial = 0; filial < N_FILIAIS; filial++) {
         q3->faturacao_normal[filial] = 0;
@@ -158,49 +158,23 @@ Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) { //FIXME f
         Filial filial = produto_get_filial(produto, i);
         FaturacaoMes fmes = filial_get_faturacao_mes(filial, INT_2_MONTH(month));
         q3->faturacao_normal[i] += faturacao_mes_get_faturacao_normal(fmes);
-        q3->vendas_normal[i] += faturacao_mes_get_total_normal(fmes);
+        q3->vendas_normal[i] += for_each_conta_vendas(faturacao_mes_get_vendas_normal(fmes));
         q3->faturacao_promocao[i] += faturacao_mes_get_faturacao_promocao(fmes);
-        q3->vendas_promocao[i] += faturacao_mes_get_total_promocao(fmes);
-    }
-    printf("Faturação e Vendas do produto %s:\n", productID);
-    if (/*cliente quiser resultados filial*/0) {
-        for (int i = 0; i < N_FILIAIS; i++) {
-            printf("Para a filial %d\n", i + 1);
-            printf("Faturação em modo normal: %f\n", q3->faturacao_normal[i]);
-            printf("Vendas em modo normal: %d\n", q3->vendas_normal[i]);
-            printf("Faturação em modo promoção: %f\n", q3->faturacao_promocao[i]);
-            printf("Vendas em modo promoção: %d\n", q3->vendas_promocao[i]);
-        }
-    } else {
-        double faturacao_total_normal = 0;
-        int vendas_total_normal = 0;
-        double faturacao_total_promocao = 0;
-        int vendas_total_promocao = 0;
-        for (int j = 0; j < N_FILIAIS; j++) {
-            faturacao_total_normal += q3->faturacao_normal[j];
-            vendas_total_normal += q3->vendas_normal[j];
-            faturacao_total_promocao += q3->faturacao_normal[j];
-            vendas_total_promocao += q3->vendas_normal[j];
-        }
-        printf("Valores totais:\n");
-        printf("Faturação total em modo normal: %f\n", faturacao_total_normal);
-        printf("Vendas totais em modo normal: %d\n", vendas_total_normal);
-        printf("Faturação total em modo promoção: %f\n", faturacao_total_promocao);
-        printf("Vendas totais em modo promoção: %d\n", vendas_total_promocao);
+        q3->vendas_promocao[i] += for_each_conta_vendas(faturacao_mes_get_vendas_promocao(fmes));
     }
     return q3;
 }
 
-//query 4 - WORKING
+//query 4 - FIXME resultado filial 2 e 3 mal
 Query4 getProductsNeverBought(SGV sgv, int branchID) {
     Produtos prods = sgv->produtos;
     Query4 q4 = malloc(sizeof(struct query_4));
     ProdutosNuncaVendidos p_n_v = make_produtos_nunca_vendidos();
     set_de_e_ate_filial_p_n_v(p_n_v, INT_2_FILIAL(1), INT_2_FILIAL(3));
-    if (branchID == 0) {
+    if (branchID == 3) {
         for (int filial = 0; filial < N_FILIAIS; ++filial) {
             q4->total_produtos_nao_comprados[filial] = 0;
-            q4->produtos_nunca_comprados[filial] = g_hash_table_new(g_str_hash, str_compare);
+            q4->produtos_nunca_comprados[filial] = g_ptr_array_new();
         }
         for (int letra = 0; letra < ('Z' - 'A') + 1; ++letra) {
             GHashTable* produtos_letra = produtos_get_produtos_letra(prods, letra);
@@ -211,17 +185,21 @@ Query4 getProductsNeverBought(SGV sgv, int branchID) {
         for (int filial = 0; filial < N_FILIAIS; ++filial) {
             produtos_nao_vendidos_filial[filial] = p_n_v_get_produtos_n_vendidos(p_n_v, filial);
             total[filial] = g_hash_table_size(produtos_nao_vendidos_filial[filial]);
-            g_hash_table_foreach(produtos_nao_vendidos_filial[filial], add_product_id,
+            g_hash_table_foreach(produtos_nao_vendidos_filial[filial], to_ptr_array_productID,
                                  q4->produtos_nunca_comprados[filial]);
+            g_ptr_array_sort(q4->produtos_nunca_comprados[filial], produtos_comparator_id);
             q4->total_produtos_nao_comprados[filial] = total[filial];
         }
     } else {
+        q4->produtos_nunca_comprados_global = g_ptr_array_new();
         for (int letra = 0; letra < ('Z' - 'A') + 1; ++letra) {
             GHashTable* produtos_letra = produtos_get_produtos_letra(prods, letra);
             g_hash_table_foreach(produtos_letra, guarda_se_nao_foi_vendido_global, p_n_v);
         }
-        q4->produtos_nunca_comprados_global = p_n_v_get_produtos_n_vendidos_global(p_n_v);
-        q4->total_produtos_nao_comprados_global = g_hash_table_size(q4->produtos_nunca_comprados_global);
+        GHashTable* produtos_nunca_vendidos = p_n_v_get_produtos_n_vendidos_global(p_n_v);
+        g_hash_table_foreach(produtos_nunca_vendidos, to_ptr_array_productID, q4->produtos_nunca_comprados_global);
+        g_ptr_array_sort(q4->produtos_nunca_comprados_global, produtos_comparator_id);
+        q4->total_produtos_nao_comprados_global = g_hash_table_size(produtos_nunca_vendidos);
     }
     return q4;
 }

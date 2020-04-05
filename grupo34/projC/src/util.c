@@ -34,6 +34,17 @@ void imprime_just_keys_clientes(void* data, void* user_data) {
     printf("%s\n", (clienteID));
 }
 
+void imprime_just_keys_produtos(void* data, void* user_data) {
+    char* p = (char*) data;
+    printf("%s\n", p);
+}
+
+void to_ptr_array_productID(void* key, void* value, void* user_data) {
+    char* productID = (char*) key;
+    GPtrArray* resultado = (GPtrArray*) user_data;
+    g_ptr_array_add(resultado, productID);
+}
+
 void adiciona_clientes_filial(void* data, void* user_data) {
     Venda venda = (Venda) data;
     GHashTable* clientes_filial = (GHashTable*) user_data;
