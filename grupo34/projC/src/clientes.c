@@ -196,20 +196,20 @@ int clientes_comparator(void const* cli1, void const* cli2) {
     return 0;
 }
 
-typedef struct produto_quantidade{
+typedef struct produto_quantidade {
     char* productID;
     int quantidade;
-} * ProdutoQuantidade; 
+} * ProdutoQuantidade;
 
-char* p_q_get_ID (ProdutoQuantidade p_q){
+char* p_q_get_ID(ProdutoQuantidade p_q) {
     return p_q->productID;
 }
 
-void get_produto_quantidade (void* key, void* value, void* user_data){
+void get_produto_quantidade(void* key, void* value, void* user_data) {
     char* productID = (char*) key;
     ProdutoCli produto = (ProdutoCli) value;
     GHashTable* resultado = (GHashTable*) user_data;
-    if(!g_hash_table_contains(resultado, productID)){
+    if (!g_hash_table_contains(resultado, productID)) {
         ProdutoQuantidade p_q = malloc(sizeof(struct produto_quantidade));
         p_q->productID = productID;
         p_q->quantidade = produto->quantidade;
@@ -220,13 +220,13 @@ void get_produto_quantidade (void* key, void* value, void* user_data){
     }
 }
 
-void adiciona_produto_quantidade (void* key, void* value, void* user_data){
+void adiciona_produto_quantidade(void* key, void* value, void* user_data) {
     ProdutoQuantidade p_q = (ProdutoQuantidade) value;
     GPtrArray* resultado = (GPtrArray*) user_data;
     g_ptr_array_add(resultado, p_q);
 }
 
-int produtos_cli_comparator (void const* prod_1, void const* prod_2) {
+int produtos_cli_comparator(void const* prod_1, void const* prod_2) {
     ProdutoQuantidade produto_1 = *((ProdutoQuantidade*) prod_1);
     ProdutoQuantidade produto_2 = *((ProdutoQuantidade*) prod_2);
     int quantidade_1 = produto_1->quantidade;
@@ -234,58 +234,59 @@ int produtos_cli_comparator (void const* prod_1, void const* prod_2) {
     return quantidade_2 - quantidade_1;
 }
 
-typedef struct top_produtos_cliente {
-    GPtrArray* produtos;
-    int limite;
-    int tamanho_atual;
-} * TopProdutosCliente;
-
-TopProdutosCliente make_top_produtos_cliente(int limite){
-    TopProdutosCliente t_p_c = malloc(sizeof(struct top_produtos_cliente));
-    t_p_c->produtos = g_ptr_array_new();
-    t_p_c->limite = limite;
-    t_p_c->tamanho_atual = 0;
-    return t_p_c;
-}
-
-GPtrArray* top_produtos_cliente_get_top_produtos(TopProdutosCliente t_p_c){
-    return t_p_c->produtos;
-}
-
-void swap_produto_menor_faturacao(GPtrArray* top_produtos, int tamanho, ProdutoCli produto_novo) {
-    for (int i = 0; i < tamanho; i++) {
-        ProdutoCli produto_cli = g_ptr_array_index(top_produtos, i);
-        int faturacao_produto = produto_cli->faturacao;
-        int faturacao_novo_produto = produto_novo->faturacao;
-        if (faturacao_produto < faturacao_novo_produto) {
-            g_ptr_array_remove_index_fast(top_produtos, i);
-            g_ptr_array_add(top_produtos, produto_novo);
-            produto_novo = produto_cli;
-        }   
-    }
-}
+typedef struct produto_faturacao {
+    char* prodID;
+    double faturacao;
+} * ProdutoFaturacao;
 
 void adiciona_produtos_q12(void* key, void* value, void* user_data) {
+    char* productID = (char*) key;
     ProdutoCli prod_cli = (ProdutoCli) value;
-    TopProdutosCliente resultado = (TopProdutosCliente) user_data;
-    if(resultado->tamanho_atual < resultado->limite) {
-        g_ptr_array_add(resultado->produtos, prod_cli);
-        resultado->tamanho_atual++;
+    GHashTable* resultado = (GHashTable*) user_data;
+    if (g_hash_table_contains(resultado, prod_cli->prodID)) {
+        ProdutoFaturacao produto_faturacao = g_hash_table_lookup(resultado, prod_cli->prodID);
+        produto_faturacao->faturacao += prod_cli->faturacao;
     } else {
-        swap_produto_menor_faturacao(resultado->produtos, resultado->tamanho_atual, prod_cli);
+        ProdutoFaturacao produto_faturacao = malloc(sizeof(struct produto_faturacao));
+        produto_faturacao->prodID = productID;
+        produto_faturacao->faturacao = prod_cli->faturacao;
+        g_hash_table_insert(resultado, prod_cli->prodID, produto_faturacao);
     }
 }
 
 int produtos_cliente_comparator(void const* prod_1, void const* prod_2) {
-    ProdutoCli p1 = *((ProdutoCli*) prod_1);
-    ProdutoCli p2 = *((ProdutoCli*) prod_2);
-    int faturacao_p1 = p1->faturacao;
-    int faturacao_p2 = p2->faturacao;
-    return faturacao_p2 - faturacao_p1;
+    ProdutoFaturacao p1 = *((ProdutoFaturacao*) prod_1);
+    ProdutoFaturacao p2 = *((ProdutoFaturacao*) prod_2);
+    double faturacao_p1 = p1->faturacao;
+    double faturacao_p2 = p2->faturacao;
+    if (faturacao_p2 > faturacao_p1) {
+        return 1;
+    } else if (faturacao_p2 < faturacao_p1) {
+        return -1;
+    }
+    return 0;
 }
 
 void set_info_produtos_cliente(void* value, void* user_data) {
-    ProdutoCli produto = (ProdutoCli) value;
+    ProdutoFaturacao produto = (ProdutoFaturacao) value;
     GPtrArray* resultado = (GPtrArray*) user_data;
     g_ptr_array_add(resultado, produto->prodID);
+}
+
+ProdutoFaturacao get_maior(GList* lista) {
+    ProdutoFaturacao p_f = malloc(sizeof(struct produto_faturacao));
+    p_f->prodID = "";
+    p_f->faturacao = -1;
+    for (int i = 0; i < g_list_length(lista); ++i) {
+        ProdutoFaturacao produto = g_list_nth_data(lista, i);
+        if (produto->faturacao > p_f->faturacao) {
+            char* id = p_f->prodID;
+            double faturacao = p_f->faturacao;
+            p_f->prodID = produto->prodID;
+            p_f->faturacao = produto->faturacao;
+            produto->prodID = id;
+            produto->faturacao = faturacao;
+        }
+    }
+    return p_f;
 }

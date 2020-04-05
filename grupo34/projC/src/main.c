@@ -172,7 +172,7 @@ void query7(SGV sgv) { //FIXME fazer a tabela
     system("clear");
 }
 
-void query8(SGV sgv) { 
+void query8(SGV sgv) {
     char flagCycle[2];
     flagCycle[0] = 'a';
     char tmp[3];
@@ -212,7 +212,7 @@ void query8(SGV sgv) {
     system("clear");
 }
 
-void query9(SGV sgv) { 
+void query9(SGV sgv) {
     char flagCycle[2];
     flagCycle[0] = 'a';
     bool flagInput1 = true;
@@ -246,13 +246,14 @@ void query9(SGV sgv) {
                         g_hash_table_foreach(q9->clientes_que_compraram_produto_P_filial, imprime_keys, NULL);
                         printf("Número total de clientes que compraram o produto indicado: %d\n", q9->total_clientes_P);
                         printf("Q -> voltar ao menu principal\n");
-                        while(toupper(flagCycle[0]) != 'Q') {
+                        while (toupper(flagCycle[0]) != 'Q') {
                             scanf("%s", flagCycle);
                         }
                     } else printf("Indique uma filial entre 1 e 3\n");
                 } else printf("Insira uma filial válida\n");
             }
-        } else printf("Insira um código (que exista no sistema), sendo este composto por duas maiúsculas e quatro dígitos\n");
+        } else
+            printf("Insira um código (que exista no sistema), sendo este composto por duas maiúsculas e quatro dígitos\n");
     }
     system("clear");
 }
@@ -289,7 +290,8 @@ void query10(SGV sgv) {
                     } else printf("Insira um mês válido\n");
                 } else printf("Insira um dígito entre 1 e 12\n");
             }
-        } else printf("Insira um código (que exista no sistema), sendo este composto por uma maiúscula e quatro dígitos\n");
+        } else
+            printf("Insira um código (que exista no sistema), sendo este composto por uma maiúscula e quatro dígitos\n");
     }
     system("clear");
 }
@@ -353,7 +355,8 @@ void query12(SGV sgv) {
                     } else printf("Insira um limite válido\n");
                 } else printf("Insira um dígito válido\n");
             }
-        } else printf("Insira um código (que exista no sistema), sendo este composto por uma maiúscula e quatro dígitos\n");
+        } else
+            printf("Insira um código (que exista no sistema), sendo este composto por uma maiúscula e quatro dígitos\n");
     }
     system("clear");
 }

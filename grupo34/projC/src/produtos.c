@@ -281,11 +281,11 @@ void adiciona_produtos(void* key, void* value, void* user_data) {
     }
 }
 
-typedef struct informacao_produto{
+typedef struct informacao_produto {
     char* codigo_produto;
     int numero_compradores;
     int numero_vendido_filial[N_FILIAIS];
-} *InformacaoProduto;
+} * InformacaoProduto;
 
 char* i_p_get_codigo_produto(InformacaoProduto i_p) {
     return i_p->codigo_produto;
@@ -299,7 +299,7 @@ int i_p_get_numero_vendido_filial(InformacaoProduto i_p, int filial) {
     return i_p->numero_vendido_filial[filial];
 }
 
-InformacaoProduto make_informacao_produto(char* codigo_produto){
+InformacaoProduto make_informacao_produto(char* codigo_produto) {
     InformacaoProduto i_p = malloc(sizeof(struct informacao_produto));
     i_p->codigo_produto = codigo_produto;
     i_p->numero_compradores = 0;

@@ -62,7 +62,8 @@ void imprime_info(void* value, void* user_data) {
     printf("Código do produto: %s\n", i_p_get_codigo_produto(i_p));
     printf("Número total de clientes envolvidos: %d\n", i_p_get_numero_compradores(i_p));
     for (int filial = 0; filial < N_FILIAIS; filial++) {
-        printf("Número de unidades vendidas na filial %d: %d\n", filial+1, i_p_get_numero_vendido_filial(i_p, filial));
+        printf("Número de unidades vendidas na filial %d: %d\n", filial + 1,
+               i_p_get_numero_vendido_filial(i_p, filial));
     }
 }
 
