@@ -45,6 +45,7 @@ void imprime_informacao_produto_aux(InformacaoProduto i_p) {
         printf(YELLOW "Número de unidades vendidas na filial %d:" RESET " %d\n", filial + 1,
                i_p_get_numero_vendido_filial(i_p, filial));
     }
+    printf( BLUE "\n---------------------------------------------\n" RESET);
 }
 
 void imprime_informacao_produto(void* value, void* user_data) {
@@ -71,7 +72,8 @@ void auxiliar(void (*funcao)(), void* query, char* titulo) {
         printf(RESET);
         printf( YELLOW "A mostrar resultados de %d até %d:\n\n" RESET, navegador->posicao_inicio_resultados, navegador->posicao_inicio_resultados + 10);
         funcao(navegador, query);
-        printf( YELLOW "\n1 -> 10 resultados anteriores.\n2 -> 10 resultados seguintes.\n3 -> sair do navegador.\n" RESET);
+        printf( YELLOW "\n1 -> 10 resultados anteriores.\n2 -> 10 resultados seguintes.\n3 -> sair do catálogo.\n\n");
+        printf("-> " RESET);
         i = 0;
         while ((aux = fgetc(stdin)) != '\n'){
             if(i+1 < 3){

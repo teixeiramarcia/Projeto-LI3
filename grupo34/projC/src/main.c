@@ -452,9 +452,9 @@ void query9(SGV sgv) {
                     if (filial > 0 && filial < 4) {
                         flagInput2 = false;
                         system("clear");
-                        printf( BLUE "----Total de clientes que compraram um determinado produto numa determinada filial----\n");
+                        printf( BLUE "----Total de clientes que compraram um determinado produto numa determinada filial----\n" RESET);
                         Query9 q9 = getProductBuyers(sgv, codigoP, filial);
-                        printf("  Na filial %d\n", filial);
+                        printf( YELLOW "  Na filial %d\n", filial);
                         printf("Em modo normal:\n");
                         printf("Clientes que efetuaram compras em modo normal:\n" RESET);
                         g_hash_table_foreach(q9->clientes_que_compraram_produto_N_filial, imprime_keys, NULL);
