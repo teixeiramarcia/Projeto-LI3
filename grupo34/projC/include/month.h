@@ -22,6 +22,8 @@ enum month {
 
 typedef enum month Month;
 
+char* mes_to_string(Month mes);
+
 extern Month const MONTHS[];
 
 #define N_MONTHS 12

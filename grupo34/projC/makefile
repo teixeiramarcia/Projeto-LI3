@@ -8,7 +8,7 @@ override CFLAGS += -Wall -pedantic -Werror=vla -std=c11 -D_POSIX_C_SOURCE -Werro
 
 GLIB = `pkg-config --cflags glib-2.0` `pkg-config --libs glib-2.0`
 
-FLAGS = -O0 -g
+FLAGS = -Ofast
 
 EXECUTABLE = prog
 

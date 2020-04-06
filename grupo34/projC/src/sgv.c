@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include "sgv.h"
 #include "util.h"
+#include "colors.h"
 
 #define CODE_SIZE 1024
 
@@ -36,9 +36,9 @@ Clientes read_clientes_with_fgets(FILE* file, Query13 q13) {
         linhas++;
     }
     printf("\n\n");
-    printf("  Foi lido o ficheiro \"Clientes.txt\":\n");
-    printf("    Linhas lidas: %d\n", linhas);
-    printf("    Clientes válidos: %d\n\n", validos);
+    printf( BLUE "  Foi lido o ficheiro \"Clientes.txt\":\n" RESET );
+    printf( YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
+    printf( YELLOW "    Clientes válidos:" RESET " %d\n\n", validos);
     q13->linhas_lidas_clientes = linhas;
     q13->linhas_validas_clientes = validos;
     return c;
@@ -54,9 +54,9 @@ Produtos read_produtos_with_fgets(FILE* file, Query13 q13) {
         adiciona_produto(p, c, &validos);
         linhas++;
     }
-    printf("  Foi lido o ficheiro \"Produtos.txt\":\n");
-    printf("    Linhas lidas: %d\n", linhas);
-    printf("    Clientes válidos: %d\n\n", validos);
+    printf( BLUE "  Foi lido o ficheiro \"Produtos.txt\":\n" RESET);
+    printf( YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
+    printf( YELLOW "    Produtos válidos:" RESET " %d\n\n", validos);
     q13->linhas_lidas_produtos = linhas;
     q13->linhas_validas_produtos = validos;
     return p;
@@ -73,9 +73,9 @@ void read_vendas_with_fgets(FILE* file, SGV sgv, Query13 q13) {
         sgv_adiciona_venda(sgv, venda, &validos);
         linhas++;
     }
-    printf("  Foi lido o ficheiro \"Vendas.txt\":\n");
-    printf("    Linhas lidas: %d\n", linhas);
-    printf("    Clientes válidos: %d\n\n", validos);
+    printf( BLUE "  Foi lido o ficheiro \"Vendas.txt\":\n" RESET);
+    printf( YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
+    printf( YELLOW "    Vendas válidas:" RESET " %d\n\n", validos);
     q13->linhas_lidas_vendas = linhas;
     q13->linhas_validas_vendas = validos;
 }
@@ -105,7 +105,9 @@ void destroySGV(SGV sgv) {
 }
 
 SGV loadSGVFromFiles(SGV sgv, char const* filesFolderPath) {
+    printf(BLUE);
     printf("\n------------------------------------------- Carregamento de dados e resultados da verificação -------------------------------------------\n");
+    printf(RESET);
     Query13 q13 = malloc(sizeof(struct query_13));
     char* result = malloc(strlen(filesFolderPath) + strlen("/Clientes.txt") + 1);
     strcpy(result, filesFolderPath);
@@ -133,7 +135,7 @@ SGV loadSGVFromFiles(SGV sgv, char const* filesFolderPath) {
     return sgv;
 }
 
-//query 2 - WORKING
+//query 2
 Query2 getProductsStartedByLetter(SGV sgv, char letter) {
     Query2 q2 = malloc(sizeof(struct query_2));
     q2->produtos_letra = g_hash_table_new(g_str_hash, str_compare);
@@ -141,7 +143,7 @@ Query2 getProductsStartedByLetter(SGV sgv, char letter) {
     return q2;
 }
 
-//query 3 - WORKING
+//query 3
 Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) {
     Query3 q3 = malloc(sizeof(struct query_3));
     for (int filial = 0; filial < N_FILIAIS; filial++) {
@@ -165,7 +167,7 @@ Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) {
     return q3;
 }
 
-//query 4 - FIXME resultado filial 2 e 3 mal
+//query 4
 Query4 getProductsNeverBought(SGV sgv, int branchID) {
     Produtos prods = sgv->produtos;
     Query4 q4 = malloc(sizeof(struct query_4));
@@ -204,7 +206,7 @@ Query4 getProductsNeverBought(SGV sgv, int branchID) {
     return q4;
 }
 
-//query 5 - WORKING
+//query 5
 Query5 getClientsOfAllBranches(SGV sgv) {
     Query5 q5 = malloc(sizeof(struct query_5));
     q5->clientes = g_ptr_array_new();
@@ -214,7 +216,7 @@ Query5 getClientsOfAllBranches(SGV sgv) {
     return q5;
 }
 
-//query 6 - WORKING
+//query 6
 Query6 getClientsAndProductsNeverBoughtCount(SGV sgv) {
     Query6 q6 = malloc(sizeof(struct query_6));
     int resCli = 0;
@@ -230,7 +232,7 @@ Query6 getClientsAndProductsNeverBoughtCount(SGV sgv) {
     return q6;
 }
 
-//query 7 - WORKING
+//query 7
 Query7 getProductsBoughtByClient(SGV sgv, char* clientID) {
     Query7 q7 = malloc(sizeof(struct query_7));
     Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
@@ -251,7 +253,7 @@ Query7 getProductsBoughtByClient(SGV sgv, char* clientID) {
     return q7;
 }
 
-//query 8 - WORKING
+//query 8
 Query8 getSalesAndProfit(SGV sgv, int minMonth, int maxMonth) {
     Query8 q8 = malloc(sizeof(struct query_8));
     Produtos produtos = sgv->produtos;
@@ -267,7 +269,7 @@ Query8 getSalesAndProfit(SGV sgv, int minMonth, int maxMonth) {
     return q8;
 }
 
-//query 9 - WORKING
+//query 9
 Query9 getProductBuyers(SGV sgv, char* prodID, int branchID) {
     Query9 q9 = malloc(sizeof(struct query_9));
     GHashTable* vendas_n = g_hash_table_new(g_str_hash, str_compare);
@@ -289,7 +291,7 @@ Query9 getProductBuyers(SGV sgv, char* prodID, int branchID) {
     return q9;
 }
 
-//query10 - WORKING
+//query10
 Query10 getClientFavoriteProducts(SGV sgv, char* clientID, int month) {
     Query10 q10 = malloc(sizeof(struct query_10));
     Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
@@ -305,7 +307,7 @@ Query10 getClientFavoriteProducts(SGV sgv, char* clientID, int month) {
     return q10;
 }
 
-//query 11 - WORKING
+//query 11
 Query11 getTopSoldProducts(SGV sgv, int limit) {
     Query11 q11 = malloc(sizeof(struct query_11));
     TopProdutos top_produtos = make_top_produtos(limit);
