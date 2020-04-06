@@ -17,5 +17,5 @@ typedef struct totais_vendas_faturacao* TotaisVendasFaturacao;
 typedef struct informacao_produto* InformacaoProduto;
 typedef struct produto_quantidade* ProdutoQuantidade;
 typedef struct produto_faturacao* ProdutoFaturacao;
-
+typedef struct navegador* Navegador;
 #endif

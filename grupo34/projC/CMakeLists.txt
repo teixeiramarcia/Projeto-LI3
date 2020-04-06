@@ -17,7 +17,7 @@ link_directories(${GLIB_LIBRARY_DIRS})
 
 add_executable(LI3
         ${MyCIncludes}
-        ${MyCSources} include/types.h src/main.c src/month.c include/month.h src/filialID.c include/filialID.h)
+        ${MyCSources} include/types.h src/main.c src/month.c include/month.h src/filialID.c include/filialID.h src/navegador.c include/navegador.h)
 
 add_definitions(${GLIB_CFLAGS_OTHER})
 target_link_libraries(LI3 ${GLIB_LIBRARIES})

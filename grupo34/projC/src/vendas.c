@@ -4,7 +4,7 @@
 #include "produtos.h"
 #include "clientes.h"
 #include <stdlib.h>
-#include <stdio.h>
+
 
 typedef struct venda {
     char* codigo_produto;

@@ -1,5 +1,6 @@
 #include "sgv.h"
 #include "util.h"
+#include "navegador.h"
 #include <stdio.h>
 #include <ctype.h>
 
@@ -28,9 +29,8 @@ void query2(SGV sgv) {
             printf("\n");
             flagInput1 = false;
             Query2 q2 = getProductsStartedByLetter(sgv, toupper(letra[0]));
-            g_hash_table_foreach(q2->produtos_letra, imprime_keys, NULL);
+            print_q2_with_navegador(q2);
             printf("\n");
-            printf("Total: %d\n\n", g_hash_table_size(q2->produtos_letra));
             printf("Q -> voltar ao menu principal\n\n");
             printf("-> ");
             while (toupper(flagCycle[0]) != 'Q') {
@@ -211,20 +211,8 @@ void query4(SGV sgv) {
                 printf("----Listagem e total de produtos que nunca foram comprados----\n");
                 printf("\n");
                 Query4 q4 = getProductsNeverBought(sgv, tipo);
-                if (tipo == 0) {
-                    printf("Produtos nunca comprados em nenhuma das filiais:\n");
-                    g_ptr_array_foreach(q4->produtos_nunca_comprados_global, imprime_just_keys_produtos, NULL);
-                    printf("\n");
-                    printf("Total: %d\n\n", q4->total_produtos_nao_comprados_global);
-                } else {
-                    for (int filial = 0; filial < N_FILIAIS; ++filial) {
-                        printf("Produtos nunca comprados na filial %d:\n", filial + 1);
-                        g_ptr_array_foreach(q4->produtos_nunca_comprados[filial], imprime_just_keys_produtos, NULL);
-                    }
-                    for (int filial = 0; filial < N_FILIAIS; ++filial) {
-                        printf("Total filial %d: %d\n\n", filial, q4->total_produtos_nao_comprados[filial]);
-                    }
-                }
+                print_q4_with_navegador(q4, tipo);
+                printf("\n");
                 printf("Q -> voltar ao menu principal\n\n");
                 printf("-> ");
                 while (toupper(flagCycle[0]) != 'Q') {
@@ -260,7 +248,7 @@ void query5(SGV sgv) {
     printf("----Listagem de clientes que efetuaram compras em todas as filiais----\n");
     printf("\n");
     Query5 q5 = getClientsOfAllBranches(sgv);
-    g_ptr_array_foreach(q5->clientes, imprime_just_keys_clientes, NULL);
+    print_q5_with_navegador(q5);
     printf("\n");
     printf("Q -> voltar ao menu principal\n\n");
     printf("-> ");
@@ -558,9 +546,7 @@ void query10(SGV sgv) {
                         system("clear");
                         printf("----Listagem de produtos comprados por um cliente num determinado mês por ordem decrescente de quantidade----\n");
                         Query10 q10 = getClientFavoriteProducts(sgv, codigoC, mes);
-                        printf("\n");
-                        g_ptr_array_foreach(q10->produtos_por_quantidade, imprime_keys_for_ptr_array, NULL);
-                        printf("\n");
+                        print_q10_with_navegador(q10);
                         printf("Q -> voltar ao menu principal\n\n");
                         printf("-> ");
                         while (toupper(flagCycle[0]) != 'Q') {
@@ -596,7 +582,7 @@ void query10(SGV sgv) {
 void query11(SGV sgv) {
     char flagCycle[2];
     flagCycle[0] = 'a';
-    char tmp[3];
+    char tmp[6];
     int limit;
     bool flagInput1 = true;
     char aux;
@@ -606,7 +592,7 @@ void query11(SGV sgv) {
     while (flagInput1) {
         i = 0;
         while ((aux = fgetc(stdin)) != '\n'){
-            if ((i+1) < 3){
+            if ((i+1) < 6){
                 tmp[i] = aux;
                 i++;
             }
@@ -619,9 +605,7 @@ void query11(SGV sgv) {
                 system("clear");
                 printf("----Listagem dos N produtos mais vendidos----\n");
                 Query11 q11 = getTopSoldProducts(sgv, limit);
-                printf("\n");
-                g_ptr_array_foreach(q11->top_n, imprime_info, NULL);
-                printf("\n");
+                print_q11_with_navegador(q11);
                 printf("Q -> voltar ao menu principal\n\n");
                 printf("-> ");
                 while (toupper(flagCycle[0]) != 'Q') {
@@ -651,7 +635,7 @@ void query11(SGV sgv) {
 void query12(SGV sgv) {
     char flagCycle[2];
     flagCycle[0] = 'a';
-    char tmp[3];
+    char tmp[6];
     char codigoC[6];
     int limit;
     bool flagInput1 = true;
@@ -679,7 +663,7 @@ void query12(SGV sgv) {
             while (flagInput2) {
                 i = 0;
                 while ((aux = fgetc(stdin)) != '\n'){
-                    if ((i+1) < 3){
+                    if ((i+1) < 6){
                         tmp[i] = aux;
                         i++;
                     }
@@ -691,8 +675,7 @@ void query12(SGV sgv) {
                         flagInput2 = false;
                         printf("----Lista dos N produtos em que um determinado cliente gastou mais dinheiro----\n");
                         Query12 q12 = getClientTopProfitProducts(sgv, codigoC, limit);
-                        printf("\n");
-                        g_ptr_array_foreach(q12->top_n, imprime_just_keys_produtos_cli, NULL);
+                        print_q12_with_navegador(q12);
                         printf("\n");
                         printf("Q -> voltar ao menu principal\n\n");
                         printf("-> ");
