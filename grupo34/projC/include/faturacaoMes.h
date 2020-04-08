@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <glib.h>
-#include "vendas.h"
+#include "venda.h"
 #include "types.h"
 
 typedef struct faturacaoMes* FaturacaoMes;

@@ -1,10 +1,8 @@
 #include <ctype.h>
 #include "util.h"
 #include "produtos.h"
-#include "clientes.h"
 #include "month.h"
 #include "filialID.h"
-
 
 typedef struct produto {
     char* produtoID;
@@ -94,7 +92,7 @@ void destroy_produto(Produto produto) {
     free(produto);
 }
 
-void conta_vendas (void* value, void* user_data) {
+void conta_vendas(void* value, void* user_data) {
     int* resultado = (int*) user_data;
     *resultado += 1;
 }

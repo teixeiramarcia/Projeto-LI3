@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['p_5fc_5fc_5fget_5fn_5fprodutos_5fcomprados_332',['p_c_c_get_n_produtos_comprados',['../clientes_8h.html#a743ebf08ad6f7614dc57d9fd9c806aa0',1,'clientes.h']]],
+  ['p_5fn_5fv_5fget_5fprodutos_5fn_5fvendidos_333',['p_n_v_get_produtos_n_vendidos',['../produtos_8h.html#a1a0208a53999c6bf330c1a67aada0262',1,'produtos.h']]],
+  ['p_5fn_5fv_5fget_5fprodutos_5fn_5fvendidos_5fglobal_334',['p_n_v_get_produtos_n_vendidos_global',['../produtos_8h.html#acfc487484f32d09b919abe181fa016cf',1,'produtos.h']]],
+  ['p_5fq_5fget_5fid_335',['p_q_get_ID',['../clientes_8h.html#a9607398e96cb8f1abb61b017907062d2',1,'clientes.h']]],
+  ['print_5fq10_5fwith_5fnavegador_336',['print_q10_with_navegador',['../navegador_8h.html#a7fc616169a170479bafc73611f0d815f',1,'navegador.h']]],
+  ['print_5fq11_5fwith_5fnavegador_337',['print_q11_with_navegador',['../navegador_8h.html#a586e0faf4db724be64e219d2f6542ef0',1,'navegador.h']]],
+  ['print_5fq12_5fwith_5fnavegador_338',['print_q12_with_navegador',['../navegador_8h.html#a715624b3b876109eea080c68f82efbe6',1,'navegador.h']]],
+  ['print_5fq2_5fwith_5fnavegador_339',['print_q2_with_navegador',['../navegador_8h.html#aee8ebcda01dbd4c7f5d0da308043bbbf',1,'navegador.h']]],
+  ['print_5fq4_5fwith_5fnavegador_340',['print_q4_with_navegador',['../navegador_8h.html#aec3e020aa3d999785906ab5fb854add1',1,'navegador.h']]],
+  ['print_5fq5_5fwith_5fnavegador_341',['print_q5_with_navegador',['../navegador_8h.html#aeec8d3679d4047a38fa7f5c92e06238a',1,'navegador.h']]],
+  ['produto_5fget_5ffilial_342',['produto_get_filial',['../produtos_8h.html#a7cc47f83fe2138dd3fe5c5b0d219a613',1,'produtos.h']]],
+  ['produto_5fget_5fproductid_343',['produto_get_productID',['../produtos_8h.html#a45b2f3c5adc3e0c579d169c36b8141fe',1,'produtos.h']]],
+  ['produtos_5fcli_5fcomparator_344',['produtos_cli_comparator',['../clientes_8h.html#ae25a96140ad018bb2537a72d49d9a5d0',1,'clientes.h']]],
+  ['produtos_5fcomparator_345',['produtos_comparator',['../produtos_8h.html#a90e278d2f40f8c98c76f229ec5ee9e0c',1,'produtos.h']]],
+  ['produtos_5fcomparator_5fid_346',['produtos_comparator_id',['../produtos_8h.html#af01183530fec6995e99be39c4cb949c9',1,'produtos.h']]],
+  ['produtos_5fforeach_5fstarted_5fby_347',['produtos_foreach_started_by',['../produtos_8h.html#a6df84779428be6e212fc02acec5148ff',1,'produtos.h']]],
+  ['produtos_5fget_5ffilial_348',['produtos_get_filial',['../produtos_8h.html#ac18f184add4295cf5beafdf999b57414',1,'produtos.h']]],
+  ['produtos_5fget_5fproduto_349',['produtos_get_produto',['../produtos_8h.html#ae9d8e42d29b3a8cdde191b458f9f125c',1,'produtos.h']]],
+  ['produtos_5fget_5fprodutos_5fletra_350',['produtos_get_produtos_letra',['../produtos_8h.html#ac0c2296548e856f0a7ffbc06ade648e9',1,'produtos.h']]]
+];

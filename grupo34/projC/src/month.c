@@ -1,5 +1,4 @@
 #include "month.h"
-#include <stddef.h>
 
 Month const MONTHS[N_MONTHS] = {
         janeiro,

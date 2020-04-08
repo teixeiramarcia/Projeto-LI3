@@ -1,9 +1,8 @@
 #include <ctype.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include "util.h"
 #include "clientes.h"
-#include "vendas.h"
+#include "venda.h"
 
 typedef struct produtoCli {
     char* prodID;
@@ -11,14 +10,14 @@ typedef struct produtoCli {
     double faturacao;
 } * ProdutoCli;
 
-typedef struct filiaisCli {
+typedef struct filialCli {
     int quantidade;
     GHashTable* produtos[12];
-} * FiliaisCli;
+} * FilialCli;
 
 typedef struct cliente {
     char* clienteID;
-    FiliaisCli filiaisCli[N_FILIAIS];
+    FilialCli filialCli[N_FILIAIS];
 } * Cliente;
 
 typedef struct clientes {
@@ -35,20 +34,20 @@ char* cliente_get_cliente_id(Cliente cliente) {
     return cliente->clienteID;
 }
 
-FiliaisCli cliente_get_filial(Cliente c, int branch) {
-    return c->filiaisCli[branch];
+FilialCli cliente_get_filial(Cliente c, int branch) {
+    return c->filialCli[branch];
 }
 
-int filiais_cli_get_quantidade(FiliaisCli fcli) {
+int filiais_cli_get_quantidade(FilialCli fcli) {
     return fcli->quantidade;
 }
 
-void filiais_cli_set_quantidade(FiliaisCli fcli, int qtd) {
+void filiais_cli_set_quantidade(FilialCli fcli, int qtd) {
     int a = filiais_cli_get_quantidade(fcli);
     fcli->quantidade = a + qtd;
 }
 
-GHashTable* filiais_cli_get_mes(FiliaisCli fcli, int mes) {
+GHashTable* filiais_cli_get_mes(FilialCli fcli, int mes) {
     return fcli->produtos[mes];
 }
 
@@ -69,10 +68,10 @@ bool adiciona_cliente(Clientes clis, char* cliID, int* validos) {
         Cliente cliente = (Cliente) malloc(sizeof(struct cliente));
         cliente->clienteID = strdup(cliID);
         for (int j = 0; j < N_FILIAIS; ++j) {
-            cliente->filiaisCli[j] = (FiliaisCli) malloc(sizeof(struct filiaisCli));
-            cliente->filiaisCli[j]->quantidade = 0;
+            cliente->filialCli[j] = (FilialCli) malloc(sizeof(struct filialCli));
+            cliente->filialCli[j]->quantidade = 0;
             for (int i = 0; i < 12; i++) {
-                cliente->filiaisCli[j]->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, free);
+                cliente->filialCli[j]->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, free);
 
             }
         }
@@ -95,7 +94,7 @@ void clientes_procurarCli(void* clienteID, void* cliente, void* resCli) {
     int* resCli_ = (int*) resCli;
     int count = 0;
     for (int i = 0; i < N_FILIAIS; i++) {
-        if (cliente_->filiaisCli[i]->quantidade == 0) {
+        if (cliente_->filialCli[i]->quantidade == 0) {
             count++;
         }
     }
@@ -107,17 +106,17 @@ void clientes_procurarCli(void* clienteID, void* cliente, void* resCli) {
 void update_clientes(Clientes clientes, Venda venda) {
     char* codigo_cliente = venda_get_codigo_cliente(venda);
     Cliente cliente = g_hash_table_lookup(clientes->clientes, codigo_cliente);
-    int qtd = filiais_cli_get_quantidade(cliente->filiaisCli[venda_get_filial(venda)]);
+    int qtd = filiais_cli_get_quantidade(cliente->filialCli[venda_get_filial(venda)]);
     int qtd_new = qtd + venda_get_unidades(venda);
-    filiais_cli_set_quantidade(cliente->filiaisCli[venda_get_filial(venda)], qtd_new);
-    ProdutoCli pcli = g_hash_table_lookup(cliente->filiaisCli[venda_get_filial(venda)]->produtos[venda_get_mes(venda)],
+    filiais_cli_set_quantidade(cliente->filialCli[venda_get_filial(venda)], qtd_new);
+    ProdutoCli pcli = g_hash_table_lookup(cliente->filialCli[venda_get_filial(venda)]->produtos[venda_get_mes(venda)],
                                           venda_get_codigo_produto(venda));
     if (pcli == NULL) {
         pcli = (ProdutoCli) malloc(sizeof(struct produtoCli));
         pcli->prodID = venda_get_codigo_produto(venda);
         pcli->quantidade = venda_get_unidades(venda);
         pcli->faturacao = venda_get_preco_unitario(venda) * venda_get_unidades(venda);
-        g_hash_table_insert(cliente->filiaisCli[venda_get_filial(venda)]->produtos[venda_get_mes(venda)], pcli->prodID,
+        g_hash_table_insert(cliente->filialCli[venda_get_filial(venda)]->produtos[venda_get_mes(venda)], pcli->prodID,
                             pcli);
     } else {
         pcli->quantidade += venda_get_unidades(venda);
@@ -130,7 +129,7 @@ void destroy_clientes(Clientes clientes) {
     free(clientes);
 }
 
-void destroy_filiais_cli(FiliaisCli fcli) {
+void destroy_filiais_cli(FilialCli fcli) {
     for (int i = 0; i < 12; ++i) {
         g_hash_table_destroy(fcli->produtos[i]);
     }
@@ -139,7 +138,7 @@ void destroy_filiais_cli(FiliaisCli fcli) {
 
 void destroy_cliente(Cliente cliente) {
     for (int i = 0; i < N_FILIAIS; ++i) {
-        destroy_filiais_cli(cliente->filiaisCli[i]);
+        destroy_filiais_cli(cliente->filialCli[i]);
     }
     free(cliente);
 }
@@ -174,7 +173,7 @@ void cliente_fez_compras_todas_filiais(void* key, void* value, void* user_data) 
     GPtrArray* clientes_resultado = (GPtrArray*) user_data;
     int r = 0;
     for (int i = 0; i < N_FILIAIS; i++) {
-        FiliaisCli fcli = cliente_get_filial(cliente, i);
+        FilialCli fcli = cliente_get_filial(cliente, i);
         if (filiais_cli_get_quantidade(fcli) != 0) {
             r++;
         }
@@ -252,19 +251,6 @@ void adiciona_produtos_q12(void* key, void* value, void* user_data) {
         produto_faturacao->faturacao = prod_cli->faturacao;
         g_hash_table_insert(resultado, prod_cli->prodID, produto_faturacao);
     }
-}
-
-int produtos_cliente_comparator(void const* prod_1, void const* prod_2) {
-    ProdutoFaturacao p1 = *((ProdutoFaturacao*) prod_1);
-    ProdutoFaturacao p2 = *((ProdutoFaturacao*) prod_2);
-    double faturacao_p1 = p1->faturacao;
-    double faturacao_p2 = p2->faturacao;
-    if (faturacao_p2 > faturacao_p1) {
-        return 1;
-    } else if (faturacao_p2 < faturacao_p1) {
-        return -1;
-    }
-    return 0;
 }
 
 void set_info_produtos_cliente(void* value, void* user_data) {

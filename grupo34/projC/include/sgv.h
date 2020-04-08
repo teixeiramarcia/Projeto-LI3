@@ -6,7 +6,7 @@
 #include <glib.h>
 #include "clientes.h"
 #include "produtos.h"
-#include "vendas.h"
+#include "venda.h"
 #include "types.h"
 
 typedef struct sgv* SGV;

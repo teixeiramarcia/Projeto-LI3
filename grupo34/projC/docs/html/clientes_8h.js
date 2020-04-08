@@ -1,0 +1,28 @@
+var clientes_8h =
+[
+    [ "make_clientes", "clientes_8h.html#a4d416683af3ed4be39c18c693f2cd1ed", null ],
+    [ "cliente_get_filial", "clientes_8h.html#a5347c3ea7bd5df6c0fec0d5d37201a53", null ],
+    [ "filiais_cli_get_quantidade", "clientes_8h.html#af5a5a9f530d0e43d81d027a2c6643ebc", null ],
+    [ "filiais_cli_get_mes", "clientes_8h.html#aa226a6bafb975c3c06e11d4ad22c1690", null ],
+    [ "adiciona_cliente", "clientes_8h.html#a59fa6eef63cd226f2b4ab83cc6b369c8", null ],
+    [ "clientes_get_clientes", "clientes_8h.html#aea94920d5cc2837c45a806ffab83f70f", null ],
+    [ "clientes_get_cliente", "clientes_8h.html#a95e52eefc8c7b8a16a3f6210d015d9b4", null ],
+    [ "clientes_procurarCli", "clientes_8h.html#ab237563708781a3436a5ede301764bac", null ],
+    [ "existe_cliente", "clientes_8h.html#a06fadc9d885de275617a899c46056dbe", null ],
+    [ "valida_cliente", "clientes_8h.html#a828bb937bff354620ee7d7add03d987c", null ],
+    [ "update_clientes", "clientes_8h.html#a9df9b4d5a90dadf49322b085d3f102cc", null ],
+    [ "destroy_clientes", "clientes_8h.html#ac60ac057aab75639c1e4d9a928e17f32", null ],
+    [ "destroy_cliente", "clientes_8h.html#a5d16bc5f55d6d5f663020f4e8e63d4ae", null ],
+    [ "make_produtos_comprados_cliente", "clientes_8h.html#ad5157c4ddb5d775fe00cd37389a29455", null ],
+    [ "p_c_c_get_n_produtos_comprados", "clientes_8h.html#a743ebf08ad6f7614dc57d9fd9c806aa0", null ],
+    [ "get_total_compras", "clientes_8h.html#af9cac875a03e7e52da76fa0724abb10d", null ],
+    [ "cliente_fez_compras_todas_filiais", "clientes_8h.html#aa8afb8940a9e661f2a6c4ba5b11a4d13", null ],
+    [ "clientes_comparator", "clientes_8h.html#ac7c99cd462741e0495b076af27aed317", null ],
+    [ "p_q_get_ID", "clientes_8h.html#a9607398e96cb8f1abb61b017907062d2", null ],
+    [ "get_produto_quantidade", "clientes_8h.html#ac74b64be543f074b92269a991ef1dfe8", null ],
+    [ "adiciona_produto_quantidade", "clientes_8h.html#ad10b5b097d9ef38ee1b0f74f2ee7d2c6", null ],
+    [ "produtos_cli_comparator", "clientes_8h.html#ae25a96140ad018bb2537a72d49d9a5d0", null ],
+    [ "adiciona_produtos_q12", "clientes_8h.html#a705926f795df4e48ff00748d771c7e2e", null ],
+    [ "set_info_produtos_cliente", "clientes_8h.html#af95738940138d7037e3135a912bad6bc", null ],
+    [ "get_maior", "clientes_8h.html#afc803620c91cb13df9d51e65bf16914b", null ]
+];

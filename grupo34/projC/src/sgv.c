@@ -36,9 +36,9 @@ Clientes read_clientes_with_fgets(FILE* file, Query13 q13) {
         linhas++;
     }
     printf("\n\n");
-    printf( BLUE "  Foi lido o ficheiro \"Clientes.txt\":\n" RESET );
-    printf( YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
-    printf( YELLOW "    Clientes válidos:" RESET " %d\n\n", validos);
+    printf(BLUE "  Foi lido o ficheiro \"Clientes.txt\":\n" RESET);
+    printf(YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
+    printf(YELLOW "    Clientes válidos:" RESET " %d\n\n", validos);
     q13->linhas_lidas_clientes = linhas;
     q13->linhas_validas_clientes = validos;
     return c;
@@ -54,9 +54,9 @@ Produtos read_produtos_with_fgets(FILE* file, Query13 q13) {
         adiciona_produto(p, c, &validos);
         linhas++;
     }
-    printf( BLUE "  Foi lido o ficheiro \"Produtos.txt\":\n" RESET);
-    printf( YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
-    printf( YELLOW "    Produtos válidos:" RESET " %d\n\n", validos);
+    printf(BLUE "  Foi lido o ficheiro \"Produtos.txt\":\n" RESET);
+    printf(YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
+    printf(YELLOW "    Produtos válidos:" RESET " %d\n\n", validos);
     q13->linhas_lidas_produtos = linhas;
     q13->linhas_validas_produtos = validos;
     return p;
@@ -73,9 +73,9 @@ void read_vendas_with_fgets(FILE* file, SGV sgv, Query13 q13) {
         sgv_adiciona_venda(sgv, venda, &validos);
         linhas++;
     }
-    printf( BLUE "  Foi lido o ficheiro \"Vendas.txt\":\n" RESET);
-    printf( YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
-    printf( YELLOW "    Vendas válidas:" RESET " %d\n\n", validos);
+    printf(BLUE "  Foi lido o ficheiro \"Vendas.txt\":\n" RESET);
+    printf(YELLOW "    Linhas lidas:" RESET " %d\n", linhas);
+    printf(YELLOW "    Vendas válidas:" RESET " %d\n\n", validos);
     q13->linhas_lidas_vendas = linhas;
     q13->linhas_validas_vendas = validos;
 }
@@ -239,7 +239,7 @@ Query7 getProductsBoughtByClient(SGV sgv, char* clientID) {
     ProdutosCompradosCliente p_c_c = make_produtos_comprados_cliente();
     for (int filial = 0; filial < N_FILIAIS; filial++) {
         for (int mes = 0; mes < N_MONTHS; ++mes) {
-            FiliaisCli fcli = cliente_get_filial(c, filial);
+            FilialCli fcli = cliente_get_filial(c, filial);
             GHashTable* mes_ = filiais_cli_get_mes(fcli, mes);
             int result = get_total_compras(mes_);
             *p_c_c_get_n_produtos_comprados(p_c_c, filial, mes) = result;
@@ -297,7 +297,7 @@ Query10 getClientFavoriteProducts(SGV sgv, char* clientID, int month) {
     Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
     GHashTable* produtos_resultado = g_hash_table_new_full(g_str_hash, str_compare, free, free);
     for (int filial = 0; filial < N_FILIAIS; filial++) {
-        FiliaisCli filial_cli = cliente_get_filial(c, filial);
+        FilialCli filial_cli = cliente_get_filial(c, filial);
         GHashTable* produtos_mes = filiais_cli_get_mes(filial_cli, INT_2_MONTH(month));
         g_hash_table_foreach(produtos_mes, get_produto_quantidade, produtos_resultado);
     }
@@ -330,7 +330,7 @@ Query12 getClientTopProfitProducts(SGV sgv, char* clientID, int limit) {
     GHashTable* produtos = g_hash_table_new(g_str_hash, str_compare);
     for (int filial = 0; filial < N_FILIAIS; filial++) {
         for (int mes = 0; mes < N_MONTHS; mes++) {
-            FiliaisCli filial_cli = cliente_get_filial(c, filial);
+            FilialCli filial_cli = cliente_get_filial(c, filial);
             GHashTable* produtos_mes = filiais_cli_get_mes(filial_cli, mes);
             g_hash_table_foreach(produtos_mes, adiciona_produtos_q12, produtos);
         }

@@ -1,5 +1,5 @@
 #include "faturacaoMes.h"
-#include "vendas.h"
+#include "venda.h"
 
 typedef struct faturacaoMes {
     double faturacao_promocao;
