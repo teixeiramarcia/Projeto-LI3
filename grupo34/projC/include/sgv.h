@@ -15,8 +15,6 @@ Produtos sgv_get_produtos(SGV sgv);
 
 Clientes sgv_get_clientes(SGV sgv);
 
-void sgv_adiciona_venda(SGV sgv, Venda venda, int* validos);
-
 SGV initSGV();
 
 SGV loadSGVFromFiles(SGV sgv, char const* filesFolderPath);
@@ -27,6 +25,8 @@ typedef struct query_2 {
     GHashTable* produtos_letra;
 } * Query2;
 
+void destroy_query2 (Query2 q2);
+
 typedef struct query_3 {
     double faturacao_normal[N_FILIAIS];
     double faturacao_promocao[N_FILIAIS];
@@ -34,30 +34,43 @@ typedef struct query_3 {
     int vendas_promocao[N_FILIAIS];
 } * Query3;
 
+void destroy_query3 (Query3 q3);
+
 typedef struct query_4 {
     GPtrArray* produtos_nunca_comprados[N_FILIAIS];
     GPtrArray* produtos_nunca_comprados_global;
     int total_produtos_nao_comprados[N_FILIAIS];
     int total_produtos_nao_comprados_global;
+    bool e_global;
 } * Query4;
+
+void destroy_query4 (Query4 q4);
 
 typedef struct query_5 {
     GPtrArray* clientes;
 } * Query5;
+
+void destroy_query5 (Query5 q5);
 
 typedef struct query_6 {
     int total_clientes_que_nunca_compraram;
     int total_produtos_nunca_comprados;
 } * Query6;
 
+void destroy_query6 (Query6 q6);
+
 typedef struct query_7 {
     int n_produtos_comprados[N_FILIAIS][N_MONTHS];
 } * Query7;
+
+void destroy_query7 (Query7 q7);
 
 typedef struct query_8 {
     int total_vendas_meses;
     double total_faturado_meses;
 } * Query8;
+
+void destroy_query8 (Query8 q8);
 
 typedef struct query_9 {
     GHashTable* clientes_que_compraram_produto_N_filial;
@@ -66,17 +79,25 @@ typedef struct query_9 {
     int total_clientes_P;
 } * Query9;
 
+void destroy_query9 (Query9 q9);
+
 typedef struct query_10 {
     GPtrArray* produtos_por_quantidade;
 } * Query10;
+
+void destroy_query10 (Query10 q10);
 
 typedef struct query_11 {
     GPtrArray* top_n;
 } * Query11;
 
+void destroy_query11 (Query11 q11);
+
 typedef struct query_12 {
     GPtrArray* top_n;
 } * Query12;
+
+void destroy_query12 (Query12 q12);
 
 typedef struct query_13 {
     int linhas_lidas_clientes;

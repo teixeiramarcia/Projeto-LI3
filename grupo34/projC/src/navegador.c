@@ -6,8 +6,8 @@
 #include <ctype.h>
 
 typedef struct navegador {
-    int posicao_inicio_resultados;
-    int indice;
+    size_t posicao_inicio_resultados;
+    size_t indice;
 } * Navegador;
 
 Navegador make_navegador() {
@@ -58,7 +58,7 @@ void imprime_informacao_produto(void* value, void* user_data) {
     navegador->indice++;
 }
 
-void auxiliar(void (* funcao)(), void* query, char* titulo) {
+void auxiliar(size_t (* funcao)(), void* query, char* titulo) {
     Navegador navegador = make_navegador();
     bool flagCycle = true;
     char tmp[3];
@@ -69,9 +69,9 @@ void auxiliar(void (* funcao)(), void* query, char* titulo) {
         printf(BLUE);
         printf("%s", titulo);
         printf(RESET);
-        printf(YELLOW "A mostrar resultados de %d até %d:\n\n" RESET, navegador->posicao_inicio_resultados,
+        printf(YELLOW "A mostrar resultados de %zu até %zu:\n\n" RESET, navegador->posicao_inicio_resultados,
                navegador->posicao_inicio_resultados + 10);
-        funcao(navegador, query);
+        size_t max_bound = funcao(navegador, query);
         printf(YELLOW "\n1 -> 10 resultados anteriores.\n2 -> 10 resultados seguintes.\n3 -> sair do catálogo.\n\n");
         printf("-> " RESET);
         i = 0;
@@ -87,12 +87,16 @@ void auxiliar(void (* funcao)(), void* query, char* titulo) {
         }
         switch (opcao) {
             case 1:
-                navegador->posicao_inicio_resultados -= 10;
+                if(navegador->posicao_inicio_resultados != 0){
+                    navegador->posicao_inicio_resultados -= 10;
+                }
                 navegador->indice = 0;
                 system("clear");
                 break;
             case 2:
-                navegador->posicao_inicio_resultados += 10;
+                if(navegador->posicao_inicio_resultados + 10 < max_bound){
+                    navegador->posicao_inicio_resultados += 10;
+                }
                 navegador->indice = 0;
                 system("clear");
                 break;
@@ -103,13 +107,15 @@ void auxiliar(void (* funcao)(), void* query, char* titulo) {
                 break;
         }
     }
+    free(navegador);
 }
 
 //query 2
-void print_q2(Navegador navegador, void* q_2) {
+size_t print_q2(Navegador navegador, void* q_2) {
     Query2 q2 = (Query2) q_2;
     printf(YELLOW "Total:" RESET "%d\n\n", g_hash_table_size(q2->produtos_letra));
     g_hash_table_foreach(q2->produtos_letra, imprime_10_hash_table, navegador);
+    return g_hash_table_size(q2->produtos_letra);
 }
 
 void print_q2_with_navegador(Query2 q2) {
@@ -118,27 +124,30 @@ void print_q2_with_navegador(Query2 q2) {
 }
 
 //query 4
-void print_q4(Navegador navegador, void* q_4) {
+size_t print_q4(Navegador navegador, void* q_4) {
     Query4 q4 = (Query4) q_4;
     printf(YELLOW "Total:" RESET "%d\n\n", q4->total_produtos_nao_comprados_global);
     g_ptr_array_foreach(q4->produtos_nunca_comprados_global, imprime_10, navegador);
+    return q4->total_produtos_nao_comprados_global;
 }
 
-void print_q4_2(Navegador navegador, void* array) {
+size_t print_q4_2(Navegador navegador, void* array) {
     GPtrArray* produtos_nunca_comprados = (GPtrArray*) array;
     g_ptr_array_foreach(produtos_nunca_comprados, imprime_10, navegador);
+    return produtos_nunca_comprados->len;
 }
 
-void print_q4_with_navegador(Query4 q4, int option) {
+void print_q4_with_navegador(Query4 q4, int option) { //FIXME no printfs, concat strings
     if (option == 0) {
         char* titulo = BLUE "----Listagem e total de produtos que nunca foram comprados----\n\n"
                        "Produtos nunca comprados em nenhuma filial:\n" RESET;
         auxiliar(print_q4, q4, titulo);
         return;
     }
-    char* titulo = BLUE "----Listagem e total de produtos que nunca foram comprados----\n\n";
     for (int filial = 0; filial < N_FILIAIS; ++filial) {
-        printf(BLUE "\n\n ------------------------------------------\n\n" RESET);
+        char* titulo = BLUE "\n\n ------------------------------------------\n\n"
+                            "----Listagem e total de produtos que nunca foram comprados----\n\n"
+                            YELLOW "Produtos nunca comprados na filial %d:\n" RESET, filial + 1;
         printf(YELLOW "Produtos nunca comprados na filial %d:\n" RESET, filial + 1);
         printf(YELLOW "Total:" RESET "%d\n\n", q4->total_produtos_nao_comprados[filial]);
         auxiliar(print_q4_2, q4->produtos_nunca_comprados[filial], titulo);
@@ -146,9 +155,10 @@ void print_q4_with_navegador(Query4 q4, int option) {
 }
 
 //query 5
-void print_q5(Navegador navegador, void* q_5) {
+size_t print_q5(Navegador navegador, void* q_5) {
     Query5 q5 = (Query5) q_5;
     g_ptr_array_foreach(q5->clientes, imprime_10, navegador);
+    return q5->clientes->len;
 }
 
 void print_q5_with_navegador(Query5 q5) {
@@ -157,9 +167,10 @@ void print_q5_with_navegador(Query5 q5) {
 }
 
 //query 10
-void print_q10(Navegador navegador, void* q_10) {
+size_t print_q10(Navegador navegador, void* q_10) {
     Query10 q10 = (Query10) q_10;
     g_ptr_array_foreach(q10->produtos_por_quantidade, imprime_info_produto_quantidade, navegador);
+    return q10->produtos_por_quantidade->len;
 }
 
 void print_q10_with_navegador(Query10 q10) {
@@ -168,9 +179,10 @@ void print_q10_with_navegador(Query10 q10) {
 }
 
 //query 11
-void print_q11(Navegador navegador, void* q_11) {
+size_t print_q11(Navegador navegador, void* q_11) {
     Query11 q11 = (Query11) q_11;
     g_ptr_array_foreach(q11->top_n, imprime_informacao_produto, navegador);
+    return q11->top_n->len;
 }
 
 void print_q11_with_navegador(Query11 q11) {
@@ -179,9 +191,10 @@ void print_q11_with_navegador(Query11 q11) {
 }
 
 //query 12
-void print_q12(Navegador navegador, void* q_12) {
+size_t print_q12(Navegador navegador, void* q_12) {
     Query12 q12 = (Query12) q_12;
     g_ptr_array_foreach(q12->top_n, imprime_10, navegador);
+    return q12->top_n->len;
 }
 
 void print_q12_with_navegador(Query12 q12) {

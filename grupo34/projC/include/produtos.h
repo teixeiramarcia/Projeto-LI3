@@ -38,6 +38,8 @@ GHashTable* p_n_v_get_produtos_n_vendidos_global(ProdutosNuncaVendidos p_n_v);
 
 GHashTable* p_n_v_get_produtos_n_vendidos(ProdutosNuncaVendidos p_n_v, int filial);
 
+void destroy_produtos_nunca_vendidos (ProdutosNuncaVendidos p_n_v);
+
 void set_de_e_ate_filial_p_n_v(ProdutosNuncaVendidos p_n_v, int from_branch, int to_branch);
 
 void destroy_produtos(Produtos produtos);
@@ -62,6 +64,8 @@ typedef struct top_produtos* TopProdutos;
 
 TopProdutos make_top_produtos(int limit);
 
+void destroy_top_produtos (TopProdutos t_p);
+
 GPtrArray* top_produtos_get_produtos(TopProdutos top_produtos);
 
 int produtos_comparator(void const* p1, void const* p2);
@@ -77,5 +81,7 @@ char* i_p_get_codigo_produto(InformacaoProduto i_p);
 int i_p_get_numero_compradores(InformacaoProduto i_p);
 
 int i_p_get_numero_vendido_filial(InformacaoProduto i_p, int filial);
+
+void destroy_informacao_produto (void* i_p);
 
 #endif

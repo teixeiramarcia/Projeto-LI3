@@ -7,6 +7,7 @@
 
 
 typedef struct venda {
+    char* venda_completa;
     char* codigo_produto;
     double preco_unitario;
     int unidades;
@@ -15,6 +16,11 @@ typedef struct venda {
     Month mes;
     FilialID filial;
 } * Venda;
+
+void destroy_venda (void* venda) {
+    free(((Venda) venda)->venda_completa);
+    free(venda);
+}
 
 char* venda_get_codigo_produto(Venda venda) {
     return venda->codigo_produto;
@@ -58,18 +64,19 @@ bool is_number(char* s) {
 
 bool is_price(char* s) {
     char* rest = strdup(s);
-
+    char* head_ptr = rest;
     bool res = is_number(strtok_r(rest, ".", &rest));
     res &= is_number(strtok_r(rest, ".", &rest));
     res &= (strtok_r(rest, ".", &rest) == NULL);
+    free(head_ptr);
     return res;
 }
 
-Venda valida_venda(Produtos prods, Clientes clientes, char* l) {
+Venda valida_venda(Produtos prods, Clientes clientes, char* line) {
     Venda venda = (Venda) malloc(sizeof(struct venda));
-
     int res = 0;
-    l = strdup(l);
+    char* l = strdup(line);
+    venda->venda_completa = l;
     char* token = strtok(l, " ");
     for (int i = 0; token != NULL; i++) {
         switch (i) {
@@ -80,7 +87,6 @@ Venda valida_venda(Produtos prods, Clientes clientes, char* l) {
                 }
                 break;
             case 1:
-
                 if (is_price(token)) {
                     res++;
                     venda->preco_unitario = atof(token);
@@ -122,7 +128,7 @@ Venda valida_venda(Produtos prods, Clientes clientes, char* l) {
         token = strtok(NULL, " ");
     }
     if (res != 7) {
-        free(venda);
+        destroy_venda(venda);
         return NULL;
     } else return venda;
 }

@@ -25,8 +25,8 @@ typedef struct clientes {
 } * Clientes;
 
 Clientes make_clientes() {
-    Clientes clientes = (Clientes) malloc(sizeof(struct clientes));
-    clientes->clientes = g_hash_table_new_full(g_str_hash, str_compare, free, (GDestroyNotify) destroy_cliente);
+    Clientes clientes = malloc(sizeof(struct clientes));
+    clientes->clientes = g_hash_table_new_full(g_str_hash, str_compare, free, destroy_cliente);
     return clientes;
 }
 
@@ -71,8 +71,7 @@ bool adiciona_cliente(Clientes clis, char* cliID, int* validos) {
             cliente->filialCli[j] = (FilialCli) malloc(sizeof(struct filialCli));
             cliente->filialCli[j]->quantidade = 0;
             for (int i = 0; i < 12; i++) {
-                cliente->filialCli[j]->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, free, free);
-
+                cliente->filialCli[j]->produtos[i] = g_hash_table_new_full(g_str_hash, str_compare, NULL, free);
             }
         }
         return g_hash_table_insert(clis->clientes, cliente->clienteID, cliente);
@@ -136,7 +135,8 @@ void destroy_filiais_cli(FilialCli fcli) {
     free(fcli);
 }
 
-void destroy_cliente(Cliente cliente) {
+void destroy_cliente(void* data) {
+    Cliente cliente = data;
     for (int i = 0; i < N_FILIAIS; ++i) {
         destroy_filiais_cli(cliente->filialCli[i]);
     }
@@ -148,7 +148,8 @@ typedef struct produtos_comprados_cliente {
 } * ProdutosCompradosCliente;
 
 ProdutosCompradosCliente make_produtos_comprados_cliente() {
-    return malloc(sizeof(struct produtos_comprados_cliente));
+    ProdutosCompradosCliente p_c_c = calloc(1, sizeof(struct produtos_comprados_cliente));
+    return p_c_c;
 }
 
 int* p_c_c_get_n_produtos_comprados(ProdutosCompradosCliente p_c_c, int filial, int month) {
@@ -241,15 +242,15 @@ typedef struct produto_faturacao {
 void adiciona_produtos_q12(void* key, void* value, void* user_data) {
     char* productID = (char*) key;
     ProdutoCli prod_cli = (ProdutoCli) value;
-    GHashTable* resultado = (GHashTable*) user_data;
-    if (g_hash_table_contains(resultado, prod_cli->prodID)) {
-        ProdutoFaturacao produto_faturacao = g_hash_table_lookup(resultado, prod_cli->prodID);
+    GHashTable* produtos = (GHashTable*) user_data;
+    if (g_hash_table_contains(produtos, prod_cli->prodID)) {
+        ProdutoFaturacao produto_faturacao = g_hash_table_lookup(produtos, prod_cli->prodID);
         produto_faturacao->faturacao += prod_cli->faturacao;
     } else {
         ProdutoFaturacao produto_faturacao = malloc(sizeof(struct produto_faturacao));
         produto_faturacao->prodID = productID;
         produto_faturacao->faturacao = prod_cli->faturacao;
-        g_hash_table_insert(resultado, prod_cli->prodID, produto_faturacao);
+        g_hash_table_insert(produtos, prod_cli->prodID, produto_faturacao);
     }
 }
 
@@ -259,20 +260,20 @@ void set_info_produtos_cliente(void* value, void* user_data) {
     g_ptr_array_add(resultado, produto->prodID);
 }
 
-ProdutoFaturacao get_maior(GList* lista) {
-    ProdutoFaturacao p_f = malloc(sizeof(struct produto_faturacao));
-    p_f->prodID = "";
-    p_f->faturacao = -1;
-    for (int i = 0; i < g_list_length(lista); ++i) {
-        ProdutoFaturacao produto = g_list_nth_data(lista, i);
-        if (produto->faturacao > p_f->faturacao) {
-            char* id = p_f->prodID;
-            double faturacao = p_f->faturacao;
-            p_f->prodID = produto->prodID;
-            p_f->faturacao = produto->faturacao;
-            produto->prodID = id;
-            produto->faturacao = faturacao;
+#include <stdio.h>
+ProdutoFaturacao get_maior(GList** lista) {
+    if(*lista == NULL) {
+        return NULL;
+    }
+    for(GList** prev = lista; *prev; prev = &((*prev)->next)) {
+        ProdutoFaturacao produto = (*prev)->data;
+        if (produto->faturacao > ((ProdutoFaturacao) (*lista)->data)->faturacao) {
+            lista = prev;
         }
     }
+    ProdutoFaturacao p_f = (*lista)->data;
+    GList* tmp = (*lista)->next;
+    g_list_free_1(*lista);
+    *lista = tmp;
     return p_f;
 }

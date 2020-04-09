@@ -6,6 +6,8 @@
 #include "month.h"
 #include "filialID.h"
 
+void destroy_venda (void* venda);
+
 char* venda_get_codigo_produto(Venda venda);
 
 double venda_get_preco_unitario(Venda venda);

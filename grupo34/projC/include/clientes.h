@@ -129,7 +129,7 @@ void destroy_clientes(Clientes clientes);
  *
  * @param cliente Cliente a libertar
 */
-void destroy_cliente(Cliente cliente);
+void destroy_cliente(void* cliente);
 
 /**
 @brief Aloca memória e inicializa a estrutura auxiliar da query 7, ProdutosCompradosCliente.
@@ -239,10 +239,10 @@ void set_info_produtos_cliente(void* value, void* user_data);
 @brief Função auxiliar da query 12 cujo objetivo é encontrar o maior elemento e eliminá-lo da GList para que não seja
  enontrado em passagens seguintes.
  *
- * @param lista GList* onde irá ser procurado o maior elemento
+ * @param lista GList** onde irá ser procurado o maior elemento
  *
 @return produto com a maior faturação encontrado
 */
-ProdutoFaturacao get_maior(GList* lista);
+ProdutoFaturacao get_maior(GList** lista);
 
 #endif

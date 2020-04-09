@@ -29,6 +29,7 @@ void query2(SGV sgv) {
             flagInput1 = false;
             Query2 q2 = getProductsStartedByLetter(sgv, toupper(letra[0]));
             print_q2_with_navegador(q2);
+            destroy_query2(q2);
             printf(BLUE "\nQ -> voltar ao menu principal\n\n");
             printf("-> " RESET);
             while (toupper(flagCycle[0]) != 'Q') {
@@ -141,6 +142,7 @@ void query3(SGV sgv) {
                                     }
                                     printf("\n");
                                 }
+                                destroy_query3(q3);
                                 printf(BLUE "Q -> voltar ao menu principal\n\n");
                                 printf("-> " RESET);
                                 while (toupper(flagCycle[0]) != 'Q') {
@@ -186,7 +188,7 @@ void query4(SGV sgv) {
     char aux;
     int i;
     printf(YELLOW "Resultados globais - Insira 0:\n");
-    printf("Resultados segregados por filiais - Insira 3:\n\n");
+    printf("Resultados segregados por filiais - Insira 1:\n\n");
     printf("-> " RESET);
     while (flagInput1) {
         i = 0;
@@ -199,12 +201,13 @@ void query4(SGV sgv) {
         tmp[i] = '\0';
         if (isdigit(tmp[0])) {
             tipo = atoi(tmp);
-            if (tipo == 0 || tipo == 3) {
+            if (tipo == 0 || tipo == 1) {
                 flagInput1 = false;
                 system("clear");
                 printf("\n");
                 Query4 q4 = getProductsNeverBought(sgv, tipo);
                 print_q4_with_navegador(q4, tipo);
+                destroy_query4(q4);
                 printf(BLUE "\nQ -> voltar ao menu principal\n\n");
                 printf("-> " RESET);
                 while (toupper(flagCycle[0]) != 'Q') {
@@ -238,6 +241,7 @@ void query5(SGV sgv) {
     printf("\n");
     Query5 q5 = getClientsOfAllBranches(sgv);
     print_q5_with_navegador(q5);
+    destroy_query5(q5);
     printf(BLUE "\nQ -> voltar ao menu principal\n\n");
     printf("-> " RESET);
     while (toupper(flagCycle[0]) != 'Q') {
@@ -259,11 +263,12 @@ void query6(SGV sgv) {
     char aux;
     int i;
     system("clear");
-    printf(BLUE "----Contagem de clientes que nunca efetuaram compras e de produtos que nunca foram comprados----\n\n");
+    printf(BLUE "----Contagem de clientes que nunca efetuaram compras e de produtos que nunca foram comprados----\n\n" RESET);
     Query6 q6 = getClientsAndProductsNeverBoughtCount(sgv);
-    printf("  Total de clientes que nunca efetuaram compras:" RESET " %d\n", q6->total_clientes_que_nunca_compraram);
+    printf(YELLOW "  Total de clientes que nunca efetuaram compras:" RESET " %d\n", q6->total_clientes_que_nunca_compraram);
     printf("\n");
     printf(YELLOW "  Total de produtos que nunca foram comprados:" RESET " %d\n\n", q6->total_produtos_nunca_comprados);
+    destroy_query6(q6);
     printf(BLUE "Q -> voltar ao menu principal\n\n");
     printf("-> " RESET);
     while (toupper(flagCycle[0]) != 'Q') {
@@ -320,6 +325,7 @@ void query7(SGV sgv) {
                 printf("\n");
             }
             printf("\n\n");
+            destroy_query7(q7);
             printf(BLUE "Q -> voltar ao menu principal\n\n");
             printf("-> " RESET);
             while (toupper(flagCycle[0]) != 'Q') {
@@ -387,6 +393,7 @@ void query8(SGV sgv) {
                                    q8->total_vendas_meses);
                             printf(YELLOW "  Faturação total no intervalo de meses indicado:" RESET " %f\n\n",
                                    q8->total_faturado_meses);
+                            destroy_query8(q8);
                             printf(BLUE "Q -> voltar ao menu principal\n\n");
                             printf("-> " RESET);
                             while (toupper(flagCycle[0]) != 'Q') {
@@ -471,6 +478,7 @@ void query9(SGV sgv) {
                         printf("Clientes que efetuaram compras em modo promoção:\n" RESET);
                         g_hash_table_foreach(q9->clientes_que_compraram_produto_P_filial, imprime_keys, NULL);
                         printf(YELLOW "\nNúmero total de clientes envolvidos:" RESET " %d\n\n", q9->total_clientes_P);
+                        destroy_query9(q9);
                         printf(BLUE "Q -> voltar ao menu principal\n\n");
                         printf("-> " RESET);
                         while (toupper(flagCycle[0]) != 'Q') {
@@ -542,6 +550,7 @@ void query10(SGV sgv) {
                         system("clear");
                         Query10 q10 = getClientFavoriteProducts(sgv, codigoC, mes);
                         print_q10_with_navegador(q10);
+                        destroy_query10(q10);
                         printf(BLUE "\nQ -> voltar ao menu principal\n\n");
                         printf("-> " RESET);
                         while (toupper(flagCycle[0]) != 'Q') {
@@ -597,6 +606,7 @@ void query11(SGV sgv) {
                 system("clear");
                 Query11 q11 = getTopSoldProducts(sgv, limit);
                 print_q11_with_navegador(q11);
+                destroy_query11(q11);
                 printf(BLUE "\nQ -> voltar ao menu principal\n\n");
                 printf("-> " RESET);
                 while (toupper(flagCycle[0]) != 'Q') {
@@ -664,6 +674,7 @@ void query12(SGV sgv) {
                         system("clear");
                         Query12 q12 = getClientTopProfitProducts(sgv, codigoC, limit);
                         print_q12_with_navegador(q12);
+                        destroy_query12(q12);
                         printf(BLUE "\nQ -> voltar ao menu principal\n\n");
                         printf("-> " RESET);
                         while (toupper(flagCycle[0]) != 'Q') {
@@ -796,8 +807,8 @@ int main(int argc, const char* argv[]) {
                 sgv = initSGV();
                 loadSGVFromFiles(sgv, argv[1]);
                 printf("\n");
-                printf("Q -> voltar ao menu principal\n\n");
-                printf("-> ");
+                printf( BLUE "Q -> voltar ao menu principal\n\n");
+                printf("-> " RESET );
                 strcpy(opcaoQ1, "a");
                 while (toupper(opcaoQ1[0]) != 'Q') {
                     i = 0;

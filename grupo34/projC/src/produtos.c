@@ -119,6 +119,14 @@ ProdutosNuncaVendidos make_produtos_nunca_vendidos() {
     return p_n_v;
 }
 
+void destroy_produtos_nunca_vendidos (ProdutosNuncaVendidos p_n_v) {
+    for(int i = 0; i < N_FILIAIS; i++) {
+        g_hash_table_destroy(p_n_v->produtos_n_vendidos[i]);
+    }
+    g_hash_table_destroy(p_n_v->produtos_n_vendidos_global);
+    free(p_n_v);
+}
+
 GHashTable* p_n_v_get_produtos_n_vendidos_global(ProdutosNuncaVendidos p_n_v) {
     return p_n_v->produtos_n_vendidos_global;
 }
@@ -241,10 +249,15 @@ typedef struct top_produtos {
 
 TopProdutos make_top_produtos(int limit) {
     TopProdutos top_produtos = malloc(sizeof(struct top_produtos));
-    top_produtos->produtos = g_ptr_array_new();
+    top_produtos->produtos = g_ptr_array_sized_new(limit);
     top_produtos->limite = limit;
     top_produtos->tamanho_atual = 0;
     return top_produtos;
+}
+
+void destroy_top_produtos (TopProdutos t_p) {
+    g_ptr_array_free(t_p->produtos, TRUE);
+    free(t_p);
 }
 
 GPtrArray* top_produtos_get_produtos(TopProdutos top_produtos) {
@@ -336,6 +349,11 @@ InformacaoProduto make_informacao_produto(char* codigo_produto) {
     return i_p;
 }
 
+void destroy_informacao_produto (void* data) {
+    InformacaoProduto i_p = (InformacaoProduto) data;
+    free(i_p);
+}
+
 void add_client_to(void* value, void* user_data) {
     Venda venda = (Venda) value;
     GHashTable* compradores = (GHashTable*) user_data;
@@ -362,4 +380,5 @@ void set_info_produtos(void* value, void* user_data) {
     }
     i_p->numero_compradores = g_hash_table_size(compradores);
     g_ptr_array_add(produtos_resultado, i_p);
+    g_hash_table_destroy(compradores);
 }
