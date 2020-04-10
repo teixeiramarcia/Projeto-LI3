@@ -14,7 +14,7 @@
 
 /**
 @brief Aloca memória e inicializa a estrutura de dados Clientes.
-
+ *
 @return estrutura de dados Clientes
 */
 Clientes make_clientes();
@@ -118,14 +118,14 @@ bool valida_cliente(char* l);
 void update_clientes(Clientes clientes, Venda venda);
 
 /**
-@brief Free da estrutura Clientes.
+@brief Liberta a memória alocada para a estrutura Clientes.
  *
  * @param clientes Clientes a libertar
 */
 void destroy_clientes(Clientes clientes);
 
 /**
-@brief Free da estrutura Cliente.
+@brief Liberta a memória alocada para a estrutura Cliente.
  *
  * @param cliente Cliente a libertar
 */

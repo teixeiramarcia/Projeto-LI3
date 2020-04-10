@@ -261,11 +261,12 @@ void set_info_produtos_cliente(void* value, void* user_data) {
 }
 
 #include <stdio.h>
+
 ProdutoFaturacao get_maior(GList** lista) {
-    if(*lista == NULL) {
+    if (*lista == NULL) {
         return NULL;
     }
-    for(GList** prev = lista; *prev; prev = &((*prev)->next)) {
+    for (GList** prev = lista; *prev; prev = &((*prev)->next)) {
         ProdutoFaturacao produto = (*prev)->data;
         if (produto->faturacao > ((ProdutoFaturacao) (*lista)->data)->faturacao) {
             lista = prev;

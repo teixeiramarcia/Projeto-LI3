@@ -1,6 +1,5 @@
 var produtos_8h =
 [
-    [ "TopProdutos", "produtos_8h.html#a6b2f193f196273ae00caf52323ea6353", null ],
     [ "make_produtos", "produtos_8h.html#a35c86ff60e5bdce874639c86966e851e", null ],
     [ "produtos_get_produtos_letra", "produtos_8h.html#ac0c2296548e856f0a7ffbc06ade648e9", null ],
     [ "adiciona_produto", "produtos_8h.html#a1b5044ea5e178335088be60d90ad6c1c", null ],
@@ -16,10 +15,10 @@ var produtos_8h =
     [ "guarda_se_nao_foi_vendido", "produtos_8h.html#a317de79ccb35389296e24017689f8694", null ],
     [ "p_n_v_get_produtos_n_vendidos_global", "produtos_8h.html#acfc487484f32d09b919abe181fa016cf", null ],
     [ "p_n_v_get_produtos_n_vendidos", "produtos_8h.html#a1a0208a53999c6bf330c1a67aada0262", null ],
+    [ "destroy_produtos_nunca_vendidos", "produtos_8h.html#ac63d88357dc30204c07d7a0d1a1673b2", null ],
     [ "set_de_e_ate_filial_p_n_v", "produtos_8h.html#ac8290b46517c6ab3e9fabd3e487c606b", null ],
     [ "destroy_produtos", "produtos_8h.html#a6e2e8f9a352610aa767db8ab580ff396", null ],
     [ "destroy_produto", "produtos_8h.html#a4f87f3865f6ddebfaea82f9c9c5c96f4", null ],
-    [ "for_each_conta_vendas", "produtos_8h.html#a1e375a2bd4772d04c11c104c03d34f36", null ],
     [ "make_produtos_nunca_vendidos", "produtos_8h.html#acdd3bc12b7c72c8a20ddfe44f2dc7abc", null ],
     [ "make_totais_vendas_faturacao", "produtos_8h.html#a7ae7568d310e7a319b6973a68504e182", null ],
     [ "t_v_f_get_total_vendas", "produtos_8h.html#aa900296ad1bbba7458f34dd240ed32cf", null ],
@@ -27,6 +26,7 @@ var produtos_8h =
     [ "t_v_f_set_limites", "produtos_8h.html#a04b25aa8a60f738b393649761e146cc5", null ],
     [ "get_totais", "produtos_8h.html#ac763a0229dd1eec7b077dd19899ccf37", null ],
     [ "make_top_produtos", "produtos_8h.html#a23b715cc4fb4aef3d9e5356e6ad1e792", null ],
+    [ "destroy_top_produtos", "produtos_8h.html#ac566e9dba6089d084923ccf693f8a475", null ],
     [ "top_produtos_get_produtos", "produtos_8h.html#a0ef4c69ffa5f4a53ea357fdbe3cc5479", null ],
     [ "produtos_comparator", "produtos_8h.html#a90e278d2f40f8c98c76f229ec5ee9e0c", null ],
     [ "produtos_comparator_id", "produtos_8h.html#af01183530fec6995e99be39c4cb949c9", null ],
@@ -34,5 +34,6 @@ var produtos_8h =
     [ "set_info_produtos", "produtos_8h.html#a54464422b395efb0077f9cc3e4bebb07", null ],
     [ "i_p_get_codigo_produto", "produtos_8h.html#ab45ab7b27309b7c05b62fb3e1a028acd", null ],
     [ "i_p_get_numero_compradores", "produtos_8h.html#a1da404f3169409d09946bc4b85eff70c", null ],
-    [ "i_p_get_numero_vendido_filial", "produtos_8h.html#afde9765be0d028985e79b6cc2af421c0", null ]
+    [ "i_p_get_numero_vendido_filial", "produtos_8h.html#afde9765be0d028985e79b6cc2af421c0", null ],
+    [ "destroy_informacao_produto", "produtos_8h.html#a0bab5827bb28dbee1cecef5716d737eb", null ]
 ];

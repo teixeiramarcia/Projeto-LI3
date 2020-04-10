@@ -1,27 +1,7 @@
 var searchData=
 [
-  ['query10_155',['Query10',['../sgv_8h.html#a4ce7a901cc186d92081d821647995b91',1,'sgv.h']]],
-  ['query11_156',['Query11',['../sgv_8h.html#ad50c25c065f6a8f8de7c7ae1e1f47102',1,'sgv.h']]],
-  ['query12_157',['Query12',['../sgv_8h.html#a52f668e3141a5c1cf9ad9c70d5ffac75',1,'sgv.h']]],
-  ['query13_158',['Query13',['../sgv_8h.html#a884e85595ca2347e0ddbb587aafdf121',1,'sgv.h']]],
-  ['query2_159',['Query2',['../sgv_8h.html#a938c3b5465e4a2af03e568d6728654c2',1,'sgv.h']]],
-  ['query3_160',['Query3',['../sgv_8h.html#ae35cec82162b3dfd325c371993033d17',1,'sgv.h']]],
-  ['query4_161',['Query4',['../sgv_8h.html#a65fab6eedbbfb1c4c4da2020f7b0e36b',1,'sgv.h']]],
-  ['query5_162',['Query5',['../sgv_8h.html#ae101861496749e640a2bfc1503eab437',1,'sgv.h']]],
-  ['query6_163',['Query6',['../sgv_8h.html#a8df7b063d0a5f1a22e5240d064b498ac',1,'sgv.h']]],
-  ['query7_164',['Query7',['../sgv_8h.html#a55c480cb2ffd2e916997faefd54b1d79',1,'sgv.h']]],
-  ['query8_165',['Query8',['../sgv_8h.html#af934fe171f86160bdce1a15a28bc7597',1,'sgv.h']]],
-  ['query9_166',['Query9',['../sgv_8h.html#aaca89cfa0968d3df01a680a1fefefdb2',1,'sgv.h']]],
-  ['query_5f10_167',['query_10',['../structquery__10.html',1,'']]],
-  ['query_5f11_168',['query_11',['../structquery__11.html',1,'']]],
-  ['query_5f12_169',['query_12',['../structquery__12.html',1,'']]],
-  ['query_5f13_170',['query_13',['../structquery__13.html',1,'']]],
-  ['query_5f2_171',['query_2',['../structquery__2.html',1,'']]],
-  ['query_5f3_172',['query_3',['../structquery__3.html',1,'']]],
-  ['query_5f4_173',['query_4',['../structquery__4.html',1,'']]],
-  ['query_5f5_174',['query_5',['../structquery__5.html',1,'']]],
-  ['query_5f6_175',['query_6',['../structquery__6.html',1,'']]],
-  ['query_5f7_176',['query_7',['../structquery__7.html',1,'']]],
-  ['query_5f8_177',['query_8',['../structquery__8.html',1,'']]],
-  ['query_5f9_178',['query_9',['../structquery__9.html',1,'']]]
+  ['update_5fclientes_139',['update_clientes',['../clientes_8h.html#a9df9b4d5a90dadf49322b085d3f102cc',1,'clientes.h']]],
+  ['update_5ffaturacao_5fmes_140',['update_faturacao_mes',['../faturacao_mes_8h.html#a4766b22217642381f9e917619e9e4721',1,'faturacaoMes.h']]],
+  ['update_5ffilial_141',['update_filial',['../filial_8h.html#a68692cb04a8a380d181c32875ca9933c',1,'filial.h']]],
+  ['update_5fprodutos_142',['update_produtos',['../produtos_8h.html#a959b0bccfdc87ae86b70708a65915e71',1,'produtos.h']]]
 ];

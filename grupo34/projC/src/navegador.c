@@ -87,14 +87,14 @@ void auxiliar(size_t (* funcao)(), void* query, char* titulo) {
         }
         switch (opcao) {
             case 1:
-                if(navegador->posicao_inicio_resultados != 0){
+                if (navegador->posicao_inicio_resultados != 0) {
                     navegador->posicao_inicio_resultados -= 10;
                 }
                 navegador->indice = 0;
                 system("clear");
                 break;
             case 2:
-                if(navegador->posicao_inicio_resultados + 10 < max_bound){
+                if (navegador->posicao_inicio_resultados + 10 < max_bound) {
                     navegador->posicao_inicio_resultados += 10;
                 }
                 navegador->indice = 0;
@@ -137,7 +137,7 @@ size_t print_q4_2(Navegador navegador, void* array) {
     return produtos_nunca_comprados->len;
 }
 
-void print_q4_with_navegador(Query4 q4, int option) { //FIXME no printfs, concat strings
+void print_q4_with_navegador(Query4 q4, int option) {
     if (option == 0) {
         char* titulo = BLUE "----Listagem e total de produtos que nunca foram comprados----\n\n"
                        "Produtos nunca comprados em nenhuma filial:\n" RESET;
@@ -145,11 +145,13 @@ void print_q4_with_navegador(Query4 q4, int option) { //FIXME no printfs, concat
         return;
     }
     for (int filial = 0; filial < N_FILIAIS; ++filial) {
-        char* titulo = BLUE "\n\n ------------------------------------------\n\n"
-                            "----Listagem e total de produtos que nunca foram comprados----\n\n"
-                            YELLOW "Produtos nunca comprados na filial %d:\n" RESET, filial + 1;
-        printf(YELLOW "Produtos nunca comprados na filial %d:\n" RESET, filial + 1);
-        printf(YELLOW "Total:" RESET "%d\n\n", q4->total_produtos_nao_comprados[filial]);
+        char titulo[200];
+        sprintf(titulo,
+                BLUE   "----Listagem e total de produtos que nunca foram comprados----\n\n" RESET
+                YELLOW "Produtos nunca comprados na filial %d:\n"
+                        "Total: " RESET
+                        "%d\n\n",
+                filial + 1, q4->total_produtos_nao_comprados[filial]);
         auxiliar(print_q4_2, q4->produtos_nunca_comprados[filial], titulo);
     }
 }
@@ -162,7 +164,12 @@ size_t print_q5(Navegador navegador, void* q_5) {
 }
 
 void print_q5_with_navegador(Query5 q5) {
-    char* titulo = "----Listagem de clientes que efetuaram compras em todas as filiais----\n\n";
+    char titulo[200];
+    sprintf(titulo,
+            BLUE   "----Listagem de clientes que efetuaram compras em todas as filiais----\n\n"    RESET
+            YELLOW "Total: " RESET
+                   "%d\n\n",
+            q5->clientes->len);
     auxiliar(print_q5, q5, titulo);
 }
 

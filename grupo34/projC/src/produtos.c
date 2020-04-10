@@ -97,12 +97,6 @@ void conta_vendas(void* value, void* user_data) {
     *resultado += 1;
 }
 
-int for_each_conta_vendas(GPtrArray* vendas) {
-    int resultado = 0;
-    g_ptr_array_foreach(vendas, conta_vendas, &resultado);
-    return resultado;
-}
-
 typedef struct produtos_nunca_vendidos {
     int de_filial;
     int ate_filial;
@@ -119,8 +113,8 @@ ProdutosNuncaVendidos make_produtos_nunca_vendidos() {
     return p_n_v;
 }
 
-void destroy_produtos_nunca_vendidos (ProdutosNuncaVendidos p_n_v) {
-    for(int i = 0; i < N_FILIAIS; i++) {
+void destroy_produtos_nunca_vendidos(ProdutosNuncaVendidos p_n_v) {
+    for (int i = 0; i < N_FILIAIS; i++) {
         g_hash_table_destroy(p_n_v->produtos_n_vendidos[i]);
     }
     g_hash_table_destroy(p_n_v->produtos_n_vendidos_global);
@@ -255,7 +249,7 @@ TopProdutos make_top_produtos(int limit) {
     return top_produtos;
 }
 
-void destroy_top_produtos (TopProdutos t_p) {
+void destroy_top_produtos(TopProdutos t_p) {
     g_ptr_array_free(t_p->produtos, TRUE);
     free(t_p);
 }
@@ -349,7 +343,7 @@ InformacaoProduto make_informacao_produto(char* codigo_produto) {
     return i_p;
 }
 
-void destroy_informacao_produto (void* data) {
+void destroy_informacao_produto(void* data) {
     InformacaoProduto i_p = (InformacaoProduto) data;
     free(i_p);
 }

@@ -265,7 +265,8 @@ void query6(SGV sgv) {
     system("clear");
     printf(BLUE "----Contagem de clientes que nunca efetuaram compras e de produtos que nunca foram comprados----\n\n" RESET);
     Query6 q6 = getClientsAndProductsNeverBoughtCount(sgv);
-    printf(YELLOW "  Total de clientes que nunca efetuaram compras:" RESET " %d\n", q6->total_clientes_que_nunca_compraram);
+    printf(YELLOW "  Total de clientes que nunca efetuaram compras:" RESET " %d\n",
+           q6->total_clientes_que_nunca_compraram);
     printf("\n");
     printf(YELLOW "  Total de produtos que nunca foram comprados:" RESET " %d\n\n", q6->total_produtos_nunca_comprados);
     destroy_query6(q6);
@@ -306,8 +307,14 @@ void query7(SGV sgv) {
         if (valida_cliente(codigoC) && existe_cliente(c, codigoC)) {
             flagInput1 = false;
             system("clear");
-            printf(BLUE "----Contagem de compras efetuadas por um cliente, separadas por meses e filiais----\n\n" RESET);
             Query7 q7 = getProductsBoughtByClient(sgv, codigoC);
+            int total_compras = 0;
+            for (int filial = 0; filial < N_FILIAIS; ++filial)
+                for (int mes = 0; mes < N_MONTHS; ++mes) {
+                    total_compras += q7->n_produtos_comprados[filial][mes];
+                }
+            printf(BLUE   "----Contagem de compras efetuadas por um cliente, separadas por meses e filiais----\n\n" RESET
+                   YELLOW "Total: %d\n\n" RESET, total_compras);
             printf(YELLOW "%10s \uFF5C", "Filiais");
             for (int filial = 0; filial < N_FILIAIS; ++filial) {
                 printf("%10d ", filial + 1);
@@ -387,9 +394,9 @@ void query8(SGV sgv) {
                         if (umes >= pmes && umes < 13) {
                             flagInput2 = false;
                             system("clear");
-                            printf(BLUE "----Contagem de vendas e faturação total do SGV num intervalo de meses----\n\n");
+                            printf(BLUE "----Contagem de vendas e faturação total do SGV num intervalo de meses----\n\n" RESET);
                             Query8 q8 = getSalesAndProfit(sgv, pmes, umes);
-                            printf("  Total de vendas no intervalo de meses indicado:" RESET " %d\n",
+                            printf(YELLOW "  Total de vendas no intervalo de meses indicado:" RESET " %d\n",
                                    q8->total_vendas_meses);
                             printf(YELLOW "  Faturação total no intervalo de meses indicado:" RESET " %f\n\n",
                                    q8->total_faturado_meses);
@@ -807,8 +814,8 @@ int main(int argc, const char* argv[]) {
                 sgv = initSGV();
                 loadSGVFromFiles(sgv, argv[1]);
                 printf("\n");
-                printf( BLUE "Q -> voltar ao menu principal\n\n");
-                printf("-> " RESET );
+                printf(BLUE "Q -> voltar ao menu principal\n\n");
+                printf("-> " RESET);
                 strcpy(opcaoQ1, "a");
                 while (toupper(opcaoQ1[0]) != 'Q') {
                     i = 0;

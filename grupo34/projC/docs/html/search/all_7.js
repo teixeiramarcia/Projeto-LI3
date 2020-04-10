@@ -1,20 +1,4 @@
 var searchData=
 [
-  ['i_5fp_5fget_5fcodigo_5fproduto_76',['i_p_get_codigo_produto',['../produtos_8h.html#ab45ab7b27309b7c05b62fb3e1a028acd',1,'produtos.h']]],
-  ['i_5fp_5fget_5fnumero_5fcompradores_77',['i_p_get_numero_compradores',['../produtos_8h.html#a1da404f3169409d09946bc4b85eff70c',1,'produtos.h']]],
-  ['i_5fp_5fget_5fnumero_5fvendido_5ffilial_78',['i_p_get_numero_vendido_filial',['../produtos_8h.html#afde9765be0d028985e79b6cc2af421c0',1,'produtos.h']]],
-  ['imprime_5f10_79',['imprime_10',['../navegador_8h.html#abd27c0d07a81086cad5ad2fe13a8786a',1,'navegador.h']]],
-  ['imprime_5f10_5fhash_5ftable_80',['imprime_10_hash_table',['../navegador_8h.html#aa7bb581c014671faf942fa8b7d539d1b',1,'navegador.h']]],
-  ['imprime_5finfo_81',['imprime_info',['../util_8h.html#ab41917fdc7b4fcc26ff9b9144e0ac41d',1,'util.h']]],
-  ['imprime_5finfo_5fproduto_5fquantidade_82',['imprime_info_produto_quantidade',['../navegador_8h.html#a6201023d5f883181f89974ef3817f0d7',1,'navegador.h']]],
-  ['imprime_5finformacao_5fproduto_83',['imprime_informacao_produto',['../navegador_8h.html#aabad448a2086ed9a8e8c6a6a558f9fc3',1,'navegador.h']]],
-  ['imprime_5fjust_5fkeys_5fclientes_84',['imprime_just_keys_clientes',['../util_8h.html#ac3c5214e086f5d47c9db2e0907672daa',1,'util.h']]],
-  ['imprime_5fjust_5fkeys_5fprodutos_85',['imprime_just_keys_produtos',['../util_8h.html#a4e8a78b24eefa8554cbf275cbfe80776',1,'util.h']]],
-  ['imprime_5fjust_5fkeys_5fprodutos_5fcli_86',['imprime_just_keys_produtos_cli',['../util_8h.html#a906554d74200c278a9cceb59df0e5e85',1,'util.h']]],
-  ['imprime_5fkeys_87',['imprime_keys',['../util_8h.html#ae412c93df79d0ee16831a1060725ec32',1,'util.h']]],
-  ['imprime_5fkeys_5ffor_5fptr_5farray_88',['imprime_keys_for_ptr_array',['../util_8h.html#a7aef8f241bb25be91c7952bd32fa33e2',1,'util.h']]],
-  ['informacaoproduto_89',['InformacaoProduto',['../types_8h.html#ad8eaec391f42e51575aa7a4796bd3fbf',1,'types.h']]],
-  ['initsgv_90',['initSGV',['../sgv_8h.html#a14c3840c38c574667ca887b40c5250bb',1,'sgv.h']]],
-  ['int_5f2_5ffilial_91',['INT_2_FILIAL',['../filial_i_d_8h.html#a2595201d58f94d01727fda74e83f671a',1,'filialID.h']]],
-  ['int_5f2_5fmonth_92',['INT_2_MONTH',['../month_8h.html#a9c72df6b87e33cf328d6acf512166430',1,'month.h']]]
+  ['loadsgvfromfiles_74',['loadSGVFromFiles',['../sgv_8h.html#a9dd5c60a9315a9fd48884d6f8927dc42',1,'sgv.h']]]
 ];

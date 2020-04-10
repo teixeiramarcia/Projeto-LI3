@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sistema de Gestão de Vendas: include/venda.h Source File</title>
+<title>Sistema de Gestão de Vendas: /Users/marciateixeira/Desktop/LI3/Projeto-LI3/grupo34/projC/include/venda.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,57 +85,43 @@ $(document).ready(function(){initNavTree('venda_8h_source.html',''); initResizab
 <div class="title">venda.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="venda_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef VENDAS_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define VENDAS_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="produtos_8h.html">produtos.h</a>&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="types_8h.html">types.h</a>&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="month_8h.html">month.h</a>&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="filial_i_d_8h.html">filialID.h</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="venda_8h.html#a474e17fa8971dd9d055c4f2957d2c534">venda_get_codigo_produto</a>(<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda);</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">double</span> <a class="code" href="venda_8h.html#a3652a6c6c4495d686803b6af19f63a24">venda_get_preco_unitario</a>(<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda);</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef VENDAS_H</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define VENDAS_H</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="produtos_8h.html">produtos.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;types.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;month.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;filialID.h&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">int</span> <a class="code" href="venda_8h.html#a4593422a2ea8b52d680cac30e7c88481">venda_get_unidades</a>(<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">char</span> <a class="code" href="venda_8h.html#aac461b2e2b575fba7e9844b21349c978">venda_get_tipo_compra</a>(<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="venda_8h.html#adf8195b4cd5e878e3fb02417cef46b73">venda_get_codigo_cliente</a>(<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<a class="code" href="month_8h.html#a50f2945ee6ba1f0ebf3d1705c2650228">Month</a> <a class="code" href="venda_8h.html#a7720a8788c40772ed8f259d2d360e35e">venda_get_mes</a>(<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> <a class="code" href="venda_8h.html#a4e1f13e2aeaf1157c26cd51ed43307da">guarda_cliente</a>(<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda, GHashTable* vendas_n);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<a class="code" href="filial_i_d_8h.html#a7018adc826c7df3aca1463a969f5226f">FilialID</a> <a class="code" href="venda_8h.html#a6b39397d24635a2a88139386202445dc">venda_get_filial</a>(<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> <a class="code" href="venda_8h.html#a7f023e3be569bfbfdd107b9e29e97455">valida_venda</a>(<a class="code" href="types_8h.html#a571233bb71cd8e25a3f8096c95a2c03f">Produtos</a> prods, <a class="code" href="types_8h.html#a20cd1151c98f2d0d074d30f6b39a8839">Clientes</a> clientes, <span class="keywordtype">char</span>* l);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> destroy_venda(<span class="keywordtype">void</span>* venda);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">char</span>* venda_get_codigo_produto(Venda venda);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">double</span> venda_get_preco_unitario(Venda venda);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">int</span> venda_get_unidades(Venda venda);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">char</span> venda_get_tipo_compra(Venda venda);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">char</span>* venda_get_codigo_cliente(Venda venda);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;Month venda_get_mes(Venda venda);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> guarda_cliente(Venda venda, GHashTable* vendas);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;FilialID venda_get_filial(Venda venda);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;Venda valida_venda(Produtos prods, Clientes clientes, <span class="keywordtype">char</span>* l);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="avenda_8h_html_a7720a8788c40772ed8f259d2d360e35e"><div class="ttname"><a href="venda_8h.html#a7720a8788c40772ed8f259d2d360e35e">venda_get_mes</a></div><div class="ttdeci">Month venda_get_mes(Venda venda)</div></div>
-<div class="ttc" id="atypes_8h_html_a20cd1151c98f2d0d074d30f6b39a8839"><div class="ttname"><a href="types_8h.html#a20cd1151c98f2d0d074d30f6b39a8839">Clientes</a></div><div class="ttdeci">struct clientes * Clientes</div><div class="ttdef"><b>Definition:</b> types.h:4</div></div>
-<div class="ttc" id="atypes_8h_html"><div class="ttname"><a href="types_8h.html">types.h</a></div></div>
-<div class="ttc" id="amonth_8h_html"><div class="ttname"><a href="month_8h.html">month.h</a></div></div>
-<div class="ttc" id="amonth_8h_html_a50f2945ee6ba1f0ebf3d1705c2650228"><div class="ttname"><a href="month_8h.html#a50f2945ee6ba1f0ebf3d1705c2650228">Month</a></div><div class="ttdeci">enum month Month</div><div class="ttdef"><b>Definition:</b> month.h:23</div></div>
-<div class="ttc" id="avenda_8h_html_a3652a6c6c4495d686803b6af19f63a24"><div class="ttname"><a href="venda_8h.html#a3652a6c6c4495d686803b6af19f63a24">venda_get_preco_unitario</a></div><div class="ttdeci">double venda_get_preco_unitario(Venda venda)</div></div>
-<div class="ttc" id="aprodutos_8h_html"><div class="ttname"><a href="produtos_8h.html">produtos.h</a></div></div>
-<div class="ttc" id="avenda_8h_html_a6b39397d24635a2a88139386202445dc"><div class="ttname"><a href="venda_8h.html#a6b39397d24635a2a88139386202445dc">venda_get_filial</a></div><div class="ttdeci">FilialID venda_get_filial(Venda venda)</div></div>
-<div class="ttc" id="atypes_8h_html_ac2b3fd46582fcdf632fb4211eeef252e"><div class="ttname"><a href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a></div><div class="ttdeci">struct venda * Venda</div><div class="ttdef"><b>Definition:</b> types.h:11</div></div>
-<div class="ttc" id="atypes_8h_html_a571233bb71cd8e25a3f8096c95a2c03f"><div class="ttname"><a href="types_8h.html#a571233bb71cd8e25a3f8096c95a2c03f">Produtos</a></div><div class="ttdeci">struct produtos * Produtos</div><div class="ttdef"><b>Definition:</b> types.h:9</div></div>
-<div class="ttc" id="avenda_8h_html_aac461b2e2b575fba7e9844b21349c978"><div class="ttname"><a href="venda_8h.html#aac461b2e2b575fba7e9844b21349c978">venda_get_tipo_compra</a></div><div class="ttdeci">char venda_get_tipo_compra(Venda venda)</div></div>
-<div class="ttc" id="afilial_i_d_8h_html_a7018adc826c7df3aca1463a969f5226f"><div class="ttname"><a href="filial_i_d_8h.html#a7018adc826c7df3aca1463a969f5226f">FilialID</a></div><div class="ttdeci">enum filialID FilialID</div><div class="ttdef"><b>Definition:</b> filialID.h:15</div></div>
-<div class="ttc" id="avenda_8h_html_adf8195b4cd5e878e3fb02417cef46b73"><div class="ttname"><a href="venda_8h.html#adf8195b4cd5e878e3fb02417cef46b73">venda_get_codigo_cliente</a></div><div class="ttdeci">char * venda_get_codigo_cliente(Venda venda)</div></div>
-<div class="ttc" id="avenda_8h_html_a7f023e3be569bfbfdd107b9e29e97455"><div class="ttname"><a href="venda_8h.html#a7f023e3be569bfbfdd107b9e29e97455">valida_venda</a></div><div class="ttdeci">Venda valida_venda(Produtos prods, Clientes clientes, char *l)</div></div>
-<div class="ttc" id="afilial_i_d_8h_html"><div class="ttname"><a href="filial_i_d_8h.html">filialID.h</a></div></div>
-<div class="ttc" id="avenda_8h_html_a474e17fa8971dd9d055c4f2957d2c534"><div class="ttname"><a href="venda_8h.html#a474e17fa8971dd9d055c4f2957d2c534">venda_get_codigo_produto</a></div><div class="ttdeci">char * venda_get_codigo_produto(Venda venda)</div></div>
-<div class="ttc" id="avenda_8h_html_a4593422a2ea8b52d680cac30e7c88481"><div class="ttname"><a href="venda_8h.html#a4593422a2ea8b52d680cac30e7c88481">venda_get_unidades</a></div><div class="ttdeci">int venda_get_unidades(Venda venda)</div></div>
-<div class="ttc" id="avenda_8h_html_a4e1f13e2aeaf1157c26cd51ed43307da"><div class="ttname"><a href="venda_8h.html#a4e1f13e2aeaf1157c26cd51ed43307da">guarda_cliente</a></div><div class="ttdeci">void guarda_cliente(Venda venda, GHashTable *vendas_n)</div></div>
+<div class="ttc" id="aprodutos_8h_html"><div class="ttname"><a href="produtos_8h.html">produtos.h</a></div><div class="ttdoc">Módulo de tratamento de produtos.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="venda_8h.html">venda.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>venda.h</b></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>

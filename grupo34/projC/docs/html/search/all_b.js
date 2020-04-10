@@ -1,9 +1,27 @@
 var searchData=
 [
-  ['n_5ffiliais_117',['N_FILIAIS',['../filial_i_d_8h.html#a8db28573d465a75fd9a1939c0535142e',1,'filialID.h']]],
-  ['n_5fmonths_118',['N_MONTHS',['../month_8h.html#a75a0177bb0ec36462a4bb452435e1f6e',1,'month.h']]],
-  ['n_5fprodutos_5fcomprados_119',['n_produtos_comprados',['../structquery__7.html#a160cb0f148912ea5ef0db67df29c2b2d',1,'query_7']]],
-  ['navegador_120',['Navegador',['../types_8h.html#a338c0275ad3cb4cd2d1c76f134331358',1,'types.h']]],
-  ['navegador_2eh_121',['navegador.h',['../navegador_8h.html',1,'']]],
-  ['novembro_122',['novembro',['../month_8h.html#ade079186a24b67d34714f590c039cd28aa1e0774bfd119e972df3b1d0d55855c0',1,'month.h']]]
+  ['query10_104',['Query10',['../sgv_8h.html#a4ce7a901cc186d92081d821647995b91',1,'sgv.h']]],
+  ['query11_105',['Query11',['../sgv_8h.html#ad50c25c065f6a8f8de7c7ae1e1f47102',1,'sgv.h']]],
+  ['query12_106',['Query12',['../sgv_8h.html#a52f668e3141a5c1cf9ad9c70d5ffac75',1,'sgv.h']]],
+  ['query13_107',['Query13',['../sgv_8h.html#a884e85595ca2347e0ddbb587aafdf121',1,'sgv.h']]],
+  ['query2_108',['Query2',['../sgv_8h.html#a938c3b5465e4a2af03e568d6728654c2',1,'sgv.h']]],
+  ['query3_109',['Query3',['../sgv_8h.html#ae35cec82162b3dfd325c371993033d17',1,'sgv.h']]],
+  ['query4_110',['Query4',['../sgv_8h.html#a65fab6eedbbfb1c4c4da2020f7b0e36b',1,'sgv.h']]],
+  ['query5_111',['Query5',['../sgv_8h.html#ae101861496749e640a2bfc1503eab437',1,'sgv.h']]],
+  ['query6_112',['Query6',['../sgv_8h.html#a8df7b063d0a5f1a22e5240d064b498ac',1,'sgv.h']]],
+  ['query7_113',['Query7',['../sgv_8h.html#a55c480cb2ffd2e916997faefd54b1d79',1,'sgv.h']]],
+  ['query8_114',['Query8',['../sgv_8h.html#af934fe171f86160bdce1a15a28bc7597',1,'sgv.h']]],
+  ['query9_115',['Query9',['../sgv_8h.html#aaca89cfa0968d3df01a680a1fefefdb2',1,'sgv.h']]],
+  ['query_5f10_116',['query_10',['../structquery__10.html',1,'']]],
+  ['query_5f11_117',['query_11',['../structquery__11.html',1,'']]],
+  ['query_5f12_118',['query_12',['../structquery__12.html',1,'']]],
+  ['query_5f13_119',['query_13',['../structquery__13.html',1,'']]],
+  ['query_5f2_120',['query_2',['../structquery__2.html',1,'']]],
+  ['query_5f3_121',['query_3',['../structquery__3.html',1,'']]],
+  ['query_5f4_122',['query_4',['../structquery__4.html',1,'']]],
+  ['query_5f5_123',['query_5',['../structquery__5.html',1,'']]],
+  ['query_5f6_124',['query_6',['../structquery__6.html',1,'']]],
+  ['query_5f7_125',['query_7',['../structquery__7.html',1,'']]],
+  ['query_5f8_126',['query_8',['../structquery__8.html',1,'']]],
+  ['query_5f9_127',['query_9',['../structquery__9.html',1,'']]]
 ];

@@ -7,16 +7,16 @@
 
 #define CODE_SIZE 1024
 
-void destroy_query2 (Query2 q2) {
-   g_hash_table_destroy(q2->produtos_letra);
-   free(q2);
+void destroy_query2(Query2 q2) {
+    g_hash_table_destroy(q2->produtos_letra);
+    free(q2);
 }
 
-void destroy_query3 (Query3 q3) {
+void destroy_query3(Query3 q3) {
     free(q3);
 }
 
-void destroy_query4 (Query4 q4) {
+void destroy_query4(Query4 q4) {
     if (q4->e_global) {
         g_ptr_array_free(q4->produtos_nunca_comprados_global, TRUE);
     } else {
@@ -27,40 +27,40 @@ void destroy_query4 (Query4 q4) {
     free(q4);
 }
 
-void destroy_query5 (Query5 q5) {
+void destroy_query5(Query5 q5) {
     g_ptr_array_free(q5->clientes, TRUE);
     free(q5);
 }
 
-void destroy_query6 (Query6 q6) {
+void destroy_query6(Query6 q6) {
     free(q6);
 }
 
-void destroy_query7 (Query7 q7) {
+void destroy_query7(Query7 q7) {
     free(q7);
 }
 
-void destroy_query8 (Query8 q8) {
+void destroy_query8(Query8 q8) {
     free(q8);
 }
 
-void destroy_query9 (Query9 q9) {
+void destroy_query9(Query9 q9) {
     g_hash_table_destroy(q9->clientes_que_compraram_produto_N_filial);
     g_hash_table_destroy(q9->clientes_que_compraram_produto_P_filial);
     free(q9);
 }
 
-void destroy_query10 (Query10 q10) {
+void destroy_query10(Query10 q10) {
     g_ptr_array_free(q10->produtos_por_quantidade, TRUE);
     free(q10);
 }
 
-void destroy_query11 (Query11 q11) {
+void destroy_query11(Query11 q11) {
     g_ptr_array_free(q11->top_n, TRUE);
     free(q11);
 }
 
-void destroy_query12 (Query12 q12) {
+void destroy_query12(Query12 q12) {
     g_ptr_array_free(q12->top_n, TRUE);
     free(q12);
 }
@@ -210,9 +210,9 @@ Query3 getProductSalesAndProfit(SGV sgv, char* productID, int month) {
         Filial filial = produto_get_filial(produto, i);
         FaturacaoMes fmes = filial_get_faturacao_mes(filial, INT_2_MONTH(month));
         q3->faturacao_normal[i] += faturacao_mes_get_faturacao_normal(fmes);
-        q3->vendas_normal[i] += for_each_conta_vendas(faturacao_mes_get_vendas_normal(fmes));
+        q3->vendas_normal[i] += faturacao_mes_get_vendas_normal(fmes)->len;
         q3->faturacao_promocao[i] += faturacao_mes_get_faturacao_promocao(fmes);
-        q3->vendas_promocao[i] += for_each_conta_vendas(faturacao_mes_get_vendas_promocao(fmes));
+        q3->vendas_promocao[i] += faturacao_mes_get_vendas_promocao(fmes)->len;
     }
     return q3;
 }
@@ -353,13 +353,13 @@ Query9 getProductBuyers(SGV sgv, char* prodID, int branchID) {
 Query10 getClientFavoriteProducts(SGV sgv, char* clientID, int month) {
     Query10 q10 = malloc(sizeof(struct query_10));
     Cliente c = clientes_get_cliente(clientes_get_clientes(sgv->clientes), clientID);
-    GHashTable* produtos_resultado = g_hash_table_new_full(g_str_hash, str_compare, free, free);
+    GHashTable* produtos_resultado = g_hash_table_new(g_str_hash, str_compare);
     for (int filial = 0; filial < N_FILIAIS; filial++) {
         FilialCli filial_cli = cliente_get_filial(c, filial);
         GHashTable* produtos_mes = filiais_cli_get_mes(filial_cli, INT_2_MONTH(month));
         g_hash_table_foreach(produtos_mes, get_produto_quantidade, produtos_resultado);
     }
-    q10->produtos_por_quantidade = g_ptr_array_new();
+    q10->produtos_por_quantidade = g_ptr_array_new_with_free_func(free);
     g_hash_table_foreach(produtos_resultado, adiciona_produto_quantidade, q10->produtos_por_quantidade);
     g_ptr_array_sort(q10->produtos_por_quantidade, produtos_cli_comparator);
     g_hash_table_destroy(produtos_resultado);

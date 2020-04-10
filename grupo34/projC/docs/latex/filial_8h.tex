@@ -1,0 +1,101 @@
+\hypertarget{filial_8h}{}\doxysection{/\+Users/marciateixeira/\+Desktop/\+L\+I3/\+Projeto-\/\+L\+I3/grupo34/proj\+C/include/filial.h File Reference}
+\label{filial_8h}\index{/Users/marciateixeira/Desktop/LI3/Projeto-\/LI3/grupo34/projC/include/filial.h@{/Users/marciateixeira/Desktop/LI3/Projeto-\/LI3/grupo34/projC/include/filial.h}}
+
+
+Módulo de tratamento de uma filial.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$glib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}faturacao\+Mes.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}venda.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}month.\+h\char`\"{}}\newline
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{filial_8h_a08bf744062f8cfbf865e9226b00f0921}\label{filial_8h_a08bf744062f8cfbf865e9226b00f0921}} 
+typedef struct filial $\ast$ \mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}}
+\begin{DoxyCompactList}\small\item\em Estrutura Filial. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}} \mbox{\hyperlink{filial_8h_a1e76324251aacea90c3b6b2fa56af452}{make\+\_\+filial}} ()
+\begin{DoxyCompactList}\small\item\em Aloca memória e inicializa a estrutura de dados Filial. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{filial_8h_a68692cb04a8a380d181c32875ca9933c}{update\+\_\+filial}} (\mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}} filial, Venda venda)
+\begin{DoxyCompactList}\small\item\em Atualiza a estrutura Filial com uma nova venda. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} \mbox{\hyperlink{filial_8h_a466b1e41c016ae42440256e691bc602a}{filial\+\_\+get\+\_\+faturacao\+\_\+mes}} (\mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}} filial, Month month)
+\begin{DoxyCompactList}\small\item\em Obter a faturação numa determinada filial num determinado mês. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{filial_8h_aca92ae433aca5a3aea31a93c136747c7}{destroy\+\_\+filial}} (\mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}} filial)
+\begin{DoxyCompactList}\small\item\em Libertar a memória alocada para a estrutura Filial. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Módulo de tratamento de uma filial. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{filial_8h_a1e76324251aacea90c3b6b2fa56af452}\label{filial_8h_a1e76324251aacea90c3b6b2fa56af452}} 
+\index{filial.h@{filial.h}!make\_filial@{make\_filial}}
+\index{make\_filial@{make\_filial}!filial.h@{filial.h}}
+\doxysubsubsection{\texorpdfstring{make\_filial()}{make\_filial()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}} make\+\_\+filial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Aloca memória e inicializa a estrutura de dados Filial. 
+
+\begin{DoxyReturn}{Returns}
+estrutura de dados Filial 
+\end{DoxyReturn}
+\mbox{\Hypertarget{filial_8h_a68692cb04a8a380d181c32875ca9933c}\label{filial_8h_a68692cb04a8a380d181c32875ca9933c}} 
+\index{filial.h@{filial.h}!update\_filial@{update\_filial}}
+\index{update\_filial@{update\_filial}!filial.h@{filial.h}}
+\doxysubsubsection{\texorpdfstring{update\_filial()}{update\_filial()}}
+{\footnotesize\ttfamily void update\+\_\+filial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}}}]{filial,  }\item[{Venda}]{venda }\end{DoxyParamCaption})}
+
+
+
+Atualiza a estrutura Filial com uma nova venda. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filial} & Filial a ser alterada \\
+\hline
+{\em venda} & Venda a ser adicionada \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{filial_8h_a466b1e41c016ae42440256e691bc602a}\label{filial_8h_a466b1e41c016ae42440256e691bc602a}} 
+\index{filial.h@{filial.h}!filial\_get\_faturacao\_mes@{filial\_get\_faturacao\_mes}}
+\index{filial\_get\_faturacao\_mes@{filial\_get\_faturacao\_mes}!filial.h@{filial.h}}
+\doxysubsubsection{\texorpdfstring{filial\_get\_faturacao\_mes()}{filial\_get\_faturacao\_mes()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} filial\+\_\+get\+\_\+faturacao\+\_\+mes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}}}]{filial,  }\item[{Month}]{month }\end{DoxyParamCaption})}
+
+
+
+Obter a faturação numa determinada filial num determinado mês. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filial} & Filial a ser consultada \\
+\hline
+{\em month} & Month a ser consultado \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{filial_8h_aca92ae433aca5a3aea31a93c136747c7}\label{filial_8h_aca92ae433aca5a3aea31a93c136747c7}} 
+\index{filial.h@{filial.h}!destroy\_filial@{destroy\_filial}}
+\index{destroy\_filial@{destroy\_filial}!filial.h@{filial.h}}
+\doxysubsubsection{\texorpdfstring{destroy\_filial()}{destroy\_filial()}}
+{\footnotesize\ttfamily void destroy\+\_\+filial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{filial_8h_a08bf744062f8cfbf865e9226b00f0921}{Filial}}}]{filial }\end{DoxyParamCaption})}
+
+
+
+Libertar a memória alocada para a estrutura Filial. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filial} & Filial a ser libertada \\
+\hline
+\end{DoxyParams}

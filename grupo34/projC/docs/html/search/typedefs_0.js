@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['cliente_411',['Cliente',['../types_8h.html#a8127acac6384d842e33ee34e0e3f7c72',1,'types.h']]],
-  ['clientes_412',['Clientes',['../types_8h.html#a20cd1151c98f2d0d074d30f6b39a8839',1,'types.h']]]
+  ['faturacaomes_276',['FaturacaoMes',['../faturacao_mes_8h.html#a3a678b283695d4726aeb26f33d9d22d2',1,'faturacaoMes.h']]],
+  ['filial_277',['Filial',['../filial_8h.html#a08bf744062f8cfbf865e9226b00f0921',1,'filial.h']]]
 ];

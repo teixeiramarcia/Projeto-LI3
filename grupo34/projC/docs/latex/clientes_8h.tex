@@ -1,0 +1,531 @@
+\hypertarget{clientes_8h}{}\doxysection{/\+Users/marciateixeira/\+Desktop/\+L\+I3/\+Projeto-\/\+L\+I3/grupo34/proj\+C/include/clientes.h File Reference}
+\label{clientes_8h}\index{/Users/marciateixeira/Desktop/LI3/Projeto-\/LI3/grupo34/projC/include/clientes.h@{/Users/marciateixeira/Desktop/LI3/Projeto-\/LI3/grupo34/projC/include/clientes.h}}
+
+
+Módulo de tratamento de clientes.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$glib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}venda.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}filial\+I\+D.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Clientes \mbox{\hyperlink{clientes_8h_a4d416683af3ed4be39c18c693f2cd1ed}{make\+\_\+clientes}} ()
+\begin{DoxyCompactList}\small\item\em Aloca memória e inicializa a estrutura de dados Clientes. \end{DoxyCompactList}\item 
+Filial\+Cli \mbox{\hyperlink{clientes_8h_a5347c3ea7bd5df6c0fec0d5d37201a53}{cliente\+\_\+get\+\_\+filial}} (Cliente c, int branch)
+\begin{DoxyCompactList}\small\item\em Obter a estrutura de dados Filial\+Cli. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{clientes_8h_af5a5a9f530d0e43d81d027a2c6643ebc}{filiais\+\_\+cli\+\_\+get\+\_\+quantidade}} (Filial\+Cli fcli)
+\begin{DoxyCompactList}\small\item\em Obter a quantidade de vendas numa Filial\+Cli. \end{DoxyCompactList}\item 
+G\+Hash\+Table $\ast$ \mbox{\hyperlink{clientes_8h_aa226a6bafb975c3c06e11d4ad22c1690}{filiais\+\_\+cli\+\_\+get\+\_\+mes}} (Filial\+Cli fcli, int mes)
+\begin{DoxyCompactList}\small\item\em Obter os produtos vendidos num determinado mês. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{clientes_8h_a59fa6eef63cd226f2b4ab83cc6b369c8}{adiciona\+\_\+cliente}} (Clientes c, char $\ast$cliente, int $\ast$validos)
+\begin{DoxyCompactList}\small\item\em Adicionar um novo cliente ao sistema. \end{DoxyCompactList}\item 
+G\+Hash\+Table $\ast$ \mbox{\hyperlink{clientes_8h_aea94920d5cc2837c45a806ffab83f70f}{clientes\+\_\+get\+\_\+clientes}} (Clientes clientes)
+\begin{DoxyCompactList}\small\item\em Obter a estrutura de dados que contém todos os clientes que existe dentro da estrutura Clientes. \end{DoxyCompactList}\item 
+Cliente \mbox{\hyperlink{clientes_8h_a95e52eefc8c7b8a16a3f6210d015d9b4}{clientes\+\_\+get\+\_\+cliente}} (G\+Hash\+Table $\ast$clientes, char $\ast$cliente\+ID)
+\begin{DoxyCompactList}\small\item\em Obter um cliente através do seu identificador. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_ab237563708781a3436a5ede301764bac}{clientes\+\_\+procurar\+Cli}} (void $\ast$cliente, void $\ast$cliente\+ID, void $\ast$res\+Cli)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 6 que consulta o cliente e verifica se este nunca efetuou compras. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{clientes_8h_a06fadc9d885de275617a899c46056dbe}{existe\+\_\+cliente}} (Clientes c, char $\ast$cliente)
+\begin{DoxyCompactList}\small\item\em Verifica se um determinado cliente existe. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{clientes_8h_a828bb937bff354620ee7d7add03d987c}{valida\+\_\+cliente}} (char $\ast$l)
+\begin{DoxyCompactList}\small\item\em Verifica se o identificador de um cliente é válido. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_a9df9b4d5a90dadf49322b085d3f102cc}{update\+\_\+clientes}} (Clientes clientes, Venda venda)
+\begin{DoxyCompactList}\small\item\em Atualiza as vendas de um determinado cliente no sistema. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_ac60ac057aab75639c1e4d9a928e17f32}{destroy\+\_\+clientes}} (Clientes clientes)
+\begin{DoxyCompactList}\small\item\em Liberta a memória alocada para a estrutura Clientes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_a9c6dd34b3ccfacaa188121f97dc09de6}{destroy\+\_\+cliente}} (void $\ast$cliente)
+\begin{DoxyCompactList}\small\item\em Liberta a memória alocada para a estrutura Cliente. \end{DoxyCompactList}\item 
+Produtos\+Comprados\+Cliente \mbox{\hyperlink{clientes_8h_ad5157c4ddb5d775fe00cd37389a29455}{make\+\_\+produtos\+\_\+comprados\+\_\+cliente}} ()
+\begin{DoxyCompactList}\small\item\em Aloca memória e inicializa a estrutura auxiliar da query 7, Produtos\+Comprados\+Cliente. \end{DoxyCompactList}\item 
+int $\ast$ \mbox{\hyperlink{clientes_8h_a743ebf08ad6f7614dc57d9fd9c806aa0}{p\+\_\+c\+\_\+c\+\_\+get\+\_\+n\+\_\+produtos\+\_\+comprados}} (Produtos\+Comprados\+Cliente p\+\_\+c\+\_\+c, int filial, int month)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 7. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{clientes_8h_af9cac875a03e7e52da76fa0724abb10d}{get\+\_\+total\+\_\+compras}} (G\+Hash\+Table $\ast$mes)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 7. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_aa8afb8940a9e661f2a6c4ba5b11a4d13}{cliente\+\_\+fez\+\_\+compras\+\_\+todas\+\_\+filiais}} (void $\ast$key, void $\ast$value, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 5. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{clientes_8h_ac7c99cd462741e0495b076af27aed317}{clientes\+\_\+comparator}} (void const $\ast$cli1, void const $\ast$cli2)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 5 que permite comparar dois códigos de cliente para efeitos de ordenação alfabética. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{clientes_8h_a9607398e96cb8f1abb61b017907062d2}{p\+\_\+q\+\_\+get\+\_\+\+ID}} (Produto\+Quantidade p\+\_\+q)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 10. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_ac74b64be543f074b92269a991ef1dfe8}{get\+\_\+produto\+\_\+quantidade}} (void $\ast$key, void $\ast$value, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 10. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_ad10b5b097d9ef38ee1b0f74f2ee7d2c6}{adiciona\+\_\+produto\+\_\+quantidade}} (void $\ast$key, void $\ast$value, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 10. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{clientes_8h_ae25a96140ad018bb2537a72d49d9a5d0}{produtos\+\_\+cli\+\_\+comparator}} (void const $\ast$prod\+\_\+1, void const $\ast$prod\+\_\+2)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 10 que permite comparar dois Produto\+Cli para efeitos de ordenação pelas unidades compradas. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_a705926f795df4e48ff00748d771c7e2e}{adiciona\+\_\+produtos\+\_\+q12}} (void $\ast$key, void $\ast$value, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 12 cujo objetivo é adicionar produtos a uma Hash\+Table sob a forma de união (sem repetições). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{clientes_8h_af95738940138d7037e3135a912bad6bc}{set\+\_\+info\+\_\+produtos\+\_\+cliente}} (void $\ast$value, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 12. \end{DoxyCompactList}\item 
+Produto\+Faturacao \mbox{\hyperlink{clientes_8h_a877112b7c99acff36501e2c1da5bd875}{get\+\_\+maior}} (G\+List $\ast$$\ast$lista)
+\begin{DoxyCompactList}\small\item\em Função auxiliar da query 12 cujo objetivo é encontrar o maior elemento e eliminá-\/lo da G\+List para que não seja enontrado em passagens seguintes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Módulo de tratamento de clientes. 
+
+Módulo de tratamento de uma venda.
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{clientes_8h_a4d416683af3ed4be39c18c693f2cd1ed}\label{clientes_8h_a4d416683af3ed4be39c18c693f2cd1ed}} 
+\index{clientes.h@{clientes.h}!make\_clientes@{make\_clientes}}
+\index{make\_clientes@{make\_clientes}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{make\_clientes()}{make\_clientes()}}
+{\footnotesize\ttfamily Clientes make\+\_\+clientes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Aloca memória e inicializa a estrutura de dados Clientes. 
+
+\begin{DoxyReturn}{Returns}
+estrutura de dados Clientes 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_a5347c3ea7bd5df6c0fec0d5d37201a53}\label{clientes_8h_a5347c3ea7bd5df6c0fec0d5d37201a53}} 
+\index{clientes.h@{clientes.h}!cliente\_get\_filial@{cliente\_get\_filial}}
+\index{cliente\_get\_filial@{cliente\_get\_filial}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{cliente\_get\_filial()}{cliente\_get\_filial()}}
+{\footnotesize\ttfamily Filial\+Cli cliente\+\_\+get\+\_\+filial (\begin{DoxyParamCaption}\item[{Cliente}]{c,  }\item[{int}]{branch }\end{DoxyParamCaption})}
+
+
+
+Obter a estrutura de dados Filial\+Cli. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Cliente do qual se pretende obter a filial em que efetuou compras \\
+\hline
+{\em branch} & int que se pretende consultar\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+estrutura de dados Filial\+Cli 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_af5a5a9f530d0e43d81d027a2c6643ebc}\label{clientes_8h_af5a5a9f530d0e43d81d027a2c6643ebc}} 
+\index{clientes.h@{clientes.h}!filiais\_cli\_get\_quantidade@{filiais\_cli\_get\_quantidade}}
+\index{filiais\_cli\_get\_quantidade@{filiais\_cli\_get\_quantidade}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{filiais\_cli\_get\_quantidade()}{filiais\_cli\_get\_quantidade()}}
+{\footnotesize\ttfamily int filiais\+\_\+cli\+\_\+get\+\_\+quantidade (\begin{DoxyParamCaption}\item[{Filial\+Cli}]{fcli }\end{DoxyParamCaption})}
+
+
+
+Obter a quantidade de vendas numa Filial\+Cli. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fcli} & Filial\+Cli da qual se pretende obter a quantidade de compras efetuadas\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+número de vendas numa determinada filial 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_aa226a6bafb975c3c06e11d4ad22c1690}\label{clientes_8h_aa226a6bafb975c3c06e11d4ad22c1690}} 
+\index{clientes.h@{clientes.h}!filiais\_cli\_get\_mes@{filiais\_cli\_get\_mes}}
+\index{filiais\_cli\_get\_mes@{filiais\_cli\_get\_mes}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{filiais\_cli\_get\_mes()}{filiais\_cli\_get\_mes()}}
+{\footnotesize\ttfamily G\+Hash\+Table$\ast$ filiais\+\_\+cli\+\_\+get\+\_\+mes (\begin{DoxyParamCaption}\item[{Filial\+Cli}]{fcli,  }\item[{int}]{mes }\end{DoxyParamCaption})}
+
+
+
+Obter os produtos vendidos num determinado mês. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fcli} & Filial\+Cli da qual se pretende obter o mês \\
+\hline
+{\em mes} & int do qual se pretende obter a estrutura com os produtos comprados num determinado mês\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+G\+Hash\+Table que contém em cada posição um Produto\+Cli 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_a59fa6eef63cd226f2b4ab83cc6b369c8}\label{clientes_8h_a59fa6eef63cd226f2b4ab83cc6b369c8}} 
+\index{clientes.h@{clientes.h}!adiciona\_cliente@{adiciona\_cliente}}
+\index{adiciona\_cliente@{adiciona\_cliente}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{adiciona\_cliente()}{adiciona\_cliente()}}
+{\footnotesize\ttfamily bool adiciona\+\_\+cliente (\begin{DoxyParamCaption}\item[{Clientes}]{c,  }\item[{char $\ast$}]{cliente,  }\item[{int $\ast$}]{validos }\end{DoxyParamCaption})}
+
+
+
+Adicionar um novo cliente ao sistema. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Clientes estrutura onde vai ser adicionado o novo cliente \\
+\hline
+{\em cliente} & char$\ast$ identificador do cliente que se pretende adicionar caso seja válido é chamada recursivamente uma função que vai inicializar uma estrutura Cliente com o código fornecido \\
+\hline
+{\em validos} & int$\ast$ caso o cliente seja adicionado, será incrementado o conteúdo deste parâmetro\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true se tiver sido adicionado com sucesso, false no caso contrário 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_aea94920d5cc2837c45a806ffab83f70f}\label{clientes_8h_aea94920d5cc2837c45a806ffab83f70f}} 
+\index{clientes.h@{clientes.h}!clientes\_get\_clientes@{clientes\_get\_clientes}}
+\index{clientes\_get\_clientes@{clientes\_get\_clientes}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{clientes\_get\_clientes()}{clientes\_get\_clientes()}}
+{\footnotesize\ttfamily G\+Hash\+Table$\ast$ clientes\+\_\+get\+\_\+clientes (\begin{DoxyParamCaption}\item[{Clientes}]{clientes }\end{DoxyParamCaption})}
+
+
+
+Obter a estrutura de dados que contém todos os clientes que existe dentro da estrutura Clientes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clientes} & Clientes onde se pretende ir buscar a estrutura de dados\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+G\+Hash\+Table que contém em cada posição um Cliente 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_a95e52eefc8c7b8a16a3f6210d015d9b4}\label{clientes_8h_a95e52eefc8c7b8a16a3f6210d015d9b4}} 
+\index{clientes.h@{clientes.h}!clientes\_get\_cliente@{clientes\_get\_cliente}}
+\index{clientes\_get\_cliente@{clientes\_get\_cliente}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{clientes\_get\_cliente()}{clientes\_get\_cliente()}}
+{\footnotesize\ttfamily Cliente clientes\+\_\+get\+\_\+cliente (\begin{DoxyParamCaption}\item[{G\+Hash\+Table $\ast$}]{clientes,  }\item[{char $\ast$}]{cliente\+ID }\end{DoxyParamCaption})}
+
+
+
+Obter um cliente através do seu identificador. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clientes} & G\+Hash\+Table onde se encontram armazenados todos os clientes do sistema \\
+\hline
+{\em cliente\+ID} & identificador do cliente que se pretende encontrar\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+estrutura Cliente 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_ab237563708781a3436a5ede301764bac}\label{clientes_8h_ab237563708781a3436a5ede301764bac}} 
+\index{clientes.h@{clientes.h}!clientes\_procurarCli@{clientes\_procurarCli}}
+\index{clientes\_procurarCli@{clientes\_procurarCli}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{clientes\_procurarCli()}{clientes\_procurarCli()}}
+{\footnotesize\ttfamily void clientes\+\_\+procurar\+Cli (\begin{DoxyParamCaption}\item[{void $\ast$}]{cliente,  }\item[{void $\ast$}]{cliente\+ID,  }\item[{void $\ast$}]{res\+Cli }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 6 que consulta o cliente e verifica se este nunca efetuou compras. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cliente} & Cliente que é consultado \\
+\hline
+{\em cliente\+ID} & char$\ast$ variável inutilizada, mas exigida pela estrutura utilizada \\
+\hline
+{\em res\+Cli} & int$\ast$ variável cujo conteúdo é incrementado caso o cliente em causa não tenha efetuado compras em nenhuma filial \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_a06fadc9d885de275617a899c46056dbe}\label{clientes_8h_a06fadc9d885de275617a899c46056dbe}} 
+\index{clientes.h@{clientes.h}!existe\_cliente@{existe\_cliente}}
+\index{existe\_cliente@{existe\_cliente}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{existe\_cliente()}{existe\_cliente()}}
+{\footnotesize\ttfamily bool existe\+\_\+cliente (\begin{DoxyParamCaption}\item[{Clientes}]{c,  }\item[{char $\ast$}]{cliente }\end{DoxyParamCaption})}
+
+
+
+Verifica se um determinado cliente existe. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Clientes estrutura onde se encontram os clientes \\
+\hline
+{\em cliente} & char$\ast$ identificador do cliente a ser procurado\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true se o cliente for encontrado, false no caso contrário 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_a828bb937bff354620ee7d7add03d987c}\label{clientes_8h_a828bb937bff354620ee7d7add03d987c}} 
+\index{clientes.h@{clientes.h}!valida\_cliente@{valida\_cliente}}
+\index{valida\_cliente@{valida\_cliente}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{valida\_cliente()}{valida\_cliente()}}
+{\footnotesize\ttfamily bool valida\+\_\+cliente (\begin{DoxyParamCaption}\item[{char $\ast$}]{l }\end{DoxyParamCaption})}
+
+
+
+Verifica se o identificador de um cliente é válido. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em l} & char$\ast$ identificador a ser verificado\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true se o identificador for válido, false no caso contrário 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_a9df9b4d5a90dadf49322b085d3f102cc}\label{clientes_8h_a9df9b4d5a90dadf49322b085d3f102cc}} 
+\index{clientes.h@{clientes.h}!update\_clientes@{update\_clientes}}
+\index{update\_clientes@{update\_clientes}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{update\_clientes()}{update\_clientes()}}
+{\footnotesize\ttfamily void update\+\_\+clientes (\begin{DoxyParamCaption}\item[{Clientes}]{clientes,  }\item[{Venda}]{venda }\end{DoxyParamCaption})}
+
+
+
+Atualiza as vendas de um determinado cliente no sistema. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clientes} & Clientes onde se encontra o cliente \\
+\hline
+{\em venda} & Venda de onde é estraído o código do cliente para eventual procura do mesmo e a informação adicional para atualizar a estrutura Cliente \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_ac60ac057aab75639c1e4d9a928e17f32}\label{clientes_8h_ac60ac057aab75639c1e4d9a928e17f32}} 
+\index{clientes.h@{clientes.h}!destroy\_clientes@{destroy\_clientes}}
+\index{destroy\_clientes@{destroy\_clientes}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{destroy\_clientes()}{destroy\_clientes()}}
+{\footnotesize\ttfamily void destroy\+\_\+clientes (\begin{DoxyParamCaption}\item[{Clientes}]{clientes }\end{DoxyParamCaption})}
+
+
+
+Liberta a memória alocada para a estrutura Clientes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clientes} & Clientes a libertar \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_a9c6dd34b3ccfacaa188121f97dc09de6}\label{clientes_8h_a9c6dd34b3ccfacaa188121f97dc09de6}} 
+\index{clientes.h@{clientes.h}!destroy\_cliente@{destroy\_cliente}}
+\index{destroy\_cliente@{destroy\_cliente}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{destroy\_cliente()}{destroy\_cliente()}}
+{\footnotesize\ttfamily void destroy\+\_\+cliente (\begin{DoxyParamCaption}\item[{void $\ast$}]{cliente }\end{DoxyParamCaption})}
+
+
+
+Liberta a memória alocada para a estrutura Cliente. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cliente} & Cliente a libertar \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_ad5157c4ddb5d775fe00cd37389a29455}\label{clientes_8h_ad5157c4ddb5d775fe00cd37389a29455}} 
+\index{clientes.h@{clientes.h}!make\_produtos\_comprados\_cliente@{make\_produtos\_comprados\_cliente}}
+\index{make\_produtos\_comprados\_cliente@{make\_produtos\_comprados\_cliente}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{make\_produtos\_comprados\_cliente()}{make\_produtos\_comprados\_cliente()}}
+{\footnotesize\ttfamily Produtos\+Comprados\+Cliente make\+\_\+produtos\+\_\+comprados\+\_\+cliente (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Aloca memória e inicializa a estrutura auxiliar da query 7, Produtos\+Comprados\+Cliente. 
+
+\begin{DoxyReturn}{Returns}
+estrutura Produtos\+Comprados\+Cliente 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_a743ebf08ad6f7614dc57d9fd9c806aa0}\label{clientes_8h_a743ebf08ad6f7614dc57d9fd9c806aa0}} 
+\index{clientes.h@{clientes.h}!p\_c\_c\_get\_n\_produtos\_comprados@{p\_c\_c\_get\_n\_produtos\_comprados}}
+\index{p\_c\_c\_get\_n\_produtos\_comprados@{p\_c\_c\_get\_n\_produtos\_comprados}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{p\_c\_c\_get\_n\_produtos\_comprados()}{p\_c\_c\_get\_n\_produtos\_comprados()}}
+{\footnotesize\ttfamily int$\ast$ p\+\_\+c\+\_\+c\+\_\+get\+\_\+n\+\_\+produtos\+\_\+comprados (\begin{DoxyParamCaption}\item[{Produtos\+Comprados\+Cliente}]{p\+\_\+c\+\_\+c,  }\item[{int}]{filial,  }\item[{int}]{month }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 7. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+\_\+c\+\_\+c} & Produtos\+Comprados\+Cliente estrutura que vai ser consultada para obtenção do total de produtos comprados numa determinada filial e num determinado mês \\
+\hline
+{\em filial} & int a ser consultada \\
+\hline
+{\em month} & int a ser consultado\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+total de produtos comprados 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_af9cac875a03e7e52da76fa0724abb10d}\label{clientes_8h_af9cac875a03e7e52da76fa0724abb10d}} 
+\index{clientes.h@{clientes.h}!get\_total\_compras@{get\_total\_compras}}
+\index{get\_total\_compras@{get\_total\_compras}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{get\_total\_compras()}{get\_total\_compras()}}
+{\footnotesize\ttfamily int get\+\_\+total\+\_\+compras (\begin{DoxyParamCaption}\item[{G\+Hash\+Table $\ast$}]{mes }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 7. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mes} & G\+Hash\+Table a ser consultada para obtenção do total de compras\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+total de compras efetuadas 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_aa8afb8940a9e661f2a6c4ba5b11a4d13}\label{clientes_8h_aa8afb8940a9e661f2a6c4ba5b11a4d13}} 
+\index{clientes.h@{clientes.h}!cliente\_fez\_compras\_todas\_filiais@{cliente\_fez\_compras\_todas\_filiais}}
+\index{cliente\_fez\_compras\_todas\_filiais@{cliente\_fez\_compras\_todas\_filiais}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{cliente\_fez\_compras\_todas\_filiais()}{cliente\_fez\_compras\_todas\_filiais()}}
+{\footnotesize\ttfamily void cliente\+\_\+fez\+\_\+compras\+\_\+todas\+\_\+filiais (\begin{DoxyParamCaption}\item[{void $\ast$}]{key,  }\item[{void $\ast$}]{value,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 5. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & void$\ast$ identificador de um determinado cliente \\
+\hline
+{\em value} & void$\ast$ Cliente que se pretende consultar \\
+\hline
+{\em user\+\_\+data} & void$\ast$ estrutura de armazenamento dos identificadores dos clientes que efetuaram compras em todas as filiais \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_ac7c99cd462741e0495b076af27aed317}\label{clientes_8h_ac7c99cd462741e0495b076af27aed317}} 
+\index{clientes.h@{clientes.h}!clientes\_comparator@{clientes\_comparator}}
+\index{clientes\_comparator@{clientes\_comparator}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{clientes\_comparator()}{clientes\_comparator()}}
+{\footnotesize\ttfamily int clientes\+\_\+comparator (\begin{DoxyParamCaption}\item[{void const $\ast$}]{cli1,  }\item[{void const $\ast$}]{cli2 }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 5 que permite comparar dois códigos de cliente para efeitos de ordenação alfabética. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cli1} & void const$\ast$ identificador do cliente 1 \\
+\hline
+{\em cli2} & void const$\ast$ identificador do cliente 2\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 se forem iguais, $<$ 0 se o primeiro for antes do segundo, $>$ 0 se o primeiro for depois do segundo 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_a9607398e96cb8f1abb61b017907062d2}\label{clientes_8h_a9607398e96cb8f1abb61b017907062d2}} 
+\index{clientes.h@{clientes.h}!p\_q\_get\_ID@{p\_q\_get\_ID}}
+\index{p\_q\_get\_ID@{p\_q\_get\_ID}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{p\_q\_get\_ID()}{p\_q\_get\_ID()}}
+{\footnotesize\ttfamily char$\ast$ p\+\_\+q\+\_\+get\+\_\+\+ID (\begin{DoxyParamCaption}\item[{Produto\+Quantidade}]{p\+\_\+q }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 10. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+\_\+q} & Produto\+Quantidade estrutura da aqual se pretende obter o identificador do produto\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+identificador de um Produto\+Quantidade 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_ac74b64be543f074b92269a991ef1dfe8}\label{clientes_8h_ac74b64be543f074b92269a991ef1dfe8}} 
+\index{clientes.h@{clientes.h}!get\_produto\_quantidade@{get\_produto\_quantidade}}
+\index{get\_produto\_quantidade@{get\_produto\_quantidade}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{get\_produto\_quantidade()}{get\_produto\_quantidade()}}
+{\footnotesize\ttfamily void get\+\_\+produto\+\_\+quantidade (\begin{DoxyParamCaption}\item[{void $\ast$}]{key,  }\item[{void $\ast$}]{value,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 10. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & void$\ast$ identificador de um Produto\+Quantidade \\
+\hline
+{\em value} & void$\ast$ produto Produto\+Cli \\
+\hline
+{\em user\+\_\+data} & void$\ast$ G\+Hash\+Table onde será guardada a estrutura Produto\+Quantidade de um dos top produtos comprados por um determinado cliente \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_ad10b5b097d9ef38ee1b0f74f2ee7d2c6}\label{clientes_8h_ad10b5b097d9ef38ee1b0f74f2ee7d2c6}} 
+\index{clientes.h@{clientes.h}!adiciona\_produto\_quantidade@{adiciona\_produto\_quantidade}}
+\index{adiciona\_produto\_quantidade@{adiciona\_produto\_quantidade}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{adiciona\_produto\_quantidade()}{adiciona\_produto\_quantidade()}}
+{\footnotesize\ttfamily void adiciona\+\_\+produto\+\_\+quantidade (\begin{DoxyParamCaption}\item[{void $\ast$}]{key,  }\item[{void $\ast$}]{value,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 10. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & void$\ast$ identificador de um Produto\+Quantidade \\
+\hline
+{\em value} & void$\ast$ produto Produto\+Cli \\
+\hline
+{\em user\+\_\+data} & void$\ast$ G\+Hash\+Table onde será guardada a estrutura Produto\+Quantidade de um dos top produtos comprados por um determinado cliente \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_ae25a96140ad018bb2537a72d49d9a5d0}\label{clientes_8h_ae25a96140ad018bb2537a72d49d9a5d0}} 
+\index{clientes.h@{clientes.h}!produtos\_cli\_comparator@{produtos\_cli\_comparator}}
+\index{produtos\_cli\_comparator@{produtos\_cli\_comparator}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{produtos\_cli\_comparator()}{produtos\_cli\_comparator()}}
+{\footnotesize\ttfamily int produtos\+\_\+cli\+\_\+comparator (\begin{DoxyParamCaption}\item[{void const $\ast$}]{prod\+\_\+1,  }\item[{void const $\ast$}]{prod\+\_\+2 }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 10 que permite comparar dois Produto\+Cli para efeitos de ordenação pelas unidades compradas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prod\+\_\+1} & void const$\ast$ primeiro produto \\
+\hline
+{\em prod\+\_\+2} & void const$\ast$ segundo produto\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 se forem iguais, $<$ 0 se o primeiro for antes do segundo, $>$ 0 se o primeiro for depois do segundo 
+\end{DoxyReturn}
+\mbox{\Hypertarget{clientes_8h_a705926f795df4e48ff00748d771c7e2e}\label{clientes_8h_a705926f795df4e48ff00748d771c7e2e}} 
+\index{clientes.h@{clientes.h}!adiciona\_produtos\_q12@{adiciona\_produtos\_q12}}
+\index{adiciona\_produtos\_q12@{adiciona\_produtos\_q12}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{adiciona\_produtos\_q12()}{adiciona\_produtos\_q12()}}
+{\footnotesize\ttfamily void adiciona\+\_\+produtos\+\_\+q12 (\begin{DoxyParamCaption}\item[{void $\ast$}]{key,  }\item[{void $\ast$}]{value,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 12 cujo objetivo é adicionar produtos a uma Hash\+Table sob a forma de união (sem repetições). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & void$\ast$ identificador de um Produto\+Cli \\
+\hline
+{\em value} & void$\ast$ produto Produto\+Cli \\
+\hline
+{\em user\+\_\+data} & void$\ast$ G\+Hash\+Table onde será adicionado o identificador do produto \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_af95738940138d7037e3135a912bad6bc}\label{clientes_8h_af95738940138d7037e3135a912bad6bc}} 
+\index{clientes.h@{clientes.h}!set\_info\_produtos\_cliente@{set\_info\_produtos\_cliente}}
+\index{set\_info\_produtos\_cliente@{set\_info\_produtos\_cliente}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{set\_info\_produtos\_cliente()}{set\_info\_produtos\_cliente()}}
+{\footnotesize\ttfamily void set\+\_\+info\+\_\+produtos\+\_\+cliente (\begin{DoxyParamCaption}\item[{void $\ast$}]{value,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 12. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & void$\ast$ identificador de um Produto\+Faturacao \\
+\hline
+{\em user\+\_\+data} & void$\ast$ G\+Ptr\+Array(ordenado pela faturação) que vai guardar o identificador do Produto\+Faturação \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{clientes_8h_a877112b7c99acff36501e2c1da5bd875}\label{clientes_8h_a877112b7c99acff36501e2c1da5bd875}} 
+\index{clientes.h@{clientes.h}!get\_maior@{get\_maior}}
+\index{get\_maior@{get\_maior}!clientes.h@{clientes.h}}
+\doxysubsubsection{\texorpdfstring{get\_maior()}{get\_maior()}}
+{\footnotesize\ttfamily Produto\+Faturacao get\+\_\+maior (\begin{DoxyParamCaption}\item[{G\+List $\ast$$\ast$}]{lista }\end{DoxyParamCaption})}
+
+
+
+Função auxiliar da query 12 cujo objetivo é encontrar o maior elemento e eliminá-\/lo da G\+List para que não seja enontrado em passagens seguintes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lista} & G\+List$\ast$$\ast$ onde irá ser procurado o maior elemento\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+produto com a maior faturação encontrado 
+\end{DoxyReturn}

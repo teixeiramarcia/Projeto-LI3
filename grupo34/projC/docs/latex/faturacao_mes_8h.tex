@@ -1,0 +1,220 @@
+\hypertarget{faturacao_mes_8h}{}\doxysection{/\+Users/marciateixeira/\+Desktop/\+L\+I3/\+Projeto-\/\+L\+I3/grupo34/proj\+C/include/faturacao\+Mes.h File Reference}
+\label{faturacao_mes_8h}\index{/Users/marciateixeira/Desktop/LI3/Projeto-\/LI3/grupo34/projC/include/faturacaoMes.h@{/Users/marciateixeira/Desktop/LI3/Projeto-\/LI3/grupo34/projC/include/faturacaoMes.h}}
+
+
+Módulo de tratamento da faturação mensal dentro de uma determinada filial.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$glib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}venda.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}\label{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}} 
+typedef struct faturacao\+Mes $\ast$ \mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}
+\begin{DoxyCompactList}\small\item\em Estrutura Faturacao\+Mes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} \mbox{\hyperlink{faturacao_mes_8h_a066990733c80896c5abdd521a4ccc97e}{make\+\_\+faturacao\+\_\+mes}} ()
+\begin{DoxyCompactList}\small\item\em Aloca memória e inicializa a estrutura de dados Faturacao\+Mes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{faturacao_mes_8h_a4766b22217642381f9e917619e9e4721}{update\+\_\+faturacao\+\_\+mes}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes, Venda venda)
+\begin{DoxyCompactList}\small\item\em Atualiza a faturação mensal com uma nova venda. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{faturacao_mes_8h_af9f0f44204c1b36397839ae0f59269dd}{faturacao\+\_\+mes\+\_\+get\+\_\+faturacao\+\_\+promocao}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes)
+\begin{DoxyCompactList}\small\item\em Obter a faturação mensal em modo promoção. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{faturacao_mes_8h_af42e3945a8360453a8f91ef2b981cf45}{faturacao\+\_\+mes\+\_\+get\+\_\+total\+\_\+promocao}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes)
+\begin{DoxyCompactList}\small\item\em Obter o total de vendas mensal em modo promoção. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{faturacao_mes_8h_a71235d7bc60132cfdc2e7ab7120e8597}{faturacao\+\_\+mes\+\_\+get\+\_\+faturacao\+\_\+normal}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes)
+\begin{DoxyCompactList}\small\item\em Obter a faturação mensal em modo normal. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{faturacao_mes_8h_ad3c3fc1edab75e80531b792723d6e3ce}{faturacao\+\_\+mes\+\_\+get\+\_\+total\+\_\+normal}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes)
+\begin{DoxyCompactList}\small\item\em Obter o total de vendas mensal em modo normal. \end{DoxyCompactList}\item 
+G\+Ptr\+Array $\ast$ \mbox{\hyperlink{faturacao_mes_8h_a37a806114c368f1b1906b9d41bc62172}{faturacao\+\_\+mes\+\_\+get\+\_\+vendas\+\_\+normal}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes)
+\begin{DoxyCompactList}\small\item\em Obter as vendas mensais em modo normal. \end{DoxyCompactList}\item 
+G\+Ptr\+Array $\ast$ \mbox{\hyperlink{faturacao_mes_8h_a21fc6ccfac37cbc8d5435d3b74d5ec1a}{faturacao\+\_\+mes\+\_\+get\+\_\+vendas\+\_\+promocao}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes)
+\begin{DoxyCompactList}\small\item\em Obter as vendas mensais em modo promoção. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{faturacao_mes_8h_a68ea731c3c70f7577fb6e084411371da}{faturacao\+\_\+nao\+\_\+faturou}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes)
+\begin{DoxyCompactList}\small\item\em Verificar se um produto faturou ou não num determinado mês. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{faturacao_mes_8h_a4b9907e54be6a0dc01135a649ecfbe5f}{destroy\+\_\+faturacao\+\_\+mes}} (\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} fmes)
+\begin{DoxyCompactList}\small\item\em Liberta a memória alocada para a estrutura Faturacao\+Mes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Módulo de tratamento da faturação mensal dentro de uma determinada filial. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{faturacao_mes_8h_a066990733c80896c5abdd521a4ccc97e}\label{faturacao_mes_8h_a066990733c80896c5abdd521a4ccc97e}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!make\_faturacao\_mes@{make\_faturacao\_mes}}
+\index{make\_faturacao\_mes@{make\_faturacao\_mes}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{make\_faturacao\_mes()}{make\_faturacao\_mes()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}} make\+\_\+faturacao\+\_\+mes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Aloca memória e inicializa a estrutura de dados Faturacao\+Mes. 
+
+\begin{DoxyReturn}{Returns}
+estrutura de dados Faturacao\+Mes 
+\end{DoxyReturn}
+\mbox{\Hypertarget{faturacao_mes_8h_a4766b22217642381f9e917619e9e4721}\label{faturacao_mes_8h_a4766b22217642381f9e917619e9e4721}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!update\_faturacao\_mes@{update\_faturacao\_mes}}
+\index{update\_faturacao\_mes@{update\_faturacao\_mes}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{update\_faturacao\_mes()}{update\_faturacao\_mes()}}
+{\footnotesize\ttfamily void update\+\_\+faturacao\+\_\+mes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes,  }\item[{Venda}]{venda }\end{DoxyParamCaption})}
+
+
+
+Atualiza a faturação mensal com uma nova venda. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a ser atualizada \\
+\hline
+{\em venda} & Venda a ser colocada na estrutura \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{faturacao_mes_8h_af9f0f44204c1b36397839ae0f59269dd}\label{faturacao_mes_8h_af9f0f44204c1b36397839ae0f59269dd}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!faturacao\_mes\_get\_faturacao\_promocao@{faturacao\_mes\_get\_faturacao\_promocao}}
+\index{faturacao\_mes\_get\_faturacao\_promocao@{faturacao\_mes\_get\_faturacao\_promocao}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{faturacao\_mes\_get\_faturacao\_promocao()}{faturacao\_mes\_get\_faturacao\_promocao()}}
+{\footnotesize\ttfamily double faturacao\+\_\+mes\+\_\+get\+\_\+faturacao\+\_\+promocao (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes }\end{DoxyParamCaption})}
+
+
+
+Obter a faturação mensal em modo promoção. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a ser consultada\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+faturação mensal em modo promoção 
+\end{DoxyReturn}
+\mbox{\Hypertarget{faturacao_mes_8h_af42e3945a8360453a8f91ef2b981cf45}\label{faturacao_mes_8h_af42e3945a8360453a8f91ef2b981cf45}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!faturacao\_mes\_get\_total\_promocao@{faturacao\_mes\_get\_total\_promocao}}
+\index{faturacao\_mes\_get\_total\_promocao@{faturacao\_mes\_get\_total\_promocao}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{faturacao\_mes\_get\_total\_promocao()}{faturacao\_mes\_get\_total\_promocao()}}
+{\footnotesize\ttfamily int faturacao\+\_\+mes\+\_\+get\+\_\+total\+\_\+promocao (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes }\end{DoxyParamCaption})}
+
+
+
+Obter o total de vendas mensal em modo promoção. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a ser consultada\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+total de vendas mensal em modo promoção 
+\end{DoxyReturn}
+\mbox{\Hypertarget{faturacao_mes_8h_a71235d7bc60132cfdc2e7ab7120e8597}\label{faturacao_mes_8h_a71235d7bc60132cfdc2e7ab7120e8597}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!faturacao\_mes\_get\_faturacao\_normal@{faturacao\_mes\_get\_faturacao\_normal}}
+\index{faturacao\_mes\_get\_faturacao\_normal@{faturacao\_mes\_get\_faturacao\_normal}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{faturacao\_mes\_get\_faturacao\_normal()}{faturacao\_mes\_get\_faturacao\_normal()}}
+{\footnotesize\ttfamily double faturacao\+\_\+mes\+\_\+get\+\_\+faturacao\+\_\+normal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes }\end{DoxyParamCaption})}
+
+
+
+Obter a faturação mensal em modo normal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a ser consultada\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+faturação mensal em modo normal 
+\end{DoxyReturn}
+\mbox{\Hypertarget{faturacao_mes_8h_ad3c3fc1edab75e80531b792723d6e3ce}\label{faturacao_mes_8h_ad3c3fc1edab75e80531b792723d6e3ce}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!faturacao\_mes\_get\_total\_normal@{faturacao\_mes\_get\_total\_normal}}
+\index{faturacao\_mes\_get\_total\_normal@{faturacao\_mes\_get\_total\_normal}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{faturacao\_mes\_get\_total\_normal()}{faturacao\_mes\_get\_total\_normal()}}
+{\footnotesize\ttfamily int faturacao\+\_\+mes\+\_\+get\+\_\+total\+\_\+normal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes }\end{DoxyParamCaption})}
+
+
+
+Obter o total de vendas mensal em modo normal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a ser consultada\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+total de vendas mensal em modo normal 
+\end{DoxyReturn}
+\mbox{\Hypertarget{faturacao_mes_8h_a37a806114c368f1b1906b9d41bc62172}\label{faturacao_mes_8h_a37a806114c368f1b1906b9d41bc62172}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!faturacao\_mes\_get\_vendas\_normal@{faturacao\_mes\_get\_vendas\_normal}}
+\index{faturacao\_mes\_get\_vendas\_normal@{faturacao\_mes\_get\_vendas\_normal}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{faturacao\_mes\_get\_vendas\_normal()}{faturacao\_mes\_get\_vendas\_normal()}}
+{\footnotesize\ttfamily G\+Ptr\+Array$\ast$ faturacao\+\_\+mes\+\_\+get\+\_\+vendas\+\_\+normal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes }\end{DoxyParamCaption})}
+
+
+
+Obter as vendas mensais em modo normal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a ser consultada\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+G\+Ptr\+Array$\ast$ de vendas mensais em modo normal 
+\end{DoxyReturn}
+\mbox{\Hypertarget{faturacao_mes_8h_a21fc6ccfac37cbc8d5435d3b74d5ec1a}\label{faturacao_mes_8h_a21fc6ccfac37cbc8d5435d3b74d5ec1a}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!faturacao\_mes\_get\_vendas\_promocao@{faturacao\_mes\_get\_vendas\_promocao}}
+\index{faturacao\_mes\_get\_vendas\_promocao@{faturacao\_mes\_get\_vendas\_promocao}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{faturacao\_mes\_get\_vendas\_promocao()}{faturacao\_mes\_get\_vendas\_promocao()}}
+{\footnotesize\ttfamily G\+Ptr\+Array$\ast$ faturacao\+\_\+mes\+\_\+get\+\_\+vendas\+\_\+promocao (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes }\end{DoxyParamCaption})}
+
+
+
+Obter as vendas mensais em modo promoção. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a ser consultada\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+G\+Ptr\+Array$\ast$ de vendas mensais em modo promoção 
+\end{DoxyReturn}
+\mbox{\Hypertarget{faturacao_mes_8h_a68ea731c3c70f7577fb6e084411371da}\label{faturacao_mes_8h_a68ea731c3c70f7577fb6e084411371da}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!faturacao\_nao\_faturou@{faturacao\_nao\_faturou}}
+\index{faturacao\_nao\_faturou@{faturacao\_nao\_faturou}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{faturacao\_nao\_faturou()}{faturacao\_nao\_faturou()}}
+{\footnotesize\ttfamily bool faturacao\+\_\+nao\+\_\+faturou (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes }\end{DoxyParamCaption})}
+
+
+
+Verificar se um produto faturou ou não num determinado mês. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a ser consultada\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true se não tiver havido faturação, false no caso contrário 
+\end{DoxyReturn}
+\mbox{\Hypertarget{faturacao_mes_8h_a4b9907e54be6a0dc01135a649ecfbe5f}\label{faturacao_mes_8h_a4b9907e54be6a0dc01135a649ecfbe5f}} 
+\index{faturacaoMes.h@{faturacaoMes.h}!destroy\_faturacao\_mes@{destroy\_faturacao\_mes}}
+\index{destroy\_faturacao\_mes@{destroy\_faturacao\_mes}!faturacaoMes.h@{faturacaoMes.h}}
+\doxysubsubsection{\texorpdfstring{destroy\_faturacao\_mes()}{destroy\_faturacao\_mes()}}
+{\footnotesize\ttfamily void destroy\+\_\+faturacao\+\_\+mes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{faturacao_mes_8h_a3a678b283695d4726aeb26f33d9d22d2}{Faturacao\+Mes}}}]{fmes }\end{DoxyParamCaption})}
+
+
+
+Liberta a memória alocada para a estrutura Faturacao\+Mes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmes} & Faturacao\+Mes a libertar \\
+\hline
+\end{DoxyParams}

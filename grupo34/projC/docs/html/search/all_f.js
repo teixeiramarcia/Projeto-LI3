@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['red_179',['RED',['../colors_8h.html#a8d23feea868a983c8c2b661e1e16972f',1,'colors.h']]],
-  ['reset_180',['RESET',['../colors_8h.html#ab702106cf3b3e96750b6845ded4e0299',1,'colors.h']]]
+  ['valida_5fcliente_143',['valida_cliente',['../clientes_8h.html#a828bb937bff354620ee7d7add03d987c',1,'clientes.h']]],
+  ['valida_5fproduto_144',['valida_produto',['../produtos_8h.html#abaa11aae86062db80ecb0e26394617e3',1,'produtos.h']]]
 ];

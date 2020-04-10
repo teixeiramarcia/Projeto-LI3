@@ -14,6 +14,7 @@ typedef struct faturacaoMes* FaturacaoMes;
 typedef struct produtos_nunca_vendidos* ProdutosNuncaVendidos;
 typedef struct produtos_comprados_cliente* ProdutosCompradosCliente;
 typedef struct totais_vendas_faturacao* TotaisVendasFaturacao;
+typedef struct top_produtos* TopProdutos;
 typedef struct informacao_produto* InformacaoProduto;
 typedef struct produto_quantidade* ProdutoQuantidade;
 typedef struct produto_faturacao* ProdutoFaturacao;

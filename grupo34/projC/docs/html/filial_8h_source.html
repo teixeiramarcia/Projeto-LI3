@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sistema de Gestão de Vendas: include/filial.h Source File</title>
+<title>Sistema de Gestão de Vendas: /Users/marciateixeira/Desktop/LI3/Projeto-LI3/grupo34/projC/include/filial.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,43 +85,38 @@ $(document).ready(function(){initNavTree('filial_8h_source.html',''); initResiza
 <div class="title">filial.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="filial_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef FILIAIS_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define FILIAIS_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;glib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="faturacao_mes_8h.html">faturacaoMes.h</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="venda_8h.html">venda.h</a>&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="types_8h.html">types.h</a>&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="month_8h.html">month.h</a>&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">   12</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>filial* <a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a>;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> <a class="code" href="filial_8h.html#a1e76324251aacea90c3b6b2fa56af452">make_filial</a>();</div>
+<a href="filial_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef FILIAIS_H</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define FILIAIS_H</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;glib.h&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="faturacao_mes_8h.html">faturacaoMes.h</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;venda.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;types.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;month.h&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">void</span> <a class="code" href="filial_8h.html#a68692cb04a8a380d181c32875ca9933c">update_filial</a>(<a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial, <a class="code" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<a class="code" href="faturacao_mes_8h.html#a3a678b283695d4726aeb26f33d9d22d2">FaturacaoMes</a> <a class="code" href="filial_8h.html#a466b1e41c016ae42440256e691bc602a">filial_get_faturacao_mes</a>(<a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial, <a class="code" href="month_8h.html#a50f2945ee6ba1f0ebf3d1705c2650228">Month</a> <a class="code" href="month_8h.html#ade079186a24b67d34714f590c039cd28">month</a>);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> <a class="code" href="filial_8h.html#aca92ae433aca5a3aea31a93c136747c7">destroy_filial</a>(<a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">   19</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>filial* <a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> <a class="code" href="filial_8h.html#a1e76324251aacea90c3b6b2fa56af452">make_filial</a>();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> <a class="code" href="filial_8h.html#a68692cb04a8a380d181c32875ca9933c">update_filial</a>(<a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial, Venda venda);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<a class="code" href="faturacao_mes_8h.html#a3a678b283695d4726aeb26f33d9d22d2">FaturacaoMes</a> <a class="code" href="filial_8h.html#a466b1e41c016ae42440256e691bc602a">filial_get_faturacao_mes</a>(<a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial, Month month);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="filial_8h.html#aca92ae433aca5a3aea31a93c136747c7">destroy_filial</a>(<a class="code" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="afilial_8h_html_aca92ae433aca5a3aea31a93c136747c7"><div class="ttname"><a href="filial_8h.html#aca92ae433aca5a3aea31a93c136747c7">destroy_filial</a></div><div class="ttdeci">void destroy_filial(Filial filial)</div></div>
-<div class="ttc" id="afilial_8h_html_a08bf744062f8cfbf865e9226b00f0921"><div class="ttname"><a href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a></div><div class="ttdeci">struct filial * Filial</div><div class="ttdef"><b>Definition:</b> filial.h:12</div></div>
-<div class="ttc" id="atypes_8h_html"><div class="ttname"><a href="types_8h.html">types.h</a></div></div>
-<div class="ttc" id="amonth_8h_html"><div class="ttname"><a href="month_8h.html">month.h</a></div></div>
-<div class="ttc" id="amonth_8h_html_a50f2945ee6ba1f0ebf3d1705c2650228"><div class="ttname"><a href="month_8h.html#a50f2945ee6ba1f0ebf3d1705c2650228">Month</a></div><div class="ttdeci">enum month Month</div><div class="ttdef"><b>Definition:</b> month.h:23</div></div>
-<div class="ttc" id="atypes_8h_html_ac2b3fd46582fcdf632fb4211eeef252e"><div class="ttname"><a href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a></div><div class="ttdeci">struct venda * Venda</div><div class="ttdef"><b>Definition:</b> types.h:11</div></div>
-<div class="ttc" id="afaturacao_mes_8h_html_a3a678b283695d4726aeb26f33d9d22d2"><div class="ttname"><a href="faturacao_mes_8h.html#a3a678b283695d4726aeb26f33d9d22d2">FaturacaoMes</a></div><div class="ttdeci">struct faturacaoMes * FaturacaoMes</div><div class="ttdef"><b>Definition:</b> faturacaoMes.h:10</div></div>
-<div class="ttc" id="amonth_8h_html_ade079186a24b67d34714f590c039cd28"><div class="ttname"><a href="month_8h.html#ade079186a24b67d34714f590c039cd28">month</a></div><div class="ttdeci">month</div><div class="ttdef"><b>Definition:</b> month.h:6</div></div>
-<div class="ttc" id="avenda_8h_html"><div class="ttname"><a href="venda_8h.html">venda.h</a></div></div>
-<div class="ttc" id="afaturacao_mes_8h_html"><div class="ttname"><a href="faturacao_mes_8h.html">faturacaoMes.h</a></div></div>
-<div class="ttc" id="afilial_8h_html_a1e76324251aacea90c3b6b2fa56af452"><div class="ttname"><a href="filial_8h.html#a1e76324251aacea90c3b6b2fa56af452">make_filial</a></div><div class="ttdeci">Filial make_filial()</div></div>
-<div class="ttc" id="afilial_8h_html_a466b1e41c016ae42440256e691bc602a"><div class="ttname"><a href="filial_8h.html#a466b1e41c016ae42440256e691bc602a">filial_get_faturacao_mes</a></div><div class="ttdeci">FaturacaoMes filial_get_faturacao_mes(Filial filial, Month month)</div></div>
-<div class="ttc" id="afilial_8h_html_a68692cb04a8a380d181c32875ca9933c"><div class="ttname"><a href="filial_8h.html#a68692cb04a8a380d181c32875ca9933c">update_filial</a></div><div class="ttdeci">void update_filial(Filial filial, Venda venda)</div></div>
+<div class="ttc" id="afilial_8h_html_aca92ae433aca5a3aea31a93c136747c7"><div class="ttname"><a href="filial_8h.html#aca92ae433aca5a3aea31a93c136747c7">destroy_filial</a></div><div class="ttdeci">void destroy_filial(Filial filial)</div><div class="ttdoc">Libertar a memória alocada para a estrutura Filial.</div></div>
+<div class="ttc" id="afilial_8h_html_a08bf744062f8cfbf865e9226b00f0921"><div class="ttname"><a href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a></div><div class="ttdeci">struct filial * Filial</div><div class="ttdoc">Estrutura Filial.</div><div class="ttdef"><b>Definition:</b> filial.h:19</div></div>
+<div class="ttc" id="afaturacao_mes_8h_html_a3a678b283695d4726aeb26f33d9d22d2"><div class="ttname"><a href="faturacao_mes_8h.html#a3a678b283695d4726aeb26f33d9d22d2">FaturacaoMes</a></div><div class="ttdeci">struct faturacaoMes * FaturacaoMes</div><div class="ttdoc">Estrutura FaturacaoMes.</div><div class="ttdef"><b>Definition:</b> faturacaoMes.h:17</div></div>
+<div class="ttc" id="afaturacao_mes_8h_html"><div class="ttname"><a href="faturacao_mes_8h.html">faturacaoMes.h</a></div><div class="ttdoc">Módulo de tratamento da faturação mensal dentro de uma determinada filial.</div></div>
+<div class="ttc" id="afilial_8h_html_a1e76324251aacea90c3b6b2fa56af452"><div class="ttname"><a href="filial_8h.html#a1e76324251aacea90c3b6b2fa56af452">make_filial</a></div><div class="ttdeci">Filial make_filial()</div><div class="ttdoc">Aloca memória e inicializa a estrutura de dados Filial.</div></div>
+<div class="ttc" id="afilial_8h_html_a466b1e41c016ae42440256e691bc602a"><div class="ttname"><a href="filial_8h.html#a466b1e41c016ae42440256e691bc602a">filial_get_faturacao_mes</a></div><div class="ttdeci">FaturacaoMes filial_get_faturacao_mes(Filial filial, Month month)</div><div class="ttdoc">Obter a faturação numa determinada filial num determinado mês.</div></div>
+<div class="ttc" id="afilial_8h_html_a68692cb04a8a380d181c32875ca9933c"><div class="ttname"><a href="filial_8h.html#a68692cb04a8a380d181c32875ca9933c">update_filial</a></div><div class="ttdeci">void update_filial(Filial filial, Venda venda)</div><div class="ttdoc">Atualiza a estrutura Filial com uma nova venda.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

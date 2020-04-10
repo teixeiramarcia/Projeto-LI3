@@ -12,7 +12,7 @@ var clientes_8h =
     [ "valida_cliente", "clientes_8h.html#a828bb937bff354620ee7d7add03d987c", null ],
     [ "update_clientes", "clientes_8h.html#a9df9b4d5a90dadf49322b085d3f102cc", null ],
     [ "destroy_clientes", "clientes_8h.html#ac60ac057aab75639c1e4d9a928e17f32", null ],
-    [ "destroy_cliente", "clientes_8h.html#a5d16bc5f55d6d5f663020f4e8e63d4ae", null ],
+    [ "destroy_cliente", "clientes_8h.html#a9c6dd34b3ccfacaa188121f97dc09de6", null ],
     [ "make_produtos_comprados_cliente", "clientes_8h.html#ad5157c4ddb5d775fe00cd37389a29455", null ],
     [ "p_c_c_get_n_produtos_comprados", "clientes_8h.html#a743ebf08ad6f7614dc57d9fd9c806aa0", null ],
     [ "get_total_compras", "clientes_8h.html#af9cac875a03e7e52da76fa0724abb10d", null ],
@@ -24,5 +24,5 @@ var clientes_8h =
     [ "produtos_cli_comparator", "clientes_8h.html#ae25a96140ad018bb2537a72d49d9a5d0", null ],
     [ "adiciona_produtos_q12", "clientes_8h.html#a705926f795df4e48ff00748d771c7e2e", null ],
     [ "set_info_produtos_cliente", "clientes_8h.html#af95738940138d7037e3135a912bad6bc", null ],
-    [ "get_maior", "clientes_8h.html#afc803620c91cb13df9d51e65bf16914b", null ]
+    [ "get_maior", "clientes_8h.html#a877112b7c99acff36501e2c1da5bd875", null ]
 ];

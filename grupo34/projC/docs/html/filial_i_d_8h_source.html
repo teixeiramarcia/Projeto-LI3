@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sistema de Gestão de Vendas: include/filialID.h Source File</title>
+<title>Sistema de Gestão de Vendas: /Users/marciateixeira/Desktop/LI3/Projeto-LI3/grupo34/projC/include/filialID.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,41 +85,33 @@ $(document).ready(function(){initNavTree('filial_i_d_8h_source.html',''); initRe
 <div class="title">filialID.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="filial_i_d_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef LI3_FILIALID_H</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef LI3_FILIALID_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define LI3_FILIALID_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0">    6</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0">filialID</a> {</div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0a9f88173ef19280cb497fcc601e36ad33">    7</a></span>&#160;    <a class="code" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0a9f88173ef19280cb497fcc601e36ad33">filial_1</a> = 0,</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0af596cffc0df260d73fabf3dda2847cc9">    8</a></span>&#160;    <a class="code" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0af596cffc0df260d73fabf3dda2847cc9">filial_2</a> = 1,</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0af7eb828d05e2c39d4ee42d5bcbc497aa">    9</a></span>&#160;    <a class="code" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0af7eb828d05e2c39d4ee42d5bcbc497aa">filial_3</a> = 2,</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0a4be0406152238cb31ee62391e7e2997e">   10</a></span>&#160;    <a class="code" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0a4be0406152238cb31ee62391e7e2997e">filial_todas</a> = -1</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">enum</span> filialID {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    filial_1 = 0,</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    filial_2 = 1,</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    filial_3 = 2,</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    filial_todas = -1</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;};</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="filial_i_d_8h.html#a2595201d58f94d01727fda74e83f671a">   13</a></span>&#160;<span class="preprocessor">#define INT_2_FILIAL(i) ((FilialID) ((i) - 1))</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define INT_2_FILIAL(i) ((FilialID) ((i) - 1))</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="filial_i_d_8h.html#a7018adc826c7df3aca1463a969f5226f">   15</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0">filialID</a> <a class="code" href="filial_i_d_8h.html#a7018adc826c7df3aca1463a969f5226f">FilialID</a>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> filialID FilialID;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="filial_i_d_8h.html#a8db28573d465a75fd9a1939c0535142e">   17</a></span>&#160;<span class="preprocessor">#define N_FILIAIS 3</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define N_FILIAIS 3</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="filial_i_d_8h.html#a7018adc826c7df3aca1463a969f5226f">FilialID</a> <a class="code" href="filial_i_d_8h.html#a2e22543ceeb53d56555b1f26d48cdb4e">FILIAIS</a>[<a class="code" href="filial_i_d_8h.html#a8db28573d465a75fd9a1939c0535142e">N_FILIAIS</a>];</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> FilialID FILIAIS[N_FILIAIS];</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#endif //LI3_FILIALID_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="afilial_i_d_8h_html_aa0da43f3ea2be5800d315d7b6f7d99e0af7eb828d05e2c39d4ee42d5bcbc497aa"><div class="ttname"><a href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0af7eb828d05e2c39d4ee42d5bcbc497aa">filial_3</a></div><div class="ttdeci">@ filial_3</div><div class="ttdef"><b>Definition:</b> filialID.h:9</div></div>
-<div class="ttc" id="afilial_i_d_8h_html_aa0da43f3ea2be5800d315d7b6f7d99e0a4be0406152238cb31ee62391e7e2997e"><div class="ttname"><a href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0a4be0406152238cb31ee62391e7e2997e">filial_todas</a></div><div class="ttdeci">@ filial_todas</div><div class="ttdef"><b>Definition:</b> filialID.h:10</div></div>
-<div class="ttc" id="afilial_i_d_8h_html_a2e22543ceeb53d56555b1f26d48cdb4e"><div class="ttname"><a href="filial_i_d_8h.html#a2e22543ceeb53d56555b1f26d48cdb4e">FILIAIS</a></div><div class="ttdeci">const FilialID FILIAIS[N_FILIAIS]</div></div>
-<div class="ttc" id="afilial_i_d_8h_html_aa0da43f3ea2be5800d315d7b6f7d99e0"><div class="ttname"><a href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0">filialID</a></div><div class="ttdeci">filialID</div><div class="ttdef"><b>Definition:</b> filialID.h:6</div></div>
-<div class="ttc" id="afilial_i_d_8h_html_a7018adc826c7df3aca1463a969f5226f"><div class="ttname"><a href="filial_i_d_8h.html#a7018adc826c7df3aca1463a969f5226f">FilialID</a></div><div class="ttdeci">enum filialID FilialID</div><div class="ttdef"><b>Definition:</b> filialID.h:15</div></div>
-<div class="ttc" id="afilial_i_d_8h_html_aa0da43f3ea2be5800d315d7b6f7d99e0a9f88173ef19280cb497fcc601e36ad33"><div class="ttname"><a href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0a9f88173ef19280cb497fcc601e36ad33">filial_1</a></div><div class="ttdeci">@ filial_1</div><div class="ttdef"><b>Definition:</b> filialID.h:7</div></div>
-<div class="ttc" id="afilial_i_d_8h_html_a8db28573d465a75fd9a1939c0535142e"><div class="ttname"><a href="filial_i_d_8h.html#a8db28573d465a75fd9a1939c0535142e">N_FILIAIS</a></div><div class="ttdeci">#define N_FILIAIS</div><div class="ttdef"><b>Definition:</b> filialID.h:17</div></div>
-<div class="ttc" id="afilial_i_d_8h_html_aa0da43f3ea2be5800d315d7b6f7d99e0af596cffc0df260d73fabf3dda2847cc9"><div class="ttname"><a href="filial_i_d_8h.html#aa0da43f3ea2be5800d315d7b6f7d99e0af596cffc0df260d73fabf3dda2847cc9">filial_2</a></div><div class="ttdeci">@ filial_2</div><div class="ttdef"><b>Definition:</b> filialID.h:8</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="filial_i_d_8h.html">filialID.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>filialID.h</b></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sistema de Gestão de Vendas: include/filial.h File Reference</title>
+<title>Sistema de Gestão de Vendas: /Users/marciateixeira/Desktop/LI3/Projeto-LI3/grupo34/projC/include/filial.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,48 +88,44 @@ $(document).ready(function(){initNavTree('filial_8h.html',''); initResizable(); 
 <div class="title">filial.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Módulo de tratamento de uma filial.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &lt;glib.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="faturacao_mes_8h_source.html">faturacaoMes.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="venda_8h_source.html">venda.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="types_8h_source.html">types.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="month_8h_source.html">month.h</a>&quot;</code><br />
+<code>#include &quot;venda.h&quot;</code><br />
+<code>#include &quot;types.h&quot;</code><br />
+<code>#include &quot;month.h&quot;</code><br />
 </div>
 <p><a href="filial_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a08bf744062f8cfbf865e9226b00f0921"><td class="memItemLeft" align="right" valign="top">typedef struct filial *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a></td></tr>
+<tr class="memitem:a08bf744062f8cfbf865e9226b00f0921"><td class="memItemLeft" align="right" valign="top"><a id="a08bf744062f8cfbf865e9226b00f0921"></a>
+typedef struct filial *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a></td></tr>
+<tr class="memdesc:a08bf744062f8cfbf865e9226b00f0921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estrutura Filial. <br /></td></tr>
 <tr class="separator:a08bf744062f8cfbf865e9226b00f0921"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a1e76324251aacea90c3b6b2fa56af452"><td class="memItemLeft" align="right" valign="top"><a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filial_8h.html#a1e76324251aacea90c3b6b2fa56af452">make_filial</a> ()</td></tr>
+<tr class="memdesc:a1e76324251aacea90c3b6b2fa56af452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aloca memória e inicializa a estrutura de dados Filial.  <a href="filial_8h.html#a1e76324251aacea90c3b6b2fa56af452">More...</a><br /></td></tr>
 <tr class="separator:a1e76324251aacea90c3b6b2fa56af452"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68692cb04a8a380d181c32875ca9933c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filial_8h.html#a68692cb04a8a380d181c32875ca9933c">update_filial</a> (<a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial, <a class="el" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a> venda)</td></tr>
+<tr class="memitem:a68692cb04a8a380d181c32875ca9933c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filial_8h.html#a68692cb04a8a380d181c32875ca9933c">update_filial</a> (<a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial, Venda venda)</td></tr>
+<tr class="memdesc:a68692cb04a8a380d181c32875ca9933c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza a estrutura Filial com uma nova venda.  <a href="filial_8h.html#a68692cb04a8a380d181c32875ca9933c">More...</a><br /></td></tr>
 <tr class="separator:a68692cb04a8a380d181c32875ca9933c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a466b1e41c016ae42440256e691bc602a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="faturacao_mes_8h.html#a3a678b283695d4726aeb26f33d9d22d2">FaturacaoMes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filial_8h.html#a466b1e41c016ae42440256e691bc602a">filial_get_faturacao_mes</a> (<a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial, <a class="el" href="month_8h.html#a50f2945ee6ba1f0ebf3d1705c2650228">Month</a> <a class="el" href="month_8h.html#ade079186a24b67d34714f590c039cd28">month</a>)</td></tr>
+<tr class="memitem:a466b1e41c016ae42440256e691bc602a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="faturacao_mes_8h.html#a3a678b283695d4726aeb26f33d9d22d2">FaturacaoMes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filial_8h.html#a466b1e41c016ae42440256e691bc602a">filial_get_faturacao_mes</a> (<a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial, Month month)</td></tr>
+<tr class="memdesc:a466b1e41c016ae42440256e691bc602a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obter a faturação numa determinada filial num determinado mês.  <a href="filial_8h.html#a466b1e41c016ae42440256e691bc602a">More...</a><br /></td></tr>
 <tr class="separator:a466b1e41c016ae42440256e691bc602a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca92ae433aca5a3aea31a93c136747c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filial_8h.html#aca92ae433aca5a3aea31a93c136747c7">destroy_filial</a> (<a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a> filial)</td></tr>
+<tr class="memdesc:aca92ae433aca5a3aea31a93c136747c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Libertar a memória alocada para a estrutura Filial.  <a href="filial_8h.html#aca92ae433aca5a3aea31a93c136747c7">More...</a><br /></td></tr>
 <tr class="separator:aca92ae433aca5a3aea31a93c136747c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a08bf744062f8cfbf865e9226b00f0921"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08bf744062f8cfbf865e9226b00f0921">&#9670;&nbsp;</a></span>Filial</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct filial* <a class="el" href="filial_8h.html#a08bf744062f8cfbf865e9226b00f0921">Filial</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Módulo de tratamento de uma filial. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a1e76324251aacea90c3b6b2fa56af452"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e76324251aacea90c3b6b2fa56af452">&#9670;&nbsp;</a></span>make_filial()</h2>
 
@@ -144,6 +140,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Aloca memória e inicializa a estrutura de dados Filial. </p>
+<dl class="section return"><dt>Returns</dt><dd>estrutura de dados Filial </dd></dl>
 
 </div>
 </div>
@@ -162,7 +161,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="types_8h.html#ac2b3fd46582fcdf632fb4211eeef252e">Venda</a>&#160;</td>
+          <td class="paramtype">Venda&#160;</td>
           <td class="paramname"><em>venda</em>&#160;</td>
         </tr>
         <tr>
@@ -172,6 +171,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Atualiza a estrutura Filial com uma nova venda. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filial</td><td>Filial a ser alterada </td></tr>
+    <tr><td class="paramname">venda</td><td>Venda a ser adicionada </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -190,7 +198,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="month_8h.html#a50f2945ee6ba1f0ebf3d1705c2650228">Month</a>&#160;</td>
+          <td class="paramtype">Month&#160;</td>
           <td class="paramname"><em>month</em>&#160;</td>
         </tr>
         <tr>
@@ -200,6 +208,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Obter a faturação numa determinada filial num determinado mês. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filial</td><td>Filial a ser consultada </td></tr>
+    <tr><td class="paramname">month</td><td>Month a ser consultado </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -218,6 +235,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Libertar a memória alocada para a estrutura Filial. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filial</td><td>Filial a ser libertada </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
