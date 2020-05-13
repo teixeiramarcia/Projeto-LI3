@@ -56,7 +56,8 @@ public class Manager {
                     printPreviousMenuOpt();
                     break;
                 case "4":
-                    //q4
+                    //FIXME pedir código do produto
+                    //printQuery4(produto);
                     printPreviousMenuOpt();
                     break;
                 case "5":
@@ -160,7 +161,7 @@ public class Manager {
         System.out.println("Total de clientes (distintos) envolvidos: " + gestVendasController.getTotalClientes(mes));
     }
 
-    private void printQuery3(String clientID) {
+    private void printQuery3(String clientID) { //FIXME por testar
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―" )) + " Listagem mensal do número de compras, número de produtos (distintos) e total gasto por um determinado cliente " +
                 String.join("", Collections.nCopies(5, "―" )) +Colors.RESET + "\n\n");
@@ -168,6 +169,16 @@ public class Manager {
         printLineInt(gestVendasController.getClientMonthlyBuyings(clientID), "Compras");
         printLineInt(gestVendasController.getClientMonthlyProducts(clientID), "Produtos");
         printLineDouble(gestVendasController.getMonthlyTotalCost(clientID), "Gasto");
+    }
+
+    private void printQuery4(String productID) {
+        System.out.println("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(5, "―" )) + " Total de vezes que o produto foi comprado, número clientes (distintos) envolvidos e total faturado " +
+                String.join("", Collections.nCopies(5, "―" )) +Colors.RESET + "\n\n");
+        printMonths();
+        printLineInt(gestVendasController.getProductMonthlyBuyings(productID), "Compras");
+        printLineInt(gestVendasController.getProductClients(productID), "Clientes");
+        printLineDouble(gestVendasController.getProductBilling(productID), "Faturação");
     }
 
     private void printMonths() {

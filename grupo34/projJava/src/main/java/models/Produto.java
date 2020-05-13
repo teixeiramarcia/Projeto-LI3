@@ -43,4 +43,28 @@ public class Produto {
         }
         return true;
     }
+
+    public List<Integer> getMonthlyBuyings() {
+        List<Integer> resultado = new ArrayList<>();
+        for (int mes = 0; mes < 12; mes++) {
+            resultado.add(mes, this.vezes_comprado[mes]);
+        }
+        return resultado;
+    }
+
+    public List<Integer> getClients() {
+        List<Integer> resultado = new ArrayList<>();
+        for (int mes = 0; mes < 12; mes++) {
+            resultado.add(mes, this.clientes_que_compraram.get(mes).size());
+        }
+        return resultado;
+    }
+
+    public List<Double> getTotalBilling() {
+        List<Double> resultado = new ArrayList<>();
+        for (int mes = 0; mes < 12; mes++) {
+            resultado.add(mes, this.faturacao[mes]);
+        }
+        return resultado;
+    }
 }

@@ -112,4 +112,16 @@ public class GestVendas {
     public List<Double> getMonthlyTotalCost(String clientID) {
         return this.clientes.getMonthlyTotalCost(clientID);
     }
+
+    public List<Integer> getProductMonthlyBuyings(String productID) {
+        return this.produtos.getProductMonthlyBuyings(productID);
+    }
+
+    public List<Integer> getProductClients(String productID) {
+        return this.produtos.getProductClients(productID);
+    }
+
+    public List<Double> getProductBilling(String productID) {
+        return this.produtos.getProductBilling(productID);
+    }
 }

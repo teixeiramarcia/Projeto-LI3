@@ -29,4 +29,16 @@ public class Produtos {
                 .sorted(String::compareTo)
                 .collect(Collectors.toList());
     }
+
+    public List<Integer> getProductMonthlyBuyings(String productID) {
+        return this.produtos.get(productID).getMonthlyBuyings();
+    }
+
+    public List<Integer> getProductClients(String productID) {
+        return this.produtos.get(productID).getClients();
+    }
+
+    public List<Double> getProductBilling(String productID) {
+        return this.produtos.get(productID).getTotalBilling();
+    }
 }
