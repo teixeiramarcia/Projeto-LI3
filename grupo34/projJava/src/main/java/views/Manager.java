@@ -194,6 +194,14 @@ public class Manager {
         printLineDouble(gestVendasController.getProductBilling(productID), "Faturação");
     }
 
+    private void printQuery5(String clientID) {
+        String titulo = ("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(40, "―" )) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
+                String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n\n");
+        List<String> produtos_mais_comprados = gestVendasController.getClientFavoriteProducts(clientID);
+        Navegador.printer(produtos_mais_comprados, titulo);
+    }
+
     private void printQuery10() { //FIXME transformar printFaturacaoMesFilial em func auxiliar 
         printMonthlyBilling();
     }

@@ -113,4 +113,8 @@ public class GestVendasController {
     public List<Double> getProductBilling(String productID) {
         return this.gestVendas.getProductBilling(productID);
     }
+
+    public List<String> getClientFavoriteProducts(String clientID) {
+        return this.gestVendas.getClientFavoriteProducts(clientID);
+    }
 }

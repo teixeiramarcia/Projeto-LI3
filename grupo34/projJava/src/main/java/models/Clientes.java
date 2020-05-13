@@ -48,4 +48,7 @@ public class Clientes {
         return this.clientes.get(clientID).getMonthlyTotalCost();
     }
 
+    public List<String> getClientFavoriteProducts(String clientID) {
+        return this.clientes.get(clientID).getFavoriteProducts();
+    }
 }

@@ -125,4 +125,8 @@ public class GestVendas {
     public List<Double> getProductBilling(String productID) {
         return this.produtos.getProductBilling(productID);
     }
+
+    public List<String> getClientFavoriteProducts(String clientID) {
+        return this.clientes.getClientFavoriteProducts(clientID);
+    }
 }

@@ -72,4 +72,7 @@ public class Cliente {
                 .sum()));
         return resultado;
     }
+
+//    public List<String> getFavoriteProducts() {} //FIXME 
+
 }
