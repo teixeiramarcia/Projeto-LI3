@@ -7,6 +7,7 @@ import views.Meses;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class GestVendasController {
@@ -75,5 +76,29 @@ public class GestVendasController {
         for (int mes = 0; mes < 12; mes++)
             resultado.put(Meses.intToMes(mes), this.gestVendas.getTotalClientesMes(mes));
         return resultado;
+    }
+
+    public List<String> getProdutosNuncaComprados() {
+        return this.gestVendas.getProdutosNComprados();
+    }
+
+    public int getTotalVendas(int mes) {
+        return this.gestVendas.getTotalComprasMes(mes);
+    }
+
+    public int getTotalClientes(int mes) {
+        return this.gestVendas.getNumClientesMes(mes);
+    }
+
+    public List<Integer> getClientMonthlyBuyings(String clientID) {
+        return this.gestVendas.getClientMonthlyBuyings(clientID);
+    }
+
+    public List<Integer> getClientMonthlyProducts(String clientID) {
+        return this.gestVendas.getClientMonthlyProducts(clientID);
+    }
+
+    public List<Double> getMonthlyTotalCost(String clientID) {
+        return this.gestVendas.getMonthlyTotalCost(clientID);
     }
 }

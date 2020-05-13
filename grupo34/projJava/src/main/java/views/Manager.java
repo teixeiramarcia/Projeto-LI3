@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class Manager {
     private final GestVendasController gestVendasController;
@@ -43,15 +42,17 @@ public class Manager {
             System.out.println("\n");
             switch (input) {
                 case "1":
-                    //q1
+                    printQuery1();
                     printPreviousMenuOpt();
                     break;
                 case "2":
-                    //q2
+                    //FIXME pedir o mês ao utilizador
+                    //printQuery2(mes);
                     printPreviousMenuOpt();
                     break;
                 case "3":
-                    //q3
+                    //FIXME pedir código do cliente
+                    //printQuery3(cliente);
                     printPreviousMenuOpt();
                     break;
                 case "4":
@@ -143,6 +144,32 @@ public class Manager {
         }
     }
 
+    private void printQuery1() { //FIXME por testar
+        String titulo = ("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(40, "―" )) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
+                String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n\n");
+        List<String> produtos_nunca_comprados = gestVendasController.getProdutosNuncaComprados();
+        Navegador.printer(produtos_nunca_comprados, titulo);
+    }
+
+    private void printQuery2(int mes) { //FIXME por testar
+        System.out.println("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(40, "―" )) + " Total de vendas realizadas e total de clientes envolvidos num determinado mês " +
+                String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n\n");
+        System.out.println("Total de vendas realizadas: " + gestVendasController.getTotalVendas(mes));
+        System.out.println("Total de clientes (distintos) envolvidos: " + gestVendasController.getTotalClientes(mes));
+    }
+
+    private void printQuery3(String clientID) {
+        System.out.println("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(5, "―" )) + " Listagem mensal do número de compras, número de produtos (distintos) e total gasto por um determinado cliente " +
+                String.join("", Collections.nCopies(5, "―" )) +Colors.RESET + "\n\n");
+        printMonths();
+        printLineInt(gestVendasController.getClientMonthlyBuyings(clientID), "Compras");
+        printLineInt(gestVendasController.getClientMonthlyProducts(clientID), "Produtos");
+        printLineDouble(gestVendasController.getMonthlyTotalCost(clientID), "Gasto");
+    }
+
     private void printMonths() {
         for (String month : Meses.meses) {
             System.out.printf(Colors.YELLOW + "%7s" + Colors.BLUE + "｜" + Colors.RESET, month);
@@ -225,6 +252,13 @@ public class Manager {
         printMonthlyBilling();
         printMonthlyMonthlyClients();
         System.out.println("\n");
+    }
 
+    private void printLineInt(List<Integer> linha, String titulo) {
+        //FIXME falta fazer
+    }
+
+    private void printLineDouble(List<Double> linha, String titulo) {
+        //FIXME falta fazer
     }
 }

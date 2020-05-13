@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 public class Cliente {
@@ -43,5 +44,32 @@ public class Cliente {
 
     public boolean comprouNoMes(int mes) {
         return this.compras_por_mes.get(mes).size() != 0;
+    }
+
+    public List<Integer> getMonthlyBuyings() {
+        List<Integer> resultado = new ArrayList<>();
+        for (int mes = 0; mes < 12; mes++) {
+            resultado.add(mes,this.compras_por_mes.get(mes).size());
+        }
+        return resultado;
+    }
+
+    public List<Integer> getMonthlyProducts() {
+        List<Integer> resultado = new ArrayList<>();
+        this.compras_por_mes.forEach(compras_mes -> resultado.add((int) compras_mes
+                .stream()
+                .map(Venda::getProductID)
+                .distinct()
+                .count()));
+        return resultado;
+    }
+
+    public List<Double> getMonthlyTotalCost() {
+        List<Double> resultado = new ArrayList<>();
+        this.compras_por_mes.forEach(compras_mes -> resultado.add(compras_mes
+                .stream()
+                .mapToDouble(Venda::getFaturacao)
+                .sum()));
+        return resultado;
     }
 }

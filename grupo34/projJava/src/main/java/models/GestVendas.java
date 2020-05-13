@@ -1,7 +1,7 @@
 package models;
 
-import java.io.InvalidClassException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GestVendas {
@@ -91,5 +91,25 @@ public class GestVendas {
         for (int filial = 0; filial < 3; filial++)
             resultado.put(filial + 1, this.clientes.getTotalClientesFilialMes(filial, mes));
         return resultado;
+    }
+
+    public List<String> getProdutosNComprados() {
+        return this.produtos.getProductsNeverBought();
+    }
+
+    public int getNumClientesMes(int mes) {
+        return getTotalClientesMes(mes).size();
+    }
+
+    public List<Integer> getClientMonthlyBuyings(String clientID) {
+        return this.clientes.getClientMonthlyBuyings(clientID);
+    }
+
+    public List<Integer> getClientMonthlyProducts(String clientID) {
+        return this.clientes.getClientMonthlyProducts(clientID);
+    }
+
+    public List<Double> getMonthlyTotalCost(String clientID) {
+        return this.clientes.getMonthlyTotalCost(clientID);
     }
 }

@@ -1,6 +1,7 @@
 package models;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Produtos {
     private final Map<String, Produto> produtos;
@@ -19,5 +20,13 @@ public class Produtos {
 
     public void updateProdutos(Venda venda) {
         this.produtos.get(venda.getProductID()).updateProduto(venda);
+    }
+
+    public List<String> getProductsNeverBought() {
+        return this.produtos.values().stream()
+                .filter(Produto::wasntBoughtGeneral)
+                .map(Produto::getProductID)
+                .sorted(String::compareTo)
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package models;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Clientes {
@@ -32,5 +33,17 @@ public class Clientes {
             if(cliente.faturouNaFilial(filial) && cliente.comprouNoMes(mes))
                 resultado++;
         return resultado;
+    }
+
+    public List<Integer> getClientMonthlyBuyings(String clientID) {
+        return this.clientes.get(clientID).getMonthlyBuyings();
+    }
+
+    public List<Integer> getClientMonthlyProducts(String clientID) {
+        return this.clientes.get(clientID).getMonthlyProducts();
+    }
+
+    public List<Double> getMonthlyTotalCost(String clientID) {
+        return this.clientes.get(clientID).getMonthlyTotalCost();
     }
 }

@@ -36,4 +36,11 @@ public class Produto {
         this.clientes_que_compraram.get(venda.getMes()).add(venda.getClientID());
         this.faturacao[venda.getMes()] += venda.getFaturacao();
     }
+
+    public boolean wasntBoughtGeneral() {
+        for (int mes = 0; mes < 12; mes++) {
+            if(this.vezes_comprado[mes] != 0) return false;
+        }
+        return true;
+    }
 }
