@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Manager {
     private final GestVendasController gestVendasController;
@@ -46,18 +47,18 @@ public class Manager {
                     printPreviousMenuOpt();
                     break;
                 case "2":
-                    //FIXME pedir o mês ao utilizador
-                    //printQuery2(mes);
+                    int mes = getInputMonth();
+                    printQuery2(mes);
                     printPreviousMenuOpt();
                     break;
                 case "3":
-                    //FIXME pedir código do cliente
-                    //printQuery3(cliente);
+                    String cliente = getInputClient();
+                    printQuery3(cliente);
                     printPreviousMenuOpt();
                     break;
                 case "4":
-                    //FIXME pedir código do produto
-                    //printQuery4(produto);
+                    String produto = getInputProduct();
+                    printQuery4(produto);
                     printPreviousMenuOpt();
                     break;
                 case "5":
@@ -81,7 +82,7 @@ public class Manager {
                     printPreviousMenuOpt();
                     break;
                 case "10":
-                    //q10
+                    printQuery10();
                     printPreviousMenuOpt();
                     break;
                 case "11":
@@ -134,6 +135,18 @@ public class Manager {
                 Colors.RED;
     }
 
+    private int getInputMonth() {
+        //FIXME 
+    }
+
+    private String getInputClient() {
+        //FIXME
+    }
+
+    private String getInputProduct() {
+        //FIXME
+    }
+
     private void printPreviousMenuOpt() throws IOException {
         System.out.println("\n");
         System.out.println(Colors.BLUE + "Q -> voltar ao menu principal\n\n");
@@ -171,7 +184,7 @@ public class Manager {
         printLineDouble(gestVendasController.getMonthlyTotalCost(clientID), "Gasto");
     }
 
-    private void printQuery4(String productID) {
+    private void printQuery4(String productID) { //FIXME por testar
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―" )) + " Total de vezes que o produto foi comprado, número clientes (distintos) envolvidos e total faturado " +
                 String.join("", Collections.nCopies(5, "―" )) +Colors.RESET + "\n\n");
@@ -179,6 +192,10 @@ public class Manager {
         printLineInt(gestVendasController.getProductMonthlyBuyings(productID), "Compras");
         printLineInt(gestVendasController.getProductClients(productID), "Clientes");
         printLineDouble(gestVendasController.getProductBilling(productID), "Faturação");
+    }
+
+    private void printQuery10() { //FIXME transformar printFaturacaoMesFilial em func auxiliar 
+        printMonthlyBilling();
     }
 
     private void printMonths() {
@@ -266,10 +283,18 @@ public class Manager {
     }
 
     private void printLineInt(List<Integer> linha, String titulo) {
-        //FIXME falta fazer
+        StringBuilder nums = new StringBuilder(titulo);
+        for (int mes = 0; mes < 12; mes++) {
+            nums.append(String.format("%8d", linha.get(mes))).append(Colors.YELLOW).append(" ｜ ").append(Colors.RESET);
+        }
+        System.out.println(nums);
     }
 
     private void printLineDouble(List<Double> linha, String titulo) {
-        //FIXME falta fazer
+        StringBuilder nums = new StringBuilder(titulo);
+        for (int mes = 0; mes < 12; mes++) {
+            nums.append(String.format("%8f", linha.get(mes))).append(Colors.YELLOW).append(" ｜ ").append(Colors.RESET);
+        }
+        System.out.println(nums);
     }
 }

@@ -113,5 +113,4 @@ public class GestVendasController {
     public List<Double> getProductBilling(String productID) {
         return this.gestVendas.getProductBilling(productID);
     }
-
 }
