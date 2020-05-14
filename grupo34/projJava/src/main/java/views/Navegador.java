@@ -1,11 +1,64 @@
 package views;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
+
 public class Navegador {
-    public static void printer(List<String> catalogo, String titulo) {
-        //FIXME fazer a paginação sobre a lista; os prints ficam dentro do while
-        //System.out.println(titulo);
-        //System.out.println("Total: " + catalogo.size());
+    public static void printer(List<String> catalogo, String titulo) throws IOException {
+        boolean flagCycle = true;
+        int posicao_inicio = 0;
+        int max_bound = catalogo.size();
+        while (flagCycle) {
+            System.out.println(Colors.BLUE + titulo + Colors.RESET);
+            System.out.println(Colors.YELLOW +
+                    "A mostrar resultados de " +
+                    posicao_inicio +
+                    " até " +
+                    (posicao_inicio + 10) +
+                    ":\n" +
+                    Colors.RESET);
+            for (int i = posicao_inicio; i < posicao_inicio + 10; i++) {
+                System.out.println(catalogo.get(i));
+            }
+            System.out.println("\n");
+            System.out.println(Colors.YELLOW + "Total: " + Colors.RESET + max_bound + "\n");
+            System.out.print(Colors.YELLOW +
+                    "1 -> " +
+                    Colors.RESET +
+                    "10 resultados anteriores.\n" +
+                    Colors.YELLOW +
+                    "2 -> " +
+                    Colors.RESET +
+                    "10 resultados seguintes.\n" +
+                    Colors.YELLOW +
+                    "3 -> " +
+                    Colors.RESET +
+                    "sair do catálogo.\n\n" +
+                    Colors.YELLOW +
+                    "-> " +
+                    Colors.RESET);
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            String opcao = br.readLine();
+            switch (opcao) {
+                case "1":
+                    if (posicao_inicio != 0) {
+                        posicao_inicio -= 10;
+                    }
+                    break;
+                case "2":
+                    if (posicao_inicio + 10 < max_bound) {
+                        posicao_inicio += 10;
+                    }
+                    break;
+                case "3":
+                    flagCycle = false;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
