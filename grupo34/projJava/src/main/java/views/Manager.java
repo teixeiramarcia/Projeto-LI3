@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class Manager {
     private final GestVendasController gestVendasController;
@@ -132,19 +131,89 @@ public class Manager {
         return Colors.RED +
                 "Input inválido.\nIndique um dígito entre 0 e 13\n" +
                 "Input -->  " +
-                Colors.RED;
+                Colors.RESET;
     }
 
     private int getInputMonth() {
-        //FIXME 
+        System.out.print(Colors.YELLOW +
+                "Indique um mês (dígito entre 1 e 12): \n" +
+                "Input -> " +
+                Colors.RESET);
+        int mes;
+        while((mes = getMonth()) == -1) {
+            System.out.print(Colors.RED +
+                    "Input inválido.\nIndique um dígito entre 1 e 12\n" +
+                    "Input -->  " +
+                    Colors.RED);
+        }
+        return mes;
+    }
+
+    private int getMonth() {
+        try {
+            String input = br.readLine();
+            int mes = Integer.parseInt(input);
+            if(mes >= 1 && mes <= 12) {
+                return mes;
+            }
+        } catch (IOException | NumberFormatException e) {
+            return -1;
+        }
+        return -1;
     }
 
     private String getInputClient() {
-        //FIXME
+        System.out.print(Colors.YELLOW +
+                "Indique o cliente que pretende consultar: \n" +
+                "Input -> " +
+                Colors.RESET);
+        String cliente;
+        while((cliente = getCliente()).equals("")) {
+            System.out.print(Colors.RED +
+                    "Input inválido.\nIndique um código de cliente válido (1 maiúscula e 4 dígitos) que exista no sistema\n" +
+                    "Input -->  " +
+                    Colors.RED);
+        }
+        return cliente;
+    }
+
+    private String getCliente() {
+        try {
+            String input = br.readLine();
+            if(gestVendasController.clienteValido(input) && gestVendasController.clienteExiste(input)) {
+                return input;
+            }
+        } catch (IOException e) {
+            return "";
+        }
+        return "";
     }
 
     private String getInputProduct() {
-        //FIXME
+        System.out.print(Colors.YELLOW +
+                "Indique o produto que pretende consultar: \n" +
+                "Input -> " +
+                Colors.RESET);
+        String cliente;
+        while((cliente = getProduto()).equals("")) {
+            System.out.print(Colors.RED +
+                    "Input inválido.\nIndique um código de produto válido (2 maiúsculas e 4 dígitos) que exista no sistema\n" +
+                    "Input -->  " +
+                    Colors.RED);
+        }
+        return cliente;
+    }
+
+    private String getProduto() {
+        try {
+            String input = br.readLine();
+            if(gestVendasController.produtoValido(input) && gestVendasController.produtoExiste(input)) {
+                return input;
+            }
+        } catch (IOException e) {
+            return "";
+        }
+        return "";
     }
 
     private void printPreviousMenuOpt() throws IOException {
@@ -194,12 +263,12 @@ public class Manager {
         printLineDouble(gestVendasController.getProductBilling(productID), "Faturação");
     }
 
-    private void printQuery5(String clientID) {
+    private void printQuery5(String clientID) { //FIXME fazer a função
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(40, "―" )) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
                 String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n\n");
-        List<String> produtos_mais_comprados = gestVendasController.getClientFavoriteProducts(clientID);
-        Navegador.printer(produtos_mais_comprados, titulo);
+        //List<String> produtos_mais_comprados = gestVendasController.getClientFavoriteProducts(clientID);
+        //Navegador.printer(produtos_mais_comprados, titulo);
     }
 
     private void printQuery10() { //FIXME transformar printFaturacaoMesFilial em func auxiliar 

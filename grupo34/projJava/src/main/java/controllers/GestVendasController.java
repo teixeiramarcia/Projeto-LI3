@@ -1,6 +1,8 @@
 package controllers;
 
+import models.Cliente;
 import models.GestVendas;
+import models.Produto;
 import utils.Chrono;
 import views.Meses;
 
@@ -114,7 +116,20 @@ public class GestVendasController {
         return this.gestVendas.getProductBilling(productID);
     }
 
-    public List<String> getClientFavoriteProducts(String clientID) {
-        return this.gestVendas.getClientFavoriteProducts(clientID);
+    public boolean clienteValido(String clientID) {
+        return Cliente.validaCliente(clientID);
     }
+
+    public boolean clienteExiste(String clientID) {
+        return this.gestVendas.existeCliente(clientID);
+    }
+
+    public boolean produtoValido(String productID) {
+        return Produto.validaProduto(productID);
+    }
+
+    public boolean produtoExiste(String productID) {
+        return this.gestVendas.produtoExiste(productID);
+    }
+
 }

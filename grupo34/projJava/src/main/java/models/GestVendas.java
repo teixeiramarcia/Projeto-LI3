@@ -3,7 +3,6 @@ package models;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class GestVendas {
     private final Clientes clientes;
@@ -126,7 +125,7 @@ public class GestVendas {
         return this.produtos.getProductBilling(productID);
     }
 
-    public List<String> getClientFavoriteProducts(String clientID) {
-        return this.clientes.getClientFavoriteProducts(clientID);
+    public boolean produtoExiste(String productID) {
+        return this.produtos.existeProduto(productID);
     }
 }

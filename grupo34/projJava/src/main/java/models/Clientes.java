@@ -1,6 +1,5 @@
 package models;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,9 +45,5 @@ public class Clientes {
 
     public List<Double> getMonthlyTotalCost(String clientID) {
         return this.clientes.get(clientID).getMonthlyTotalCost();
-    }
-
-    public List<String> getClientFavoriteProducts(String clientID) {
-        return this.clientes.get(clientID).getFavoriteProducts();
     }
 }
