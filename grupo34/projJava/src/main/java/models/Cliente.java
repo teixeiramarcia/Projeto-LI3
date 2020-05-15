@@ -1,9 +1,9 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Cliente {
     private static final Pattern pattern = Pattern.compile("[A-Z]([1-4]\\d{3}|5000)");
@@ -71,5 +71,30 @@ public class Cliente {
                 .mapToDouble(Venda::getFaturacao)
                 .sum()));
         return resultado;
+    }
+
+    public List<String> getFavoriteProducts() {
+        Map<String, Integer> produtos_por_quantidade = getProdutosPorQuantidade();
+        return produtos_por_quantidade.entrySet().stream()
+                .sorted((p1, p2) -> {
+                    if(p1.getValue().equals(p2.getValue())) {
+                        return p1.getKey().compareTo(p2.getKey());
+                    }
+                    return p2.getValue() - p1.getValue();
+                })
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, Integer> getProdutosPorQuantidade() {
+        Map<String, Integer> produtos_por_quantidade = new HashMap<>();
+        this.compras_por_mes.forEach(mes -> {
+            mes.forEach(venda -> {
+                int atual = produtos_por_quantidade.getOrDefault(venda.getProductID(), 0);
+                int novo = atual + venda.getUnidades();
+                produtos_por_quantidade.put(venda.getProductID(), novo);
+            });
+        });
+        return produtos_por_quantidade;
     }
 }

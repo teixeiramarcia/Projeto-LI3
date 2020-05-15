@@ -132,4 +132,7 @@ public class GestVendasController {
         return this.gestVendas.produtoExiste(productID);
     }
 
+    public List<String> getClientFavoriteProducts(String clientID) {
+        return this.gestVendas.getClientFavoriteProducts(clientID);
+    }
 }

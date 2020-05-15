@@ -128,4 +128,8 @@ public class GestVendas {
     public boolean produtoExiste(String productID) {
         return this.produtos.existeProduto(productID);
     }
+
+    public List<String> getClientFavoriteProducts(String clientID) {
+        return this.clientes.getClientFavoriteProducts(clientID);
+    }
 }

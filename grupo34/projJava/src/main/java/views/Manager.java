@@ -46,22 +46,19 @@ public class Manager {
                     printPreviousMenuOpt();
                     break;
                 case "2":
-                    int mes = getInputMonth();
-                    printQuery2(mes);
+                    printQuery2(getInputMonth());
                     printPreviousMenuOpt();
                     break;
                 case "3":
-                    String cliente = getInputClient();
-                    printQuery3(cliente);
+                    printQuery3(getInputClient());
                     printPreviousMenuOpt();
                     break;
                 case "4":
-                    String produto = getInputProduct();
-                    printQuery4(produto);
+                    printQuery4(getInputProduct());
                     printPreviousMenuOpt();
                     break;
                 case "5":
-                    //q5
+                    printQuery5(getInputClient());
                     printPreviousMenuOpt();
                     break;
                 case "6":
@@ -227,7 +224,7 @@ public class Manager {
         }
     }
 
-    private void printQuery1() throws IOException { //FIXME por testar
+    private void printQuery1() throws IOException { //FIXME por
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(40, "―" )) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
                 String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n");
@@ -263,12 +260,12 @@ public class Manager {
         printLineDouble(gestVendasController.getProductBilling(productID), "Faturação");
     }
 
-    private void printQuery5(String clientID) { //FIXME fazer a função
+    private void printQuery5(String clientID) throws IOException { //FIXME por testar
         String titulo = ("\n" + Colors.BLUE +
-                String.join("", Collections.nCopies(40, "―" )) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
+                String.join("", Collections.nCopies(40, "―" )) + " Listagem dos códigos de produtos favoritos de um determinado cliente e respetivo total " +
                 String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n");
-        //List<String> produtos_mais_comprados = gestVendasController.getClientFavoriteProducts(clientID);
-        //Navegador.printer(produtos_mais_comprados, titulo);
+        List<String> produtos_mais_comprados = gestVendasController.getClientFavoriteProducts(clientID);
+        Navegador.printer(produtos_mais_comprados, titulo);
     }
 
     private void printQuery10() { //FIXME transformar printFaturacaoMesFilial em func auxiliar 
