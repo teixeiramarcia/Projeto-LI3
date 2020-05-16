@@ -1,5 +1,7 @@
 package models;
 
+import utils.Pair;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,5 +133,9 @@ public class GestVendas {
 
     public List<String> getClientFavoriteProducts(String clientID) {
         return this.clientes.getClientFavoriteProducts(clientID);
+    }
+
+    public List<Pair<String, Integer>> getTopNClients(int n) {
+        return this.clientes.getTopNClients(n);
     }
 }

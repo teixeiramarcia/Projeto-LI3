@@ -4,6 +4,7 @@ import models.Cliente;
 import models.GestVendas;
 import models.Produto;
 import utils.Chrono;
+import utils.Pair;
 import views.Meses;
 
 import java.io.*;
@@ -134,5 +135,9 @@ public class GestVendasController {
 
     public List<String> getClientFavoriteProducts(String clientID) {
         return this.gestVendas.getClientFavoriteProducts(clientID);
+    }
+
+    public List<Pair<String, Integer>> getTopNClients(int n) {
+        return this.gestVendas.getTopNClients(n);
     }
 }

@@ -1,7 +1,6 @@
 package models;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -96,5 +95,13 @@ public class Cliente {
             });
         });
         return produtos_por_quantidade;
+    }
+
+    public int getDistinctProducts() {
+        int total = 0;
+        for (List<Venda> vendas_mes : this.compras_por_mes) {
+            total += vendas_mes.stream().map(Venda::getProductID).distinct().count();
+        }
+        return total;
     }
 }

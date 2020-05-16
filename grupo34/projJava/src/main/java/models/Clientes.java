@@ -1,8 +1,13 @@
 package models;
 
+import utils.Pair;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Clientes {
     private final Map<String, Cliente> clientes;
@@ -49,5 +54,13 @@ public class Clientes {
 
     public List<String> getClientFavoriteProducts(String clientID) {
         return this.clientes.get(clientID).getFavoriteProducts();
+    }
+
+    public List<Pair<String, Integer>> getTopNClients(int n) {
+        Stream<Pair<String, Integer>> s = this.clientes.values().stream()
+                .map(cliente -> Pair.of(cliente.getClientID(), cliente.getDistinctProducts()));
+        return s.sorted((par1, par2)-> par2.getSecond() - par1.getSecond())
+                .limit(n)
+                .collect(Collectors.toList());
     }
 }

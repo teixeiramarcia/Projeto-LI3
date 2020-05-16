@@ -1,12 +1,14 @@
 package views;
 
 import controllers.GestVendasController;
+import utils.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Manager {
     private final GestVendasController gestVendasController;
@@ -70,7 +72,7 @@ public class Manager {
                     printPreviousMenuOpt();
                     break;
                 case "8":
-                    //q8
+                    printQuery8(getInputInt());
                     printPreviousMenuOpt();
                     break;
                 case "9":
@@ -114,7 +116,7 @@ public class Manager {
                 yellowNumber(10) + "Contagem mês a mês e filial a filial a faturação total do sistema\n" +
                 yellowNumber(11) + "Consultas estatísticas\n" +
                 yellowNumber(0) + "Sair do programa\n" +
-                "\n\n\n" +
+                "\n\n" +
                 Colors.BLUE +
                 "Input -->  " +
                 Colors.RESET;
@@ -151,7 +153,7 @@ public class Manager {
             String input = br.readLine();
             int mes = Integer.parseInt(input);
             if(mes >= 1 && mes <= 12) {
-                return mes;
+                return mes - 1;
             }
         } catch (IOException | NumberFormatException e) {
             return -1;
@@ -186,6 +188,29 @@ public class Manager {
         return "";
     }
 
+    private int getInputInt() {
+        System.out.print(Colors.YELLOW +
+                "Indique o número de clientes dos quais pretende obter informação: \n" +
+                "Input -> " +
+                Colors.RESET);
+        Integer n;
+        while((n = getInt()).equals(-1)) {
+            System.out.print(Colors.RED +
+                    "Input inválido.\nIndique um dígito\n" +
+                    "Input -->  " +
+                    Colors.RED);
+        }
+        return n;
+    }
+
+    private Integer getInt() {
+        try {
+            return Integer.parseInt(br.readLine());
+        } catch (IOException e) {
+            return -1;
+        }
+    }
+
     private String getInputProduct() {
         System.out.print(Colors.YELLOW +
                 "Indique o produto que pretende consultar: \n" +
@@ -215,16 +240,17 @@ public class Manager {
 
     private void printPreviousMenuOpt() throws IOException {
         System.out.println("\n");
-        System.out.println(Colors.BLUE + "Q -> voltar ao menu principal\n\n");
+        System.out.println(Colors.BLUE + "Q -> voltar ao menu principal");
         System.out.print("-> " + Colors.RESET);
 
         while(!br.readLine().equals("Q")) {
-            System.out.println(Colors.RED + "Q -> voltar ao menu principal\n\n");
+            System.out.println("\n");
+            System.out.println(Colors.RED + "Q -> voltar ao menu principal");
             System.out.print("-> " + Colors.RESET);
         }
     }
 
-    private void printQuery1() throws IOException { //FIXME por
+    private void printQuery1() throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(40, "―" )) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
                 String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n");
@@ -232,49 +258,92 @@ public class Manager {
         Navegador.printer(produtos_nunca_comprados, titulo);
     }
 
-    private void printQuery2(int mes) { //FIXME por testar
+    private void printQuery2(int mes) {
         System.out.println("\n" + Colors.BLUE +
-                String.join("", Collections.nCopies(40, "―" )) + " Total de vendas realizadas e total de clientes envolvidos num determinado mês " +
-                String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n");
-        System.out.println("Total de vendas realizadas: " + gestVendasController.getTotalVendas(mes));
-        System.out.println("Total de clientes (distintos) envolvidos: " + gestVendasController.getTotalClientes(mes));
+                String.join("", Collections.nCopies(5, "―" )) + " Total de vendas realizadas e total de clientes envolvidos num determinado mês " +
+                String.join("", Collections.nCopies(5, "―" )) +Colors.RESET + "\n");
+        System.out.println(Colors.YELLOW +
+                "Total de vendas realizadas: " +
+                Colors.RESET +
+                gestVendasController.getTotalVendas(mes));
+        System.out.println(Colors.YELLOW +
+                "Total de clientes (distintos) envolvidos: " +
+                Colors.RESET +
+                gestVendasController.getTotalClientes(mes));
     }
 
-    private void printQuery3(String clientID) { //FIXME por testar
+    private void printQuery3(String clientID) {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―" )) + " Listagem mensal do número de compras, número de produtos (distintos) e total gasto por um determinado cliente " +
                 String.join("", Collections.nCopies(5, "―" )) +Colors.RESET + "\n");
+        System.out.print(String.format("%6s", ""));
         printMonths();
-        printLineInt(gestVendasController.getClientMonthlyBuyings(clientID), "Compras");
-        printLineInt(gestVendasController.getClientMonthlyProducts(clientID), "Produtos");
-        printLineDouble(gestVendasController.getMonthlyTotalCost(clientID), "Gasto");
+        System.out.print(Colors.BLUE);
+        System.out.println(String.join("", Collections.nCopies(172, "―" )));
+        System.out.print(Colors.RESET);
+        printLineInt(gestVendasController.getClientMonthlyBuyings(clientID),
+                String.format("%10s",
+                Colors.YELLOW + "Nums ｜" + Colors.RESET));
+        printLineInt(gestVendasController.getClientMonthlyProducts(clientID),
+                String.format("%10s",
+                Colors.YELLOW + "Prods｜" + Colors.RESET));
+        printLineDouble(gestVendasController.getMonthlyTotalCost(clientID),
+                String.format("%10s",
+                Colors.YELLOW + "Gasto｜" + Colors.RESET));
     }
 
-    private void printQuery4(String productID) { //FIXME por testar
+    private void printQuery4(String productID) {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―" )) + " Total de vezes que o produto foi comprado, número clientes (distintos) envolvidos e total faturado " +
                 String.join("", Collections.nCopies(5, "―" )) +Colors.RESET + "\n");
+        System.out.print(String.format("%6s", ""));
         printMonths();
-        printLineInt(gestVendasController.getProductMonthlyBuyings(productID), "Compras");
-        printLineInt(gestVendasController.getProductClients(productID), "Clientes");
-        printLineDouble(gestVendasController.getProductBilling(productID), "Faturação");
+        printLineInt(gestVendasController.getProductMonthlyBuyings(productID),
+                String.format("%10s",
+                Colors.YELLOW + "Nums ｜" + Colors.RESET));
+        printLineInt(gestVendasController.getProductClients(productID),
+                String.format("%10s",
+                Colors.YELLOW + "Clis ｜" + Colors.RESET));
+        printLineDouble(gestVendasController.getProductBilling(productID),
+                String.format("%10s",
+                Colors.YELLOW + "Fat  ｜" + Colors.RESET));
     }
 
-    private void printQuery5(String clientID) throws IOException { //FIXME por testar
+    private void printQuery5(String clientID) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
-                String.join("", Collections.nCopies(40, "―" )) + " Listagem dos códigos de produtos favoritos de um determinado cliente e respetivo total " +
-                String.join("", Collections.nCopies(40, "―" )) +Colors.RESET + "\n");
+                String.join("", Collections.nCopies(5, "―" )) + " Listagem dos códigos de produtos favoritos de um determinado cliente e respetivo total " +
+                String.join("", Collections.nCopies(5, "―" )) +Colors.RESET + "\n");
         List<String> produtos_mais_comprados = gestVendasController.getClientFavoriteProducts(clientID);
         Navegador.printer(produtos_mais_comprados, titulo);
     }
 
-    private void printQuery10() { //FIXME transformar printFaturacaoMesFilial em func auxiliar 
+    private void printQuery8(int n) throws IOException {
+        String titulo = ("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(50, "―" )) + " Top X clientes que compraram mais produtos distintos " +
+                String.join("", Collections.nCopies(50, "―" )) +Colors.RESET + "\n");
+        List<Pair<String, Integer>> top_n = gestVendasController.getTopNClients(n);
+        List<String> out = top_n.stream()
+                .map(p -> Colors.YELLOW +
+                        "Cliente: " +
+                        Colors.RESET +
+                        p.getFirst() +
+                        "\n" +
+                        Colors.YELLOW +
+                        "Distintos: " +
+                        Colors.RESET +
+                        p.getSecond().toString() +
+                        "\n")
+                .collect(Collectors.toList());
+        Navegador.printer(out, titulo);
+    }
+
+    private void printQuery10() {
         printMonthlyBilling();
     }
 
     private void printMonths() {
         for (String month : Meses.meses) {
-            System.out.printf(Colors.YELLOW + "%7s" + Colors.BLUE + "｜" + Colors.RESET, month);
+            System.out.printf(Colors.YELLOW + "%12s" + Colors.BLUE + "｜" + Colors.RESET, month);
         }
         System.out.print("\n");
     }
@@ -282,7 +351,7 @@ public class Manager {
     private void printSales(Map<String, Integer> sales_per_month) {
         for (String mes : Meses.meses) {
             Integer faturacao = sales_per_month.get(mes);
-            System.out.printf("%7d" + Colors.BLUE + "｜" + Colors.RESET, faturacao);
+            System.out.printf("%12d" + Colors.BLUE + "｜" + Colors.RESET, faturacao);
         }
         System.out.println("\n");
     }
@@ -290,7 +359,7 @@ public class Manager {
     private void printMonthlySales() {
         System.out.println(Colors.YELLOW + "Total de compras por mês:\n" + Colors.RESET);
         printMonths();
-        String line = String.join("", Collections.nCopies(106, "―" ));
+        String line = String.join("", Collections.nCopies(166, "―" ));
         System.out.println(Colors.BLUE + line + Colors.RESET);
         printSales(gestVendasController.getTotalCompras());
     }
@@ -314,7 +383,8 @@ public class Manager {
 
             System.out.println(line);
         }
-        System.out.println(Colors.YELLOW + "\nFaturacao global: " + Colors.RESET + faturacao_global);
+        System.out.print(Colors.YELLOW + "\nFaturacao global: " + Colors.RESET);
+        System.out.print(String.format("%10.2f", faturacao_global));
     }
 
     private void printMonthlyBilling() {
@@ -359,7 +429,7 @@ public class Manager {
     private void printLineInt(List<Integer> linha, String titulo) {
         StringBuilder nums = new StringBuilder(titulo);
         for (int mes = 0; mes < 12; mes++) {
-            nums.append(String.format("%8d", linha.get(mes))).append(Colors.YELLOW).append(" ｜ ").append(Colors.RESET);
+            nums.append(String.format("%10d", linha.get(mes))).append(Colors.BLUE).append(" ｜ ").append(Colors.RESET);
         }
         System.out.println(nums);
     }
@@ -367,7 +437,7 @@ public class Manager {
     private void printLineDouble(List<Double> linha, String titulo) {
         StringBuilder nums = new StringBuilder(titulo);
         for (int mes = 0; mes < 12; mes++) {
-            nums.append(String.format("%8f", linha.get(mes))).append(Colors.YELLOW).append(" ｜ ").append(Colors.RESET);
+            nums.append(String.format("%10.2f", linha.get(mes))).append(Colors.BLUE).append(" ｜ ").append(Colors.RESET);
         }
         System.out.println(nums);
     }
