@@ -1,4 +1,5 @@
 package utils;
+
 import java.util.function.Function;
 
 public class Pair<F, S> {
@@ -9,6 +10,10 @@ public class Pair<F, S> {
     private Pair(final F first, final S second) {
         this.first = first;
         this.second = second;
+    }
+
+    public static <F, S> Pair<F, S> of(final F first, final S second) {
+        return new Pair<>(first, second);
     }
 
     public F getFirst() {
@@ -25,9 +30,5 @@ public class Pair<F, S> {
 
     public <S2> Pair<F, S2> mapSecond(final Function<? super S, ? extends S2> function) {
         return of(first, function.apply(second));
-    }
-
-    public static <F, S> Pair<F, S> of(final F first, final S second) {
-        return new Pair<>(first, second);
     }
 }

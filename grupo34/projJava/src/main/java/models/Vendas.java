@@ -2,10 +2,9 @@ package models;
 
 import java.io.InvalidClassException;
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class Vendas {
-    private final List<Set<Venda>> vendas_por_mes;
+public class Vendas implements IVendas {
+    private final List<Set<IVenda>> vendas_por_mes;
 
 
     public Vendas() {
@@ -15,25 +14,29 @@ public class Vendas {
         }
     }
 
-    public Optional<Venda> addVenda(String venda_completa, GestVendas gestVendas) {
+    @Override
+    public Optional<IVenda> addVenda(String venda_completa, IGestVendas IGestVendas) {
         try {
-            Venda venda = new Venda(venda_completa, gestVendas);
-            if(this.vendas_por_mes.get(venda.getMes()).add(venda)) {
-                return Optional.of(venda);
+            IVenda IVenda = new Venda(venda_completa, IGestVendas);
+            if (this.vendas_por_mes.get(IVenda.getMes()).add(IVenda)) {
+                return Optional.of(IVenda);
             }
-        } catch (InvalidClassException ignored) {}
+        } catch (InvalidClassException ignored) {
+        }
         return Optional.empty();
     }
 
+    @Override
     public int getTotalVendas(int mes) {
         return this.vendas_por_mes.get(mes).size();
     }
 
-    public Double getTotalFaturacaoMesFilial(int mes, int filial){
+    @Override
+    public Double getTotalFaturacaoMesFilial(int mes, int filial) {
         return this.vendas_por_mes.get(mes)
                 .stream()
                 .filter(venda -> venda.getFilial() == filial)
-                .mapToDouble(Venda::getFaturacao)
+                .mapToDouble(IVenda::getFaturacao)
                 .sum();
     }
 }

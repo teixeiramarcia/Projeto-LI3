@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class Navegador {
-    public static void printer(List<String> catalogo, String titulo) throws IOException {
+    public static <T> void printer(List<T> catalogo, String titulo) throws IOException {
         boolean flagCycle = true;
         int posicao_inicio = 0;
         int max_bound = catalogo.size();

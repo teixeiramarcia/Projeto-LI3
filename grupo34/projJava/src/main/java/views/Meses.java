@@ -4,9 +4,9 @@ public class Meses {
     public static final String[] meses = {"Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"};
 
     public static String intToMes(int mes) {
-        switch(mes){
+        switch (mes) {
             case 0:
-               return "Jan";
+                return "Jan";
             case 1:
                 return "Fev";
             case 2:

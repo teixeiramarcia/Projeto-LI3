@@ -2,7 +2,7 @@ package models;
 
 import java.io.InvalidClassException;
 
-public class Venda {
+public class Venda implements IVenda {
     private final String codigo_produto;
     private final double preco_unitario;
     private final int unidades;
@@ -10,10 +10,10 @@ public class Venda {
     private final int mes;
     private final int filial;
 
-    public Venda(String venda_completa, GestVendas gestVendas) throws InvalidClassException {
+    public Venda(String venda_completa, IGestVendas IGestVendas) throws InvalidClassException {
         String[] pieces = venda_completa.replace("(\\r\\n)", "").split(" ");
 
-        if (!validaVenda(pieces, gestVendas)) {
+        if (!validaVenda(pieces, IGestVendas)) {
             throw new InvalidClassException("Venda Inválida");
         }
 
@@ -25,36 +25,41 @@ public class Venda {
         this.filial = Integer.parseInt(pieces[6]) - 1;
     }
 
+    static boolean validaVenda(String[] pieces, IGestVendas IGestVendas) {
+        return IProduto.validaProduto(pieces[0]) &&
+                IGestVendas.existeProduto(pieces[0]) &&
+                ICliente.validaCliente(pieces[4]) &&
+                IGestVendas.existeCliente(pieces[4]);
+    }
+
+    @Override
     public int getMes() {
         return this.mes;
     }
 
+    @Override
     public String getClientID() {
         return this.codigo_cliente;
     }
 
+    @Override
     public String getProductID() {
         return this.codigo_produto;
     }
 
+    @Override
     public int getFilial() {
         return this.filial;
     }
 
+    @Override
     public int getUnidades() {
         return this.unidades;
     }
 
+    @Override
     public double getFaturacao() {
         return this.preco_unitario * this.unidades;
-    }
-
-    public static boolean validaVenda(String[] pieces, GestVendas gestVendas) {
-        return
-                Produto.validaProduto(pieces[0]) &&
-                        gestVendas.existeProduto(pieces[0]) &&
-                        Cliente.validaCliente(pieces[4]) &&
-                        gestVendas.existeCliente(pieces[4]);
     }
 
 }

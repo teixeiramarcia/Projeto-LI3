@@ -1,43 +1,52 @@
 package models;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Produtos {
-    private final Map<String, Produto> produtos;
+public class Produtos implements IProdutos {
+    private final Map<String, IProduto> produtos;
 
     public Produtos() {
         this.produtos = new HashMap<>();
     }
 
+    @Override
     public boolean existeProduto(String productID) {
         return this.produtos.containsKey(productID);
     }
 
-    public void addProduct(Produto produto) {
-        this.produtos.put(produto.getProductID(), produto);
+    @Override
+    public void addProduct(IProduto IProduto) {
+        this.produtos.put(IProduto.getProductID(), IProduto);
     }
 
-    public void updateProdutos(Venda venda) {
-        this.produtos.get(venda.getProductID()).updateProduto(venda);
+    @Override
+    public void updateProdutos(IVenda IVenda) {
+        this.produtos.get(IVenda.getProductID()).updateProduto(IVenda);
     }
 
+    @Override
     public List<String> getProductsNeverBought() {
         return this.produtos.values().stream()
-                .filter(Produto::wasntBoughtGeneral)
-                .map(Produto::getProductID)
+                .filter(IProduto::wasntBoughtGeneral)
+                .map(IProduto::getProductID)
                 .sorted(String::compareTo)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<Integer> getProductMonthlyBuyings(String productID) {
         return this.produtos.get(productID).getMonthlyBuyings();
     }
 
+    @Override
     public List<Integer> getProductClients(String productID) {
         return this.produtos.get(productID).getClients();
     }
 
+    @Override
     public List<Double> getProductBilling(String productID) {
         return this.produtos.get(productID).getTotalBilling();
     }
