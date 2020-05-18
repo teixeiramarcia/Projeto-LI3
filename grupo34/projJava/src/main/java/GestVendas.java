@@ -1,3 +1,4 @@
+import views.Input;
 import views.Manager;
 
 import java.io.FileNotFoundException;
