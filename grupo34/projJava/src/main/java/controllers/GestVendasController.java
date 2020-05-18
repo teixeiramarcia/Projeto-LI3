@@ -17,47 +17,47 @@ import java.util.List;
 import java.util.Map;
 
 public class GestVendasController implements IGestVendasController {
-    private IGestVendas IGestVendas;
+    private IGestVendas gestVendas;
 
-    private void readClients(String file, IGestVendas IGestVendas) throws FileNotFoundException {
+    private void readClients(String file, IGestVendas gestVendas) throws FileNotFoundException {
         BufferedReader bf = new BufferedReader(new FileReader(file));
         Iterator<String> it = bf.lines().iterator();
         while (it.hasNext()) {
             String line = it.next();
-            IGestVendas.adicionaCliente(line);
+            gestVendas.adicionaCliente(line);
         }
     }
 
-    private void readProducts(String file, IGestVendas IGestVendas) throws FileNotFoundException {
+    private void readProducts(String file, IGestVendas gestVendas) throws FileNotFoundException {
         BufferedReader bf = new BufferedReader(new FileReader(file));
         Iterator<String> it = bf.lines().iterator();
         while (it.hasNext()) {
             String line = it.next();
-            IGestVendas.adicionaProduto(line);
+            gestVendas.adicionaProduto(line);
         }
     }
 
-    private void readVendas(String file, IGestVendas IGestVendas) throws FileNotFoundException {
+    private void readVendas(String file, IGestVendas gestVendas) throws FileNotFoundException {
         BufferedReader bf = new BufferedReader(new FileReader(file));
         Iterator<String> it = bf.lines().iterator();
         while (it.hasNext()) {
             String line = it.next();
-            IGestVendas.adicionaVenda(line);
+            gestVendas.adicionaVenda(line);
         }
     }
 
     @Override
     public void loadSGVFromFiles(String filesFolderPath) throws FileNotFoundException {
-        this.IGestVendas = new GestVendas();
+        this.gestVendas = new GestVendas();
         Chrono.start();
         String ficheiro_clientes = filesFolderPath + "/Clientes.txt";
-        readClients(ficheiro_clientes, IGestVendas);
+        readClients(ficheiro_clientes, gestVendas);
 
         String ficheiro_produtos = filesFolderPath + "/Produtos.txt";
-        readProducts(ficheiro_produtos, IGestVendas);
+        readProducts(ficheiro_produtos, gestVendas);
 
         String ficheiro_vendas = filesFolderPath + "/Vendas_1M.txt";
-        readVendas(ficheiro_vendas, IGestVendas);
+        readVendas(ficheiro_vendas, gestVendas);
 
         Chrono.stop();
         System.out.println(Chrono.getTImeString());
@@ -67,7 +67,7 @@ public class GestVendasController implements IGestVendasController {
     public Map<String, Integer> getTotalCompras() {
         Map<String, Integer> resultado = new HashMap<>();
         for (int mes = 0; mes < 12; mes++) {
-            resultado.put(Meses.intToMes(mes), this.IGestVendas.getTotalComprasMes(mes));
+            resultado.put(Meses.intToMes(mes), this.gestVendas.getTotalComprasMes(mes));
         }
         return resultado;
     }
@@ -76,7 +76,7 @@ public class GestVendasController implements IGestVendasController {
     public Map<String, Map<Integer, Double>> getTotalFaturacao() {
         Map<String, Map<Integer, Double>> resultado = new HashMap<>();
         for (int mes = 0; mes < 12; mes++)
-            resultado.put(Meses.intToMes(mes), this.IGestVendas.getTotalFaturacaoMes(mes));
+            resultado.put(Meses.intToMes(mes), this.gestVendas.getTotalFaturacaoMes(mes));
         return resultado;
     }
 
@@ -84,53 +84,53 @@ public class GestVendasController implements IGestVendasController {
     public Map<String, Map<Integer, Integer>> getTotalClientesMesFilial() {
         Map<String, Map<Integer, Integer>> resultado = new HashMap<>();
         for (int mes = 0; mes < 12; mes++)
-            resultado.put(Meses.intToMes(mes), this.IGestVendas.getTotalClientesMes(mes));
+            resultado.put(Meses.intToMes(mes), this.gestVendas.getTotalClientesMes(mes));
         return resultado;
     }
 
     @Override
     public List<String> getProdutosNuncaComprados() {
-        return this.IGestVendas.getProdutosNComprados();
+        return this.gestVendas.getProdutosNComprados();
     }
 
     @Override
     public int getTotalVendas(int mes) {
-        return this.IGestVendas.getTotalComprasMes(mes);
+        return this.gestVendas.getTotalComprasMes(mes);
     }
 
     @Override
     public int getTotalClientes(int mes) {
-        return this.IGestVendas.getNumClientesMes(mes);
+        return this.gestVendas.getNumClientesMes(mes);
     }
 
     @Override
     public List<Integer> getClientMonthlyBuyings(String clientID) {
-        return this.IGestVendas.getClientMonthlyBuyings(clientID);
+        return this.gestVendas.getClientMonthlyBuyings(clientID);
     }
 
     @Override
     public List<Integer> getClientMonthlyProducts(String clientID) {
-        return this.IGestVendas.getClientMonthlyProducts(clientID);
+        return this.gestVendas.getClientMonthlyProducts(clientID);
     }
 
     @Override
     public List<Double> getMonthlyTotalCost(String clientID) {
-        return this.IGestVendas.getMonthlyTotalCost(clientID);
+        return this.gestVendas.getMonthlyTotalCost(clientID);
     }
 
     @Override
     public List<Integer> getProductMonthlyBuyings(String productID) {
-        return this.IGestVendas.getProductMonthlyBuyings(productID);
+        return this.gestVendas.getProductMonthlyBuyings(productID);
     }
 
     @Override
     public List<Integer> getProductClients(String productID) {
-        return this.IGestVendas.getProductClients(productID);
+        return this.gestVendas.getProductClients(productID);
     }
 
     @Override
     public List<Double> getProductBilling(String productID) {
-        return this.IGestVendas.getProductBilling(productID);
+        return this.gestVendas.getProductBilling(productID);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class GestVendasController implements IGestVendasController {
 
     @Override
     public boolean clienteExiste(String clientID) {
-        return this.IGestVendas.existeCliente(clientID);
+        return this.gestVendas.existeCliente(clientID);
     }
 
     @Override
@@ -150,16 +150,20 @@ public class GestVendasController implements IGestVendasController {
 
     @Override
     public boolean produtoExiste(String productID) {
-        return this.IGestVendas.produtoExiste(productID);
+        return this.gestVendas.produtoExiste(productID);
     }
 
     @Override
     public List<String> getClientFavoriteProducts(String clientID) {
-        return this.IGestVendas.getClientFavoriteProducts(clientID);
+        return this.gestVendas.getClientFavoriteProducts(clientID);
     }
 
     @Override
     public List<Pair<String, Integer>> getTopNClients(int n) {
-        return this.IGestVendas.getTopNClients(n);
+        return this.gestVendas.getTopNClients(n);
+    }
+
+    public List<Pair<String, Integer>> getTopNProducts(int n) {
+        return this.gestVendas.getTopNProducts(n);
     }
 }

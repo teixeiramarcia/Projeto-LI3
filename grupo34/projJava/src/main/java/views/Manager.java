@@ -69,7 +69,7 @@ public class Manager {
                     printPreviousMenuOpt();
                     break;
                 case "6":
-                    //q6
+                    printQuery6(inputClass.getInputInt());
                     printPreviousMenuOpt();
                     break;
                 case "7":
@@ -217,6 +217,17 @@ public class Manager {
         Navegador.printer(produtos_mais_comprados, titulo);
     }
 
+    private void printQuery6(int n) throws IOException {
+        String titulo = ("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(50, "―")) + " Top X produtos que mais clientes distintos compraram " +
+                String.join("", Collections.nCopies(50, "―")) + Colors.RESET + "\n");
+        List<ProdutosQuantidade> top_n = gestVendasController.getTopNProducts(n).stream()
+                .map(ProdutosQuantidade::new)
+                .collect(Collectors.toList());
+        Navegador.printer(top_n, titulo);
+
+    }
+
     private void printQuery8(int n) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(50, "―")) + " Top X clientes que compraram mais produtos distintos " +
@@ -357,4 +368,27 @@ public class Manager {
                     "\n";
         }
     }
+
+    private static class ProdutosQuantidade {
+        private final Pair<String, Integer> par;
+
+        private ProdutosQuantidade(Pair<String, Integer> par) {
+            this.par = par;
+        }
+
+        @Override
+        public String toString() {
+            return Colors.YELLOW +
+                    "Produto: " +
+                    Colors.RESET +
+                    par.getFirst() +
+                    "\n" +
+                    Colors.YELLOW +
+                    "Distintos: " +
+                    Colors.RESET +
+                    par.getSecond().toString() +
+                    "\n";
+        }
+    }
+
 }

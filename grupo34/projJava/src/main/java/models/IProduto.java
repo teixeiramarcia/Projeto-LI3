@@ -22,4 +22,6 @@ public interface IProduto {
     List<Integer> getClients();
 
     List<Double> getTotalBilling();
+
+    int getDistinctClients();
 }

@@ -1,10 +1,8 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Produto implements IProduto {
     private final String productID;
@@ -65,5 +63,11 @@ public class Produto implements IProduto {
             resultado.add(mes, this.faturacao[mes]);
         }
         return resultado;
+    }
+
+    public int getDistinctClients() {
+        Set<String> clientes = new TreeSet<>();
+        this.clientes_que_compraram.forEach(clientes::addAll);
+        return clientes.size();
     }
 }

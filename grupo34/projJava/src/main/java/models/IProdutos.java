@@ -1,5 +1,7 @@
 package models;
 
+import utils.Pair;
+
 import java.util.List;
 
 public interface IProdutos {
@@ -16,4 +18,6 @@ public interface IProdutos {
     List<Integer> getProductClients(String productID);
 
     List<Double> getProductBilling(String productID);
+
+    List<Pair<String, Integer>> getTopNProducts(int n);
 }

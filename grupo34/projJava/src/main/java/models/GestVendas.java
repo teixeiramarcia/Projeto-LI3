@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public class GestVendas implements IGestVendas {
-    private final IClientes IClientes;
-    private final IProdutos IProdutos;
-    private final IVendas IVendas;
+    private final IClientes clientes;
+    private final IProdutos produtos;
+    private final IVendas vendas;
     private final IFiliais IFiliais;
     private int clientes_lidos;
     private int clientes_validos;
@@ -20,13 +20,13 @@ public class GestVendas implements IGestVendas {
 
 
     public GestVendas() {
-        this.IClientes = new Clientes();
+        this.clientes = new Clientes();
         this.clientes_lidos = 0;
         this.clientes_validos = 0;
-        this.IProdutos = new Produtos();
+        this.produtos = new Produtos();
         this.produtos_lidos = 0;
         this.produtos_validos = 0;
-        this.IVendas = new Vendas();
+        this.vendas = new Vendas();
         this.vendas_lidas = 0;
         this.vendas_validas = 0;
         this.IFiliais = new Filiais();
@@ -38,9 +38,9 @@ public class GestVendas implements IGestVendas {
             this.clientes_lidos++;
             return;
         }
-        if (!this.IClientes.existeCliente(clientID)) {
+        if (!this.clientes.existeCliente(clientID)) {
             ICliente ICliente = new Cliente(clientID);
-            this.IClientes.addClient(ICliente);
+            this.clientes.addClient(ICliente);
             this.clientes_validos++;
             this.clientes_lidos++;
         }
@@ -52,9 +52,9 @@ public class GestVendas implements IGestVendas {
             this.produtos_lidos++;
             return;
         }
-        if (!this.IProdutos.existeProduto(productID)) {
+        if (!this.produtos.existeProduto(productID)) {
             IProduto IProduto = new Produto(productID);
-            this.IProdutos.addProduct(IProduto);
+            this.produtos.addProduct(IProduto);
             this.produtos_validos++;
             this.produtos_lidos++;
         }
@@ -62,36 +62,36 @@ public class GestVendas implements IGestVendas {
 
     @Override
     public void adicionaVenda(String venda_completa) {
-        this.IVendas.addVenda(venda_completa, this).ifPresent(v -> {
+        this.vendas.addVenda(venda_completa, this).ifPresent(v -> {
             this.vendas_validas++;
-            this.IClientes.updateClientes(v);
-            this.IProdutos.updateProdutos(v);
+            this.clientes.updateClientes(v);
+            this.produtos.updateProdutos(v);
 
-            this.IFiliais.updateFiliais(v, this.IClientes.getClient(v));
+            this.IFiliais.updateFiliais(v, this.clientes.getClient(v));
         });
         this.vendas_lidas++;
     }
 
     @Override
     public boolean existeProduto(String piece) {
-        return this.IProdutos.existeProduto(piece);
+        return this.produtos.existeProduto(piece);
     }
 
     @Override
     public boolean existeCliente(String piece) {
-        return this.IClientes.existeCliente(piece);
+        return this.clientes.existeCliente(piece);
     }
 
     @Override
     public int getTotalComprasMes(int mes) {
-        return this.IVendas.getTotalVendas(mes);
+        return this.vendas.getTotalVendas(mes);
     }
 
     @Override
     public Map<Integer, Double> getTotalFaturacaoMes(int mes) {
         Map<Integer, Double> resultado = new HashMap<>();
         for (int filial = 0; filial < 3; filial++)
-            resultado.put(filial + 1, this.IVendas.getTotalFaturacaoMesFilial(mes, filial));
+            resultado.put(filial + 1, this.vendas.getTotalFaturacaoMesFilial(mes, filial));
         return resultado;
     }
 
@@ -99,13 +99,13 @@ public class GestVendas implements IGestVendas {
     public Map<Integer, Integer> getTotalClientesMes(int mes) {
         Map<Integer, Integer> resultado = new HashMap<>();
         for (int filial = 0; filial < 3; filial++)
-            resultado.put(filial + 1, this.IClientes.getTotalClientesFilialMes(filial, mes));
+            resultado.put(filial + 1, this.clientes.getTotalClientesFilialMes(filial, mes));
         return resultado;
     }
 
     @Override
     public List<String> getProdutosNComprados() {
-        return this.IProdutos.getProductsNeverBought();
+        return this.produtos.getProductsNeverBought();
     }
 
     @Override
@@ -115,46 +115,50 @@ public class GestVendas implements IGestVendas {
 
     @Override
     public List<Integer> getClientMonthlyBuyings(String clientID) {
-        return this.IClientes.getClientMonthlyBuyings(clientID);
+        return this.clientes.getClientMonthlyBuyings(clientID);
     }
 
     @Override
     public List<Integer> getClientMonthlyProducts(String clientID) {
-        return this.IClientes.getClientMonthlyProducts(clientID);
+        return this.clientes.getClientMonthlyProducts(clientID);
     }
 
     @Override
     public List<Double> getMonthlyTotalCost(String clientID) {
-        return this.IClientes.getMonthlyTotalCost(clientID);
+        return this.clientes.getMonthlyTotalCost(clientID);
     }
 
     @Override
     public List<Integer> getProductMonthlyBuyings(String productID) {
-        return this.IProdutos.getProductMonthlyBuyings(productID);
+        return this.produtos.getProductMonthlyBuyings(productID);
     }
 
     @Override
     public List<Integer> getProductClients(String productID) {
-        return this.IProdutos.getProductClients(productID);
+        return this.produtos.getProductClients(productID);
     }
 
     @Override
     public List<Double> getProductBilling(String productID) {
-        return this.IProdutos.getProductBilling(productID);
+        return this.produtos.getProductBilling(productID);
     }
 
     @Override
     public boolean produtoExiste(String productID) {
-        return this.IProdutos.existeProduto(productID);
+        return this.produtos.existeProduto(productID);
     }
 
     @Override
     public List<String> getClientFavoriteProducts(String clientID) {
-        return this.IClientes.getClientFavoriteProducts(clientID);
+        return this.clientes.getClientFavoriteProducts(clientID);
     }
 
     @Override
     public List<Pair<String, Integer>> getTopNClients(int n) {
-        return this.IClientes.getTopNClients(n);
+        return this.clientes.getTopNClients(n);
+    }
+
+    public List<Pair<String, Integer>> getTopNProducts(int n) {
+        return this.produtos.getTopNProducts(n);
     }
 }

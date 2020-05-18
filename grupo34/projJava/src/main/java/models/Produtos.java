@@ -1,9 +1,12 @@
 package models;
 
+import utils.Pair;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Produtos implements IProdutos {
     private final Map<String, IProduto> produtos;
@@ -49,5 +52,13 @@ public class Produtos implements IProdutos {
     @Override
     public List<Double> getProductBilling(String productID) {
         return this.produtos.get(productID).getTotalBilling();
+    }
+
+    public List<Pair<String, Integer>> getTopNProducts(int n) {
+        Stream<Pair<String, Integer>> s = this.produtos.values().stream()
+                .map(produto -> Pair.of(produto.getProductID(), produto.getDistinctClients()));
+        return s.sorted((par1, par2) -> par2.getSecond() - par1.getSecond())
+                .limit(n)
+                .collect(Collectors.toList());
     }
 }

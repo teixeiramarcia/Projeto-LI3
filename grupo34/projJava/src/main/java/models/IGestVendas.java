@@ -43,4 +43,6 @@ public interface IGestVendas {
     List<String> getClientFavoriteProducts(String clientID);
 
     List<Pair<String, Integer>> getTopNClients(int n);
+
+    List<Pair<String, Integer>> getTopNProducts(int n);
 }
