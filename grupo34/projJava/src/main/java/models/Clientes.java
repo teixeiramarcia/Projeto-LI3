@@ -36,11 +36,24 @@ public class Clientes implements IClientes {
     }
 
     @Override
-    public int getTotalClientesFilialMes(int filial, int mes) {
+    public int getTotalClientesMes(int mes) {
         int resultado = 0;
-        for (ICliente ICliente : clientes.values())
-            if (ICliente.faturouNaFilial(filial) && ICliente.comprouNoMes(mes))
+        for (ICliente cliente : clientes.values()) {
+            if (cliente.comprouNoMes(mes)) {
                 resultado++;
+            }
+        }
+        return resultado;
+    }
+
+    @Override
+    public int getTotalClientesFilialMes(int filial, int mes){
+        int resultado = 0;
+        for (ICliente cliente : this.clientes.values()) {
+            if(cliente.comprouNoMesEFilial(mes, filial)) {
+                resultado++;
+            }
+        }
         return resultado;
     }
 

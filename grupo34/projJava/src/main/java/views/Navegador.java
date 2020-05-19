@@ -20,7 +20,7 @@ public class Navegador {
                     (posicao_inicio + 10) +
                     ":\n" +
                     Colors.RESET);
-            for (int i = posicao_inicio; i < posicao_inicio + 10; i++) {
+            for (int i = posicao_inicio; i < posicao_inicio + 10 && i < max_bound; i++) {
                 System.out.println(catalogo.get(i));
             }
             System.out.println("\n");

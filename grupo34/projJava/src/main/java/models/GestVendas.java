@@ -10,7 +10,7 @@ public class GestVendas implements IGestVendas {
     private final IClientes clientes;
     private final IProdutos produtos;
     private final IVendas vendas;
-    private final IFiliais IFiliais;
+    private final IFiliais filiais;
     private int clientes_lidos;
     private int clientes_validos;
     private int produtos_lidos;
@@ -29,7 +29,7 @@ public class GestVendas implements IGestVendas {
         this.vendas = new Vendas();
         this.vendas_lidas = 0;
         this.vendas_validas = 0;
-        this.IFiliais = new Filiais();
+        this.filiais = new Filiais();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class GestVendas implements IGestVendas {
             this.clientes.updateClientes(v);
             this.produtos.updateProdutos(v);
 
-            this.IFiliais.updateFiliais(v, this.clientes.getClient(v));
+            this.filiais.updateFiliais(v, this.clientes.getClient(v));
         });
         this.vendas_lidas++;
     }
@@ -109,8 +109,8 @@ public class GestVendas implements IGestVendas {
     }
 
     @Override
-    public int getNumClientesMes(int mes) {
-        return getTotalClientesMes(mes).size();
+    public int getNumClientesCompraramNoMes(int mes) {
+        return this.clientes.getTotalClientesMes(mes);
     }
 
     @Override
@@ -160,5 +160,13 @@ public class GestVendas implements IGestVendas {
 
     public List<Pair<String, Integer>> getTopNProducts(int n) {
         return this.produtos.getTopNProducts(n);
+    }
+
+    public String[][] getTop3Buyers() {
+        return this.filiais.getTop3Buyers();
+    }
+
+    public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
+      return this.produtos.getTopNClientsOfProduct(productID, n);
     }
 }

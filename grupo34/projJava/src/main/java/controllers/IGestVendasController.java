@@ -13,13 +13,13 @@ public interface IGestVendasController {
 
     Map<String, Map<Integer, Double>> getTotalFaturacao();
 
-    Map<String, Map<Integer, Integer>> getTotalClientesMesFilial();
+    Map<String, Map<Integer, Integer>> getNumClientesCompraramFilialPorMes();
 
     List<String> getProdutosNuncaComprados();
 
     int getTotalVendas(int mes);
 
-    int getTotalClientes(int mes);
+    int getNumClientesCompraramNoMes(int mes);
 
     List<Integer> getClientMonthlyBuyings(String clientID);
 
@@ -46,4 +46,8 @@ public interface IGestVendasController {
     List<Pair<String, Integer>> getTopNClients(int n);
 
     List<Pair<String, Integer>> getTopNProducts(int n);
+
+    String[][] getTop3Buyers();
+
+    List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n);
 }

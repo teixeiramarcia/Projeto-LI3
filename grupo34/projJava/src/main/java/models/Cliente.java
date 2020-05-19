@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Cliente implements ICliente {
-    private static final Pattern pattern = Pattern.compile("[A-Z]([1-4]\\d{3}|5000)");
-
     private final String clientID;
     private final int[] faturacao_filial;
     private final List<List<IVenda>> compras_por_mes;
@@ -40,8 +37,8 @@ public class Cliente implements ICliente {
     }
 
     @Override
-    public boolean faturouNaFilial(int filial) {
-        return this.faturacao_filial[filial] != 0;
+    public boolean comprouNoMesEFilial(int mes, int filial){
+        return compras_por_mes.get(mes).stream().anyMatch(compra -> compra.getFilial() == filial);
     }
 
     @Override
@@ -96,13 +93,13 @@ public class Cliente implements ICliente {
     @Override
     public Map<String, Integer> getProdutosPorQuantidade() {
         Map<String, Integer> produtos_por_quantidade = new HashMap<>();
-        this.compras_por_mes.forEach(mes -> {
+        this.compras_por_mes.forEach(mes ->
             mes.forEach(venda -> {
                 int atual = produtos_por_quantidade.getOrDefault(venda.getProductID(), 0);
                 int novo = atual + venda.getUnidades();
                 produtos_por_quantidade.put(venda.getProductID(), novo);
-            });
-        });
+            })
+        );
         return produtos_por_quantidade;
     }
 

@@ -13,6 +13,8 @@ public interface IClientes {
 
     void updateClientes(IVenda IVenda);
 
+    int getTotalClientesMes(int mes);
+
     int getTotalClientesFilialMes(int filial, int mes);
 
     List<Integer> getClientMonthlyBuyings(String clientID);

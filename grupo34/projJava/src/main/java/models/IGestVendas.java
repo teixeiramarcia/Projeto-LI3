@@ -16,6 +16,8 @@ public interface IGestVendas {
 
     boolean existeCliente(String piece);
 
+    int getNumClientesCompraramNoMes(int mes);
+
     int getTotalComprasMes(int mes);
 
     Map<Integer, Double> getTotalFaturacaoMes(int mes);
@@ -23,8 +25,6 @@ public interface IGestVendas {
     Map<Integer, Integer> getTotalClientesMes(int mes);
 
     List<String> getProdutosNComprados();
-
-    int getNumClientesMes(int mes);
 
     List<Integer> getClientMonthlyBuyings(String clientID);
 
@@ -45,4 +45,8 @@ public interface IGestVendas {
     List<Pair<String, Integer>> getTopNClients(int n);
 
     List<Pair<String, Integer>> getTopNProducts(int n);
+
+    String[][] getTop3Buyers();
+
+    List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n);
 }

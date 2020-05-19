@@ -61,4 +61,8 @@ public class Produtos implements IProdutos {
                 .limit(n)
                 .collect(Collectors.toList());
     }
+
+    public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
+        return this.produtos.get(productID).getTopNClients(n);
+    }
 }

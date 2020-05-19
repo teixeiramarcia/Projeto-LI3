@@ -16,7 +16,7 @@ public interface ICliente {
 
     void updateCliente(IVenda IVenda);
 
-    boolean faturouNaFilial(int filial);
+    boolean comprouNoMesEFilial(int mes, int filial);
 
     boolean comprouNoMes(int mes);
 

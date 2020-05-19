@@ -20,4 +20,6 @@ public interface IProdutos {
     List<Double> getProductBilling(String productID);
 
     List<Pair<String, Integer>> getTopNProducts(int n);
+
+    List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n);
 }

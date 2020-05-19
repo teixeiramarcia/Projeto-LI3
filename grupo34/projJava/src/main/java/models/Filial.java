@@ -1,33 +1,39 @@
 package models;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
-import static java.util.Comparator.comparingDouble;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Filial implements IFilial {
-    private final ICliente[] top_3_I_clientes = new ICliente[3];
-    private int clientes_so_far;
+    private final int filial;
+    private List<ICliente> top_3_clientes;
+    private final Comparator<ICliente> comparator;
 
-    public Filial() {
-        this.clientes_so_far = 0;
+    public Filial(int filial) {
+        this.filial = filial;
+        this.top_3_clientes = new ArrayList<>();
+        this.comparator = Comparator.comparingDouble(cliente -> cliente.getFaturacaoFilial(filial));
     }
 
     @Override
-    public void updateFilial(IVenda IVenda, ICliente ICliente) {
-        Comparator<ICliente> c = comparingDouble(a -> a.getFaturacaoFilial(IVenda.getFilial()));
-        if (this.clientes_so_far > 2) {
-            double faturacao_ultimo_cliente = top_3_I_clientes[2].getFaturacaoFilial(IVenda.getFilial());
-            double faturacao_cliente_novo = ICliente.getFaturacaoFilial(IVenda.getFilial());
-            if (faturacao_ultimo_cliente > faturacao_cliente_novo) {
-                return;
-            }
-            this.top_3_I_clientes[2] = ICliente;
-            Arrays.sort(this.top_3_I_clientes, c.reversed());
-        } else if (this.clientes_so_far < 2) {
-            this.top_3_I_clientes[this.clientes_so_far] = ICliente;
-            Arrays.sort(this.top_3_I_clientes, 0, clientes_so_far, c.reversed());
-            this.clientes_so_far++;
+    public void updateFilial(IVenda venda, ICliente cliente) {
+        if(!this.top_3_clientes.contains(cliente)) {
+            this.top_3_clientes.add(cliente);
+
+            this.top_3_clientes = this.top_3_clientes.stream()
+                    .sorted(comparator.reversed())
+                    .limit(3)
+                    .collect(Collectors.toList());
         }
+    }
+
+    public String[] getTop3Buyers() {
+        String[] resultado = new String[this.top_3_clientes.size()];
+        int indice = 0;
+        for (Iterator<ICliente> it = this.top_3_clientes.stream().sorted(comparator.reversed()).iterator(); it.hasNext(); ) {
+            ICliente cliente = it.next();
+            resultado[indice++] = cliente.getClientID();
+        }
+        return resultado;
     }
 }

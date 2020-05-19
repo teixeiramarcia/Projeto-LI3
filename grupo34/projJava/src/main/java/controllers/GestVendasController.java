@@ -81,7 +81,7 @@ public class GestVendasController implements IGestVendasController {
     }
 
     @Override
-    public Map<String, Map<Integer, Integer>> getTotalClientesMesFilial() {
+    public Map<String, Map<Integer, Integer>> getNumClientesCompraramFilialPorMes() {
         Map<String, Map<Integer, Integer>> resultado = new HashMap<>();
         for (int mes = 0; mes < 12; mes++)
             resultado.put(Meses.intToMes(mes), this.gestVendas.getTotalClientesMes(mes));
@@ -99,8 +99,8 @@ public class GestVendasController implements IGestVendasController {
     }
 
     @Override
-    public int getTotalClientes(int mes) {
-        return this.gestVendas.getNumClientesMes(mes);
+    public int getNumClientesCompraramNoMes(int mes) {
+        return this.gestVendas.getNumClientesCompraramNoMes(mes);
     }
 
     @Override
@@ -165,5 +165,13 @@ public class GestVendasController implements IGestVendasController {
 
     public List<Pair<String, Integer>> getTopNProducts(int n) {
         return this.gestVendas.getTopNProducts(n);
+    }
+
+    public String[][] getTop3Buyers() {
+        return this.gestVendas.getTop3Buyers();
+    }
+
+    public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
+        return this.gestVendas.getTopNClientsOfProduct(productID, n);
     }
 }

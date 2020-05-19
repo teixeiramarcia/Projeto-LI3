@@ -2,7 +2,9 @@ package views;
 
 import controllers.GestVendasController;
 import controllers.IGestVendasController;
-import utils.Pair;
+import utils.ClienteFaturacaoNoProduto;
+import utils.ClientesQuantidade;
+import utils.ProdutoQuantidade;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -73,7 +75,7 @@ public class Manager {
                     printPreviousMenuOpt();
                     break;
                 case "7":
-                    //q7
+                    printQuery7();
                     printPreviousMenuOpt();
                     break;
                 case "8":
@@ -81,7 +83,7 @@ public class Manager {
                     printPreviousMenuOpt();
                     break;
                 case "9":
-                    //q9
+                    printQuery9(inputClass.getInputProduct(), inputClass.getInputInt());
                     printPreviousMenuOpt();
                     break;
                 case "10":
@@ -169,7 +171,7 @@ public class Manager {
         System.out.println(Colors.YELLOW +
                 "Total de clientes (distintos) envolvidos: " +
                 Colors.RESET +
-                gestVendasController.getTotalClientes(mes));
+                gestVendasController.getNumClientesCompraramNoMes(mes));
     }
 
     private void printQuery3(String clientID) {
@@ -221,11 +223,26 @@ public class Manager {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(50, "―")) + " Top X produtos que mais clientes distintos compraram " +
                 String.join("", Collections.nCopies(50, "―")) + Colors.RESET + "\n");
-        List<ProdutosQuantidade> top_n = gestVendasController.getTopNProducts(n).stream()
-                .map(ProdutosQuantidade::new)
+        List<ProdutoQuantidade> top_n = gestVendasController.getTopNProducts(n).stream()
+                .map(ProdutoQuantidade::new)
                 .collect(Collectors.toList());
         Navegador.printer(top_n, titulo);
 
+    }
+
+    private void printQuery7() {
+        System.out.println("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(5, "―")) + " 3 maiores compradores separados por filial " +
+                String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
+        String[][] top3 =  this.gestVendasController.getTop3Buyers();
+        for (int filial = 0; filial < 3; filial++) {
+            System.out.println(Colors.YELLOW + "Filial" + (filial + 1) + Colors.RESET);
+            for (int cliente = 0; cliente < top3[filial].length; cliente++) {
+                System.out.print(Colors.YELLOW + "-> " + Colors.RESET);
+                System.out.println(top3[filial][cliente]);
+            }
+            System.out.println();
+        }
     }
 
     private void printQuery8(int n) throws IOException {
@@ -238,7 +255,17 @@ public class Manager {
         Navegador.printer(top_n, titulo);
     }
 
-    private void printQuery10() {
+    private void printQuery9(String productID, int n) throws IOException {
+        String titulo = ("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(10, "―")) + " Top X clientes que mais compraram um determinado produto e para cada, o valor gasto " +
+                String.join("", Collections.nCopies(10, "―")) + Colors.RESET + "\n");
+        List<ClienteFaturacaoNoProduto> top_n = gestVendasController.getTopNClientsOfProduct(productID, n).stream()
+                .map(ClienteFaturacaoNoProduto::new)
+                .collect(Collectors.toList());
+        Navegador.printer(top_n, titulo);
+    }
+
+    private void printQuery10() { //FIXME por testar
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(15, "―")) + " Faturação total por mês e por filial " +
                 String.join("", Collections.nCopies(15, "―")) + Colors.RESET + "\n");
@@ -318,7 +345,7 @@ public class Manager {
 
     private void printMonthlyMonthlyClients() {
         System.out.println(Colors.YELLOW + "\n\nTotal de clientes que efetuaram compras por mês e por filial:\n" + Colors.RESET);
-        printNumClientesMesFilial(gestVendasController.getTotalClientesMesFilial());
+        printNumClientesMesFilial(gestVendasController.getNumClientesCompraramFilialPorMes());
     }
 
     private void printStatisticsMenu() {
@@ -347,48 +374,5 @@ public class Manager {
         System.out.println(nums);
     }
 
-    private static class ClientesQuantidade {
-        private final Pair<String, Integer> par;
-
-        private ClientesQuantidade(Pair<String, Integer> par) {
-            this.par = par;
-        }
-
-        @Override
-        public String toString() {
-            return Colors.YELLOW +
-                    "Cliente: " +
-                    Colors.RESET +
-                    par.getFirst() +
-                    "\n" +
-                    Colors.YELLOW +
-                    "Distintos: " +
-                    Colors.RESET +
-                    par.getSecond().toString() +
-                    "\n";
-        }
-    }
-
-    private static class ProdutosQuantidade {
-        private final Pair<String, Integer> par;
-
-        private ProdutosQuantidade(Pair<String, Integer> par) {
-            this.par = par;
-        }
-
-        @Override
-        public String toString() {
-            return Colors.YELLOW +
-                    "Produto: " +
-                    Colors.RESET +
-                    par.getFirst() +
-                    "\n" +
-                    Colors.YELLOW +
-                    "Distintos: " +
-                    Colors.RESET +
-                    par.getSecond().toString() +
-                    "\n";
-        }
-    }
 
 }
