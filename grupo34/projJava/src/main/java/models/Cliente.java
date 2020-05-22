@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 public class Cliente implements ICliente {
     private final String clientID;
-    private final int[] faturacao_filial;
+    private final double[] faturacao_filial;
     private final List<List<IVenda>> compras_por_mes;
 
     public Cliente(String clientID) {
         this.clientID = clientID;
-        this.faturacao_filial = new int[3];
+        this.faturacao_filial = new double[3];
         this.compras_por_mes = new ArrayList<>(3);
         for (int mes = 0; mes < 12; mes++) {
             this.compras_por_mes.add(new ArrayList<>());
@@ -26,7 +26,7 @@ public class Cliente implements ICliente {
     }
 
     @Override
-    public int getFaturacaoFilial(int filial) {
+    public double getFaturacaoFilial(int filial) {
         return this.faturacao_filial[filial];
     }
 
@@ -37,7 +37,7 @@ public class Cliente implements ICliente {
     }
 
     @Override
-    public boolean comprouNoMesEFilial(int mes, int filial){
+    public boolean comprouNoMesEFilial(int mes, int filial) {
         return compras_por_mes.get(mes).stream().anyMatch(compra -> compra.getFilial() == filial);
     }
 
@@ -94,11 +94,11 @@ public class Cliente implements ICliente {
     public Map<String, Integer> getProdutosPorQuantidade() {
         Map<String, Integer> produtos_por_quantidade = new HashMap<>();
         this.compras_por_mes.forEach(mes ->
-            mes.forEach(venda -> {
-                int atual = produtos_por_quantidade.getOrDefault(venda.getProductID(), 0);
-                int novo = atual + venda.getUnidades();
-                produtos_por_quantidade.put(venda.getProductID(), novo);
-            })
+                mes.forEach(venda -> {
+                    int atual = produtos_por_quantidade.getOrDefault(venda.getProductID(), 0);
+                    int novo = atual + venda.getUnidades();
+                    produtos_por_quantidade.put(venda.getProductID(), novo);
+                })
         );
         return produtos_por_quantidade;
     }

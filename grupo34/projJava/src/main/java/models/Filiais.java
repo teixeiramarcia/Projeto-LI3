@@ -15,6 +15,7 @@ public class Filiais implements IFiliais {
         this.filiais[IVenda.getFilial()].updateFilial(IVenda, ICliente);
     }
 
+    @Override
     public String[][] getTop3Buyers() {
         String[][] resultado = new String[3][];
         for (int filial = 0; filial < 3; filial++) {

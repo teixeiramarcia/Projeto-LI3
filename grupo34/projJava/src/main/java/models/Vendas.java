@@ -41,4 +41,36 @@ public class Vendas implements IVendas {
                 .mapToDouble(IVenda::getFaturacao)
                 .sum();
     }
+
+    @Override
+    public int getDistinctProducts() {
+        Set<String> produtos = new TreeSet<>();
+        this.vendas_por_mes.forEach(vendas_mes -> {
+            vendas_mes.forEach(venda -> produtos.add(venda.getProductID()));
+        });
+        return produtos.size();
+    }
+
+    @Override
+    public int getTotalBuyingClients() {
+        Set<String> clientes = new TreeSet<>();
+        this.vendas_por_mes.forEach(vendas_mes -> {
+            vendas_mes.forEach(venda -> clientes.add(venda.getClientID()));
+        });
+        return clientes.size();
+    }
+
+    @Override
+    public int getZeroSales() {
+        List<IVenda> vendas = new ArrayList<>();
+        this.vendas_por_mes.forEach(vendas::addAll);
+        return (int) vendas.stream().filter(venda -> venda.getFaturacao() == 0).count();
+    }
+
+    @Override
+    public double getTotalBilling() {
+        List<IVenda> vendas = new ArrayList<>();
+        this.vendas_por_mes.forEach(vendas::addAll);
+        return vendas.stream().mapToDouble(IVenda::getFaturacao).sum();
+    }
 }

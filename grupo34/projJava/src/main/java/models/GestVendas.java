@@ -83,6 +83,51 @@ public class GestVendas implements IGestVendas {
     }
 
     @Override
+    public int getWrongSales() {
+        return this.vendas_lidas - this.vendas_validas;
+    }
+
+    @Override
+    public int getTotalProducts() {
+        return this.produtos_validos;
+    }
+
+    @Override
+    public int getTotalDistinctBoughtProducts() {
+        return this.vendas.getDistinctProducts();
+    }
+
+    @Override
+    public int getTotalNeverBoughtProducts() {
+        return this.produtos.getProductsNeverBought().size();
+    }
+
+    @Override
+    public int getTotalClients() {
+        return this.clientes_validos;
+    }
+
+    @Override
+    public int getTotalBuyingClients() {
+        return this.vendas.getTotalBuyingClients();
+    }
+
+    @Override
+    public int getNeverBuyingClients() {
+        return this.clientes_validos - getTotalBuyingClients();
+    }
+
+    @Override
+    public int getZeroSales() {
+        return this.vendas.getZeroSales();
+    }
+
+    @Override
+    public double getTotalBilling() {
+        return this.vendas.getTotalBilling();
+    }
+
+    @Override
     public int getTotalComprasMes(int mes) {
         return this.vendas.getTotalVendas(mes);
     }
@@ -158,15 +203,18 @@ public class GestVendas implements IGestVendas {
         return this.clientes.getTopNClients(n);
     }
 
+    @Override
     public List<Pair<String, Integer>> getTopNProducts(int n) {
         return this.produtos.getTopNProducts(n);
     }
 
+    @Override
     public String[][] getTop3Buyers() {
         return this.filiais.getTop3Buyers();
     }
 
+    @Override
     public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
-      return this.produtos.getTopNClientsOfProduct(productID, n);
+        return this.produtos.getTopNClientsOfProduct(productID, n);
     }
 }

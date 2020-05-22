@@ -47,10 +47,10 @@ public class Clientes implements IClientes {
     }
 
     @Override
-    public int getTotalClientesFilialMes(int filial, int mes){
+    public int getTotalClientesFilialMes(int filial, int mes) {
         int resultado = 0;
         for (ICliente cliente : this.clientes.values()) {
-            if(cliente.comprouNoMesEFilial(mes, filial)) {
+            if (cliente.comprouNoMesEFilial(mes, filial)) {
                 resultado++;
             }
         }

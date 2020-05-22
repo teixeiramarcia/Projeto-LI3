@@ -2,6 +2,7 @@ package models;
 
 import utils.ComprasEFaturacao;
 import utils.Pair;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class Produto implements IProduto {
         this.faturacao[venda.getMes()] += venda.getFaturacao();
 
         Map<String, ComprasEFaturacao> clientes_mes = this.clientes_que_compraram.get(venda.getMes());
-        if(!clientes_mes.containsKey(venda.getClientID())) {
+        if (!clientes_mes.containsKey(venda.getClientID())) {
             clientes_mes.put(venda.getClientID(), new ComprasEFaturacao(venda.getUnidades(), venda.getFaturacao()));
         } else {
             ComprasEFaturacao anterior = clientes_mes.get(venda.getClientID());
@@ -72,6 +73,7 @@ public class Produto implements IProduto {
         return resultado;
     }
 
+    @Override
     public int getDistinctClients() {
         Set<String> clientes = new TreeSet<>();
         this.clientes_que_compraram.forEach(clientes_mes -> clientes.addAll(clientes_mes.keySet()));
@@ -83,9 +85,9 @@ public class Produto implements IProduto {
         List<Pair<String, ComprasEFaturacao>> resultado = new ArrayList<>();
         Map<String, ComprasEFaturacao> clientes = new HashMap<>();
 
-        for (Map<String, ComprasEFaturacao> clientes_mes: this.clientes_que_compraram) {
+        for (Map<String, ComprasEFaturacao> clientes_mes : this.clientes_que_compraram) {
             clientes_mes.forEach((k, v) -> {
-                if(!clientes.containsKey(k)) {
+                if (!clientes.containsKey(k)) {
                     clientes.put(k, v);
                 } else {
                     ComprasEFaturacao ant = clientes.get(k);

@@ -7,13 +7,15 @@ import java.util.List;
 
 
 public class Navegador {
-    public static <T> void printer(List<T> catalogo, String titulo) throws IOException {
+    public static <T> void printer(List<T> catalogo, String titulo, String time) throws IOException {
         boolean flagCycle = true;
         int posicao_inicio = 0;
         int max_bound = catalogo.size();
         while (flagCycle) {
+            System.out.print("\033\143");
             System.out.println(Colors.BLUE + titulo + Colors.RESET);
-            System.out.println(Colors.YELLOW +
+            System.out.println(time +
+                    Colors.YELLOW +
                     "A mostrar resultados de " +
                     posicao_inicio +
                     " até " +
@@ -36,7 +38,7 @@ public class Navegador {
                     Colors.YELLOW +
                     "3 -> " +
                     Colors.RESET +
-                    "sair do catálogo.\n\n" +
+                    "Regressar ao menu inicial.\n\n" +
                     Colors.YELLOW +
                     "-> " +
                     Colors.RESET);

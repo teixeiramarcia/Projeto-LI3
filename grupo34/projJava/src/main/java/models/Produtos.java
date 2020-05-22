@@ -62,6 +62,7 @@ public class Produtos implements IProdutos {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
         return this.produtos.get(productID).getTopNClients(n);
     }

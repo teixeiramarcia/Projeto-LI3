@@ -6,13 +6,14 @@ import java.util.regex.Pattern;
 
 public interface ICliente {
     Pattern pattern = Pattern.compile("[A-Z]([1-4]\\d{3}|5000)");
+
     static boolean validaCliente(String line) {
         return ICliente.pattern.matcher(line.trim()).matches();
     }
 
     String getClientID();
 
-    int getFaturacaoFilial(int filial);
+    double getFaturacaoFilial(int filial);
 
     void updateCliente(IVenda IVenda);
 

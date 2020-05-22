@@ -16,6 +16,24 @@ public interface IGestVendas {
 
     boolean existeCliente(String piece);
 
+    int getWrongSales();
+
+    int getTotalProducts();
+
+    int getTotalDistinctBoughtProducts();
+
+    int getTotalNeverBoughtProducts();
+
+    int getTotalClients();
+
+    int getTotalBuyingClients();
+
+    int getNeverBuyingClients();
+
+    int getZeroSales();
+
+    double getTotalBilling();
+
     int getNumClientesCompraramNoMes(int mes);
 
     int getTotalComprasMes(int mes);

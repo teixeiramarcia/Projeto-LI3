@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class GestVendasController implements IGestVendasController {
     private IGestVendas gestVendas;
+    private String lastVendasFileName;
 
     private void readClients(String file, IGestVendas gestVendas) throws FileNotFoundException {
         BufferedReader bf = new BufferedReader(new FileReader(file));
@@ -57,10 +58,61 @@ public class GestVendasController implements IGestVendasController {
         readProducts(ficheiro_produtos, gestVendas);
 
         String ficheiro_vendas = filesFolderPath + "/Vendas_1M.txt";
+        this.lastVendasFileName = ficheiro_vendas;
         readVendas(ficheiro_vendas, gestVendas);
 
         Chrono.stop();
-        System.out.println(Chrono.getTImeString());
+        System.out.println(Chrono.getTimeString());
+    }
+
+    @Override
+    public String getLastSalesFileName() {
+        return this.lastVendasFileName;
+    }
+
+    @Override
+    public int getWrongSales() {
+        return this.gestVendas.getWrongSales();
+    }
+
+    @Override
+    public int getTotalProducts() {
+        return this.gestVendas.getTotalProducts();
+    }
+
+    @Override
+    public int getTotalDistinctBoughtProducts() {
+        return this.gestVendas.getTotalDistinctBoughtProducts();
+    }
+
+    @Override
+    public int getTotalNeverBoughtProducts() {
+        return this.gestVendas.getTotalNeverBoughtProducts();
+    }
+
+    @Override
+    public int getTotalClients() {
+        return this.gestVendas.getTotalClients();
+    }
+
+    @Override
+    public int getTotalBuyingClients() {
+        return this.gestVendas.getTotalBuyingClients();
+    }
+
+    @Override
+    public int getNeverBuyingClients() {
+        return this.gestVendas.getNeverBuyingClients();
+    }
+
+    @Override
+    public int getZeroSales() {
+        return this.gestVendas.getZeroSales();
+    }
+
+    @Override
+    public double getTotalBilling() {
+        return this.gestVendas.getTotalBilling();
     }
 
     @Override
@@ -167,10 +219,12 @@ public class GestVendasController implements IGestVendasController {
         return this.gestVendas.getTopNProducts(n);
     }
 
+    @Override
     public String[][] getTop3Buyers() {
         return this.gestVendas.getTop3Buyers();
     }
 
+    @Override
     public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
         return this.gestVendas.getTopNClientsOfProduct(productID, n);
     }

@@ -2,9 +2,7 @@ package views;
 
 import controllers.GestVendasController;
 import controllers.IGestVendasController;
-import utils.ClienteFaturacaoNoProduto;
-import utils.ClientesQuantidade;
-import utils.ProdutoQuantidade;
+import utils.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -30,6 +28,7 @@ public class Manager {
 
     public void start() throws FileNotFoundException {
         this.gestVendasController.loadSGVFromFiles(this.path_to_files);
+        System.out.print("\033\143");
         try {
             menu();
         } catch (IOException e) {
@@ -48,11 +47,10 @@ public class Manager {
                 no_errors = true;
             }
             String input = br.readLine();
-            System.out.println("\n");
+            System.out.print("\033\143");
             switch (input) {
                 case "1":
                     printQuery1();
-                    printPreviousMenuOpt();
                     break;
                 case "2":
                     printQuery2(inputClass.getInputMonth());
@@ -68,11 +66,9 @@ public class Manager {
                     break;
                 case "5":
                     printQuery5(inputClass.getInputClient());
-                    printPreviousMenuOpt();
                     break;
                 case "6":
                     printQuery6(inputClass.getInputInt());
-                    printPreviousMenuOpt();
                     break;
                 case "7":
                     printQuery7();
@@ -80,11 +76,9 @@ public class Manager {
                     break;
                 case "8":
                     printQuery8(inputClass.getInputInt());
-                    printPreviousMenuOpt();
                     break;
                 case "9":
                     printQuery9(inputClass.getInputProduct(), inputClass.getInputInt());
-                    printPreviousMenuOpt();
                     break;
                 case "10":
                     printQuery10();
@@ -92,7 +86,6 @@ public class Manager {
                     break;
                 case "11":
                     printStatisticsMenu();
-                    printPreviousMenuOpt();
                     break;
                 case "0":
                     flagCycle = false;
@@ -105,7 +98,8 @@ public class Manager {
     }
 
     private String getMenu() {
-        return Colors.BLUE +
+        return "\033\143" +
+                Colors.BLUE +
                 "\n" + String.join("", Collections.nCopies(50, "―")) + " SISTEMA DE GESTÃO DE VENDAS " + String.join("", Collections.nCopies(50, "―")) + "\n\n" +
                 Colors.RESET +
                 Colors.YELLOW +
@@ -120,7 +114,7 @@ public class Manager {
                 yellowNumber(7) + "Listagem dos 3 maiores compradores em cada filial\n" +
                 yellowNumber(8) + "Top N clientes que compraram uma maior quantidade de produtos diferentes\n" +
                 yellowNumber(9) + "Top N clientes que mais compraram um determinado produto\n" +
-                yellowNumber(10) + "Contagem mês a mês e filial a filial a faturação total do sistema\n" +
+                yellowNumber(10) + "Contagem mês a mês e filial a filial da faturação total do sistema\n" +
                 yellowNumber(11) + "Consultas estatísticas\n" +
                 yellowNumber(0) + "Sair do programa\n" +
                 "\n\n" +
@@ -156,22 +150,32 @@ public class Manager {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(40, "―")) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
                 String.join("", Collections.nCopies(40, "―")) + Colors.RESET + "\n");
-        List<String> produtos_nunca_comprados = gestVendasController.getProdutosNuncaComprados();
-        Navegador.printer(produtos_nunca_comprados, titulo);
+        Pair<List<String>, String> p = Chrono.chronoMe(gestVendasController::getProdutosNuncaComprados);
+        List<String> produtos_nunca_comprados = p.getFirst();
+        Navegador.printer(produtos_nunca_comprados, titulo, p.getSecond());
+        System.err.println("Q1" + p.getSecond());
+
     }
 
     private void printQuery2(int mes) {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―")) + " Total de vendas realizadas e total de clientes envolvidos num determinado mês " +
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
+        Pair<Pair<Integer, Integer>, String> p = Chrono.chronoMe(() -> {
+            int total_vendas = gestVendasController.getTotalVendas(mes);
+            int total_clientes = gestVendasController.getNumClientesCompraramNoMes(mes);
+            return Pair.of(total_vendas, total_clientes);
+        });
         System.out.println(Colors.YELLOW +
                 "Total de vendas realizadas: " +
                 Colors.RESET +
-                gestVendasController.getTotalVendas(mes));
+                p.getFirst().getFirst());
         System.out.println(Colors.YELLOW +
                 "Total de clientes (distintos) envolvidos: " +
                 Colors.RESET +
-                gestVendasController.getNumClientesCompraramNoMes(mes));
+                p.getFirst().getSecond());
+        System.out.println(p.getSecond());
+        System.err.println("Q2" + p.getSecond());
     }
 
     private void printQuery3(String clientID) {
@@ -183,15 +187,24 @@ public class Manager {
         System.out.print(Colors.BLUE);
         System.out.println(String.join("", Collections.nCopies(172, "―")));
         System.out.print(Colors.RESET);
-        printLineInt(gestVendasController.getClientMonthlyBuyings(clientID),
+        Pair<QWithTablesHelper, String> p = Chrono.chronoMe(() -> {
+            QWithTablesHelper q = new QWithTablesHelper();
+            q.a = gestVendasController.getClientMonthlyBuyings(clientID);
+            q.b = gestVendasController.getClientMonthlyProducts(clientID);
+            q.c = gestVendasController.getMonthlyTotalCost(clientID);
+            return q;
+        });
+        printLineInt(p.getFirst().a,
                 String.format("%10s",
                         Colors.YELLOW + "Nums ｜" + Colors.RESET));
-        printLineInt(gestVendasController.getClientMonthlyProducts(clientID),
+        printLineInt(p.getFirst().b,
                 String.format("%10s",
                         Colors.YELLOW + "Prods｜" + Colors.RESET));
-        printLineDouble(gestVendasController.getMonthlyTotalCost(clientID),
+        printLineDouble(p.getFirst().c,
                 String.format("%10s",
                         Colors.YELLOW + "Gasto｜" + Colors.RESET));
+        System.out.println(p.getSecond());
+        System.err.println("Q3" + p.getSecond());
     }
 
     private void printQuery4(String productID) {
@@ -200,76 +213,117 @@ public class Manager {
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
         System.out.print(String.format("%6s", ""));
         printMonths();
-        printLineInt(gestVendasController.getProductMonthlyBuyings(productID),
+        System.out.print(Colors.BLUE);
+        System.out.println(String.join("", Collections.nCopies(172, "―")));
+        System.out.print(Colors.RESET);
+        Pair<QWithTablesHelper, String> p = Chrono.chronoMe(() -> {
+            QWithTablesHelper q = new QWithTablesHelper();
+            q.a = gestVendasController.getProductMonthlyBuyings(productID);
+            q.b = gestVendasController.getProductClients(productID);
+            q.c = gestVendasController.getProductBilling(productID);
+            return q;
+        });
+        printLineInt(p.getFirst().a,
                 String.format("%10s",
                         Colors.YELLOW + "Nums ｜" + Colors.RESET));
-        printLineInt(gestVendasController.getProductClients(productID),
+        printLineInt(p.getFirst().b,
                 String.format("%10s",
                         Colors.YELLOW + "Clis ｜" + Colors.RESET));
-        printLineDouble(gestVendasController.getProductBilling(productID),
+        printLineDouble(p.getFirst().c,
                 String.format("%10s",
                         Colors.YELLOW + "Fat  ｜" + Colors.RESET));
+        System.out.println(p.getSecond());
+        System.err.println("Q4" + p.getSecond());
     }
 
     private void printQuery5(String clientID) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―")) + " Listagem dos códigos de produtos favoritos de um determinado cliente e respetivo total " +
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
-        List<String> produtos_mais_comprados = gestVendasController.getClientFavoriteProducts(clientID);
-        Navegador.printer(produtos_mais_comprados, titulo);
+        Pair<List<String>, String> p = Chrono.chronoMe(() -> gestVendasController.getClientFavoriteProducts(clientID));
+        List<String> produtos_mais_comprados = p.getFirst();
+        Navegador.printer(produtos_mais_comprados, titulo, p.getSecond());
+        System.err.println("Q5" + p.getSecond());
     }
 
     private void printQuery6(int n) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(50, "―")) + " Top X produtos que mais clientes distintos compraram " +
                 String.join("", Collections.nCopies(50, "―")) + Colors.RESET + "\n");
-        List<ProdutoQuantidade> top_n = gestVendasController.getTopNProducts(n).stream()
+        Pair<List<ProdutoQuantidade>, String> p = Chrono.chronoMe(() -> gestVendasController.getTopNProducts(n).stream()
                 .map(ProdutoQuantidade::new)
-                .collect(Collectors.toList());
-        Navegador.printer(top_n, titulo);
-
+                .collect(Collectors.toList()));
+        List<ProdutoQuantidade> top_n = p.getFirst();
+        Navegador.printer(top_n, titulo, p.getSecond());
+        System.err.println("Q6" + p.getSecond());
     }
 
     private void printQuery7() {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―")) + " 3 maiores compradores separados por filial " +
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
-        String[][] top3 =  this.gestVendasController.getTop3Buyers();
+        Pair<String[][], String> p = Chrono.chronoMe(this.gestVendasController::getTop3Buyers);
+        String[][] top3 = p.getFirst();
         for (int filial = 0; filial < 3; filial++) {
-            System.out.println(Colors.YELLOW + "Filial" + (filial + 1) + Colors.RESET);
+            System.out.println(Colors.YELLOW + "Filial " + (filial + 1) + Colors.RESET);
             for (int cliente = 0; cliente < top3[filial].length; cliente++) {
                 System.out.print(Colors.YELLOW + "-> " + Colors.RESET);
                 System.out.println(top3[filial][cliente]);
             }
             System.out.println();
         }
+        System.out.println(p.getSecond());
+        System.err.println("Q7" + p.getSecond());
     }
 
     private void printQuery8(int n) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(50, "―")) + " Top X clientes que compraram mais produtos distintos " +
                 String.join("", Collections.nCopies(50, "―")) + Colors.RESET + "\n");
-        List<ClientesQuantidade> top_n = gestVendasController.getTopNClients(n).stream()
+        Pair<List<ClientesQuantidade>, String> p = Chrono.chronoMe(() -> gestVendasController.getTopNClients(n).stream()
                 .map(ClientesQuantidade::new)
-                .collect(Collectors.toList());
-        Navegador.printer(top_n, titulo);
+                .collect(Collectors.toList()));
+        List<ClientesQuantidade> top_n = p.getFirst();
+        Navegador.printer(top_n, titulo, p.getSecond());
+        System.err.println("Q8" + p.getSecond());
     }
 
     private void printQuery9(String productID, int n) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(10, "―")) + " Top X clientes que mais compraram um determinado produto e para cada, o valor gasto " +
                 String.join("", Collections.nCopies(10, "―")) + Colors.RESET + "\n");
-        List<ClienteFaturacaoNoProduto> top_n = gestVendasController.getTopNClientsOfProduct(productID, n).stream()
+        Pair<List<ClienteFaturacaoNoProduto>, String> p = Chrono.chronoMe(() -> gestVendasController.getTopNClientsOfProduct(productID, n).stream()
                 .map(ClienteFaturacaoNoProduto::new)
-                .collect(Collectors.toList());
-        Navegador.printer(top_n, titulo);
+                .collect(Collectors.toList()));
+        List<ClienteFaturacaoNoProduto> top_n = p.getFirst();
+        Navegador.printer(top_n, titulo, p.getSecond());
+        System.err.println("Q9" + p.getSecond());
     }
 
-    private void printQuery10() { //FIXME por testar
+    private void printQuery10() {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(15, "―")) + " Faturação total por mês e por filial " +
                 String.join("", Collections.nCopies(15, "―")) + Colors.RESET + "\n");
-        printFaturacaoMesFilial(gestVendasController.getTotalFaturacao());
+        Pair<Map<String, Map<Integer, Double>>, String> p = Chrono.chronoMe(gestVendasController::getTotalFaturacao);
+        printFaturacaoMesFilial(p.getFirst());
+        System.out.println(p.getSecond());
+        System.err.println("Q10" + p.getSecond());
+    }
+
+    private void printLastSalesFileInfo() {
+        System.out.println(Colors.YELLOW + "Dados referentes ao último ficheiro de vendas lido:" + Colors.RESET);
+        System.out.println("\n");
+        System.out.println(Colors.YELLOW + "Nome do ficheiro -> " + Colors.RESET + gestVendasController.getLastSalesFileName());
+        System.out.println(Colors.YELLOW + "Registos de vendas errados -> " + Colors.RESET + gestVendasController.getWrongSales());
+        System.out.println(Colors.YELLOW + "Total de produtos -> " + Colors.RESET + gestVendasController.getTotalProducts());
+        System.out.println(Colors.YELLOW + "Total de produtos distintos comprados -> " + Colors.RESET + gestVendasController.getTotalDistinctBoughtProducts());
+        System.out.println(Colors.YELLOW + "Total de produtos não comprados ->" + Colors.RESET + gestVendasController.getTotalNeverBoughtProducts());
+        System.out.println(Colors.YELLOW + "Total de clientes -> " + Colors.RESET + gestVendasController.getTotalClients());
+        System.out.println(Colors.YELLOW + "Total de clientes que efetuaram compras -> " + Colors.RESET + gestVendasController.getTotalBuyingClients());
+        System.out.println(Colors.YELLOW + "Total de clientes que nunca efeturam compras -> " + Colors.RESET + gestVendasController.getNeverBuyingClients());
+        System.out.println(Colors.YELLOW + "Total de compras de valor 0.0 -> " + Colors.RESET + gestVendasController.getZeroSales());
+        System.out.println(Colors.YELLOW + "Faturação total -> " + Colors.RESET + String.format("%10.2f", gestVendasController.getTotalBilling()));
+        System.out.println();
     }
 
     private void printMonths() {
@@ -352,6 +406,7 @@ public class Manager {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(45, "―")) + " Estatísticas: " +
                 String.join("", Collections.nCopies(46, "―")) + Colors.RESET + "\n\n");
+        printLastSalesFileInfo();
         printMonthlySales();
         printMonthlyBilling();
         printMonthlyMonthlyClients();
@@ -372,6 +427,12 @@ public class Manager {
             nums.append(String.format("%10.2f", linha.get(mes))).append(Colors.BLUE).append(" ｜ ").append(Colors.RESET);
         }
         System.out.println(nums);
+    }
+
+    private static class QWithTablesHelper {
+        private List<Integer> a;
+        private List<Integer> b;
+        private List<Double> c;
     }
 
 

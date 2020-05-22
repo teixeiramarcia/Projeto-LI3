@@ -1,5 +1,9 @@
 package utils;
 
+import views.Colors;
+
+import java.util.function.Supplier;
+
 import static java.lang.System.nanoTime;
 
 public class Chrono {
@@ -19,7 +23,14 @@ public class Chrono {
         elapsedTime = fim - inicio;
     }
 
-    public static String getTImeString() {
-        return "Elapsed Time: " + (elapsedTime / 1.0E09) + " s";
+    public static String getTimeString() {
+        return Colors.YELLOW + "Elapsed Time: " + Colors.RESET + (elapsedTime / 1.0E09) + " s\n\n";
+    }
+
+    public static <T> Pair<T, String> chronoMe(Supplier<T> s) {
+        start();
+        T resultado = s.get();
+        stop();
+        return Pair.of(resultado, getTimeString());
     }
 }

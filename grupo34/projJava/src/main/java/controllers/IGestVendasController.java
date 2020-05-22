@@ -9,6 +9,26 @@ import java.util.Map;
 public interface IGestVendasController {
     void loadSGVFromFiles(String filesFolderPath) throws FileNotFoundException;
 
+    String getLastSalesFileName();
+
+    int getWrongSales();
+
+    int getTotalProducts();
+
+    int getTotalDistinctBoughtProducts();
+
+    int getTotalNeverBoughtProducts();
+
+    int getTotalClients();
+
+    int getTotalBuyingClients();
+
+    int getNeverBuyingClients();
+
+    int getZeroSales();
+
+    double getTotalBilling();
+
     Map<String, Integer> getTotalCompras();
 
     Map<String, Map<Integer, Double>> getTotalFaturacao();

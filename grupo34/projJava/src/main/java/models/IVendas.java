@@ -8,4 +8,12 @@ public interface IVendas {
     int getTotalVendas(int mes);
 
     Double getTotalFaturacaoMesFilial(int mes, int filial);
+
+    int getDistinctProducts();
+
+    int getTotalBuyingClients();
+
+    int getZeroSales();
+
+    double getTotalBilling();
 }

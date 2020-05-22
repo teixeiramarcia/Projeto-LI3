@@ -1,13 +1,15 @@
 package models;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Filial implements IFilial {
     private final int filial;
-    private List<ICliente> top_3_clientes;
     private final Comparator<ICliente> comparator;
+    private List<ICliente> top_3_clientes;
 
     public Filial(int filial) {
         this.filial = filial;
@@ -17,7 +19,7 @@ public class Filial implements IFilial {
 
     @Override
     public void updateFilial(IVenda venda, ICliente cliente) {
-        if(!this.top_3_clientes.contains(cliente)) {
+        if (!this.top_3_clientes.contains(cliente)) {
             this.top_3_clientes.add(cliente);
 
             this.top_3_clientes = this.top_3_clientes.stream()
@@ -27,6 +29,7 @@ public class Filial implements IFilial {
         }
     }
 
+    @Override
     public String[] getTop3Buyers() {
         String[] resultado = new String[this.top_3_clientes.size()];
         int indice = 0;
