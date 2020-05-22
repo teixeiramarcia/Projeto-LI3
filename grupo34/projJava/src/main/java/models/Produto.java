@@ -1,16 +1,15 @@
 package models;
 
-import utils.ComprasEFaturacao;
 import utils.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Produto implements IProduto {
+public class Produto extends Model implements IProduto {
     private final String productID;
     private final List<Integer> vezes_comprado;
-    private final List<Map<String, ComprasEFaturacao>> clientes_que_compraram;
-    private final double[] faturacao = new double[12];
+    private final List<Map<String, IComprasEFaturacao>> clientes_que_compraram;
+    private final double[][] faturacao_mes_filial = new double[3][12];
 
     public Produto(String productID) {
         this.productID = productID;
@@ -30,13 +29,13 @@ public class Produto implements IProduto {
     @Override
     public void updateProduto(IVenda venda) {
         this.vezes_comprado.set(venda.getMes(), this.vezes_comprado.get(venda.getMes()) + 1);
-        this.faturacao[venda.getMes()] += venda.getFaturacao();
+        this.faturacao_mes_filial[venda.getFilial()][venda.getMes()] += venda.getFaturacao();
 
-        Map<String, ComprasEFaturacao> clientes_mes = this.clientes_que_compraram.get(venda.getMes());
+        Map<String, IComprasEFaturacao> clientes_mes = this.clientes_que_compraram.get(venda.getMes());
         if (!clientes_mes.containsKey(venda.getClientID())) {
             clientes_mes.put(venda.getClientID(), new ComprasEFaturacao(venda.getUnidades(), venda.getFaturacao()));
         } else {
-            ComprasEFaturacao anterior = clientes_mes.get(venda.getClientID());
+            IComprasEFaturacao anterior = clientes_mes.get(venda.getClientID());
             anterior.addCompras(venda.getUnidades());
             anterior.addFaturacao(venda.getFaturacao());
         }
@@ -68,7 +67,11 @@ public class Produto implements IProduto {
     public List<Double> getTotalBilling() {
         List<Double> resultado = new ArrayList<>();
         for (int mes = 0; mes < 12; mes++) {
-            resultado.add(mes, this.faturacao[mes]);
+            double fat_mes = 0;
+            for (int filial = 0; filial < 3; filial++) {
+                fat_mes += this.faturacao_mes_filial[filial][mes];
+            }
+            resultado.add(mes, fat_mes);
         }
         return resultado;
     }
@@ -82,15 +85,15 @@ public class Produto implements IProduto {
 
     @Override
     public List<Pair<String, Double>> getTopNClients(int n) {
-        List<Pair<String, ComprasEFaturacao>> resultado = new ArrayList<>();
-        Map<String, ComprasEFaturacao> clientes = new HashMap<>();
+        List<Pair<String, IComprasEFaturacao>> resultado = new ArrayList<>();
+        Map<String, IComprasEFaturacao> clientes = new HashMap<>();
 
-        for (Map<String, ComprasEFaturacao> clientes_mes : this.clientes_que_compraram) {
+        for (Map<String, IComprasEFaturacao> clientes_mes : this.clientes_que_compraram) {
             clientes_mes.forEach((k, v) -> {
                 if (!clientes.containsKey(k)) {
                     clientes.put(k, v);
                 } else {
-                    ComprasEFaturacao ant = clientes.get(k);
+                    IComprasEFaturacao ant = clientes.get(k);
                     ant.addCompras(v.getVezes_comprado());
                     ant.addFaturacao(v.getFaturacao());
                 }
@@ -99,11 +102,22 @@ public class Produto implements IProduto {
 
         clientes.forEach((k, v) -> resultado.add(Pair.of(k, v)));
 
-        Comparator<Pair<String, ComprasEFaturacao>> comparator = Comparator.comparingInt(p -> p.getSecond().getVezes_comprado());
+        Comparator<Pair<String, IComprasEFaturacao>> comparator = Comparator.comparingInt(p -> p.getSecond().getVezes_comprado());
         return resultado.stream()
                 .sorted(comparator.reversed())
                 .limit(n)
                 .map(p -> Pair.of(p.getFirst(), p.getSecond().getFaturacao()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Pair<String, List<Double>> getFaturacaoMesFilial() {
+        List<Double> resultado = new ArrayList<>();
+        for (int filial = 0; filial < 3; filial++) {
+            for (int mes = 0; mes < 12; mes++) {
+                resultado.add(this.faturacao_mes_filial[filial][mes]);
+            }
+        }
+        return Pair.of(this.productID, resultado);
     }
 }

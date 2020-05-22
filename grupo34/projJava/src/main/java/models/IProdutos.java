@@ -22,4 +22,6 @@ public interface IProdutos {
     List<Pair<String, Integer>> getTopNProducts(int n);
 
     List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n);
+
+    List<Pair<String, List<Double>>> getFaturacaoPorProduto();
 }

@@ -1,8 +1,9 @@
-package utils;
+package models;
 
+import utils.Pair;
 import views.Colors;
 
-public class ProdutoQuantidade {
+public class ProdutoQuantidade extends Model implements IProdutoQuantidade {
     private final Pair<String, Integer> par;
 
     public ProdutoQuantidade(Pair<String, Integer> par) {

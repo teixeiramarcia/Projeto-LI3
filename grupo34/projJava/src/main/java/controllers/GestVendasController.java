@@ -8,9 +8,7 @@ import utils.Chrono;
 import utils.Pair;
 import views.Meses;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -47,22 +45,57 @@ public class GestVendasController implements IGestVendasController {
         }
     }
 
-    @Override
-    public void loadSGVFromFiles(String filesFolderPath) throws FileNotFoundException {
-        this.gestVendas = new GestVendas();
-        Chrono.start();
+    private void readFromDatFile(String filesFolderPath) throws FileNotFoundException {
+        File tempFile = new File(filesFolderPath + "/gestVendas.dat");
+        if (!tempFile.exists()) {
+            throw new FileNotFoundException();
+        }
+
+        try (
+                FileInputStream is = new FileInputStream(tempFile);
+                ObjectInputStream ois = new ObjectInputStream(is)
+        ) {
+            this.gestVendas = (GestVendas) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readFromFiles(String filesFolderPath, String sales_file) throws FileNotFoundException {
         String ficheiro_clientes = filesFolderPath + "/Clientes.txt";
         readClients(ficheiro_clientes, gestVendas);
 
         String ficheiro_produtos = filesFolderPath + "/Produtos.txt";
         readProducts(ficheiro_produtos, gestVendas);
 
-        String ficheiro_vendas = filesFolderPath + "/Vendas_1M.txt";
+        String ficheiro_vendas = filesFolderPath + "/" + sales_file;
         this.lastVendasFileName = ficheiro_vendas;
         readVendas(ficheiro_vendas, gestVendas);
+    }
 
+    @Override
+    public void loadSGVFromFiles(String filesFolderPath, String sales_file) throws FileNotFoundException {
+        this.gestVendas = new GestVendas();
+        Chrono.start();
+        if (sales_file.equals("dat")) {
+            readFromDatFile(filesFolderPath);
+        } else {
+            readFromFiles(filesFolderPath, sales_file);
+        }
         Chrono.stop();
         System.out.println(Chrono.getTimeString());
+    }
+
+    @Override
+    public void saveProgramStatus(String filesFolderPath) {
+        try (
+                FileOutputStream fos = new FileOutputStream(filesFolderPath + "/gestVendas.dat");
+                ObjectOutputStream oos = new ObjectOutputStream(fos)
+        ) {
+            oos.writeObject(this.gestVendas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -227,5 +260,10 @@ public class GestVendasController implements IGestVendasController {
     @Override
     public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
         return this.gestVendas.getTopNClientsOfProduct(productID, n);
+    }
+
+    @Override
+    public List<Pair<String, List<Double>>> getFaturacaoPorProduto() {
+        return this.gestVendas.getFaturacaoPorProduto();
     }
 }

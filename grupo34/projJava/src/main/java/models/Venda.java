@@ -2,7 +2,7 @@ package models;
 
 import java.io.InvalidClassException;
 
-public class Venda implements IVenda {
+public class Venda extends Model implements IVenda {
     private final String codigo_produto;
     private final double preco_unitario;
     private final int unidades;

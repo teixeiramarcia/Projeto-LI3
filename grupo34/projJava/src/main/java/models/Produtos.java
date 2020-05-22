@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Produtos implements IProdutos {
+public class Produtos extends Model implements IProdutos {
     private final Map<String, IProduto> produtos;
 
     public Produtos() {
@@ -65,5 +65,12 @@ public class Produtos implements IProdutos {
     @Override
     public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
         return this.produtos.get(productID).getTopNClients(n);
+    }
+
+    @Override
+    public List<Pair<String, List<Double>>> getFaturacaoPorProduto() {
+        return this.produtos.values().stream()
+                .map(IProduto::getFaturacaoMesFilial)
+                .collect(Collectors.toList());
     }
 }

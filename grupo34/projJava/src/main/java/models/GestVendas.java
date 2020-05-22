@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GestVendas implements IGestVendas {
+public class GestVendas extends Model implements IGestVendas {
     private final IClientes clientes;
     private final IProdutos produtos;
     private final IVendas vendas;
@@ -216,5 +216,10 @@ public class GestVendas implements IGestVendas {
     @Override
     public List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n) {
         return this.produtos.getTopNClientsOfProduct(productID, n);
+    }
+
+    @Override
+    public List<Pair<String, List<Double>>> getFaturacaoPorProduto() {
+        return this.produtos.getFaturacaoPorProduto();
     }
 }

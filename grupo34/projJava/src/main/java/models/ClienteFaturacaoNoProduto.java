@@ -1,8 +1,9 @@
-package utils;
+package models;
 
+import utils.Pair;
 import views.Colors;
 
-public class ClienteFaturacaoNoProduto {
+public class ClienteFaturacaoNoProduto extends Model implements IClienteFaturacaoNoProduto {
     private final Pair<String, Double> par;
 
     public ClienteFaturacaoNoProduto(Pair<String, Double> par) {

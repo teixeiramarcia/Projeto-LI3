@@ -28,4 +28,6 @@ public interface IProduto {
     int getDistinctClients();
 
     List<Pair<String, Double>> getTopNClients(int n);
+
+    Pair<String, List<Double>> getFaturacaoMesFilial();
 }

@@ -67,4 +67,6 @@ public interface IGestVendas {
     String[][] getTop3Buyers();
 
     List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n);
+
+    List<Pair<String, List<Double>>> getFaturacaoPorProduto();
 }

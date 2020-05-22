@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Clientes implements IClientes {
+public class Clientes extends Model implements IClientes {
     private final Map<String, ICliente> clientes;
 
     public Clientes() {

@@ -2,10 +2,11 @@ package views;
 
 import controllers.GestVendasController;
 import controllers.IGestVendasController;
-import utils.*;
+import models.*;
+import utils.Chrono;
+import utils.Pair;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
@@ -26,10 +27,41 @@ public class Manager {
         this.path_to_files = path_to_files;
     }
 
-    public void start() throws FileNotFoundException {
-        this.gestVendasController.loadSGVFromFiles(this.path_to_files);
+    public void loadOptionsMenu() throws IOException {
+        boolean errors = true;
+        while (errors) {
+            printLoadOptions();
+            errors = false;
+            String input = br.readLine();
+            System.out.print("\033\143");
+            switch (input) {
+                case "1":
+                    this.gestVendasController.loadSGVFromFiles(this.path_to_files, "Vendas_1M.txt");
+                    break;
+                case "2":
+                    this.gestVendasController.loadSGVFromFiles(this.path_to_files, "Vendas_3M.txt");
+                    break;
+                case "3":
+                    this.gestVendasController.loadSGVFromFiles(this.path_to_files, "Vendas_5M.txt");
+                    break;
+                case "4":
+                    this.gestVendasController.loadSGVFromFiles(this.path_to_files, "dat");
+                    break;
+                case "5":
+                    System.exit(0);
+                    break;
+                default:
+                    errors = true;
+                    System.out.println(getLoadOptInvalidoMenu());
+
+            }
+        }
+    }
+
+    public void start() {
         System.out.print("\033\143");
         try {
+            loadOptionsMenu();
             menu();
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,42 +82,48 @@ public class Manager {
             System.out.print("\033\143");
             switch (input) {
                 case "1":
-                    printQuery1();
+                    query1();
                     break;
                 case "2":
-                    printQuery2(inputClass.getInputMonth());
+                    query2(inputClass.getInputMonth());
                     printPreviousMenuOpt();
                     break;
                 case "3":
-                    printQuery3(inputClass.getInputClient());
+                    query3(inputClass.getInputClient());
                     printPreviousMenuOpt();
                     break;
                 case "4":
-                    printQuery4(inputClass.getInputProduct());
+                    query4(inputClass.getInputProduct());
                     printPreviousMenuOpt();
                     break;
                 case "5":
-                    printQuery5(inputClass.getInputClient());
+                    query5(inputClass.getInputClient());
                     break;
                 case "6":
-                    printQuery6(inputClass.getInputInt());
+                    query6(inputClass.getInputInt());
                     break;
                 case "7":
-                    printQuery7();
+                    query7();
                     printPreviousMenuOpt();
                     break;
                 case "8":
-                    printQuery8(inputClass.getInputInt());
+                    query8(inputClass.getInputInt());
                     break;
                 case "9":
-                    printQuery9(inputClass.getInputProduct(), inputClass.getInputInt());
+                    query9(inputClass.getInputProduct(), inputClass.getInputInt());
                     break;
                 case "10":
-                    printQuery10();
-                    printPreviousMenuOpt();
+                    query10();
                     break;
                 case "11":
                     printStatisticsMenu();
+                    printPreviousMenuOpt();
+                    break;
+                case "12":
+                    loadOptionsMenu();
+                    break;
+                case "13":
+                    this.gestVendasController.saveProgramStatus(this.path_to_files);
                     break;
                 case "0":
                     flagCycle = false;
@@ -116,6 +154,8 @@ public class Manager {
                 yellowNumber(9) + "Top N clientes que mais compraram um determinado produto\n" +
                 yellowNumber(10) + "Contagem mês a mês e filial a filial da faturação total do sistema\n" +
                 yellowNumber(11) + "Consultas estatísticas\n" +
+                yellowNumber(12) + "Carregamento de dados\n" +
+                yellowNumber(13) + "Gravar estado do programa\n" +
                 yellowNumber(0) + "Sair do programa\n" +
                 "\n\n" +
                 Colors.BLUE +
@@ -123,8 +163,26 @@ public class Manager {
                 Colors.RESET;
     }
 
+    private void printLoadOptions() {
+        System.out.println(Colors.BLUE +
+                "\n" + String.join("", Collections.nCopies(15, "―")) + " Carregamento do Sistema " + String.join("", Collections.nCopies(15, "―")) + "\n\n" +
+                Colors.RESET);
+        System.out.println(yellowNumber(1) + "Ler o ficheiro 'Vendas_1M.txt'.");
+        System.out.println(yellowNumber(2) + "Ler o ficheiro 'Vendas_3M.txt'.");
+        System.out.println(yellowNumber(3) + "Ler o ficheiro 'Vendas_5M.txt'.");
+        System.out.println(yellowNumber(4) + "Carregamento de dados a partir do ficheiro .dat.");
+        System.out.println(yellowNumber(5) + "Sair do programa.\n");
+        System.out.print(Colors.BLUE + "Input -> " + Colors.RESET);
+    }
+
     private String yellowNumber(int i) {
         return Colors.YELLOW + " " + i + " -> " + Colors.RESET;
+    }
+
+    private String getLoadOptInvalidoMenu() {
+        return Colors.RED +
+                "Input inválido.\nIndique um dígito entre 1 e 5\n" +
+                Colors.RESET;
     }
 
     private String getInputInvalidoMenu() {
@@ -138,34 +196,46 @@ public class Manager {
         System.out.println("\n");
         System.out.println(Colors.BLUE + "Q -> voltar ao menu principal");
         System.out.print("-> " + Colors.RESET);
-
-        while (!br.readLine().equals("Q")) {
+        String i = br.readLine();
+        while (!i.equals("Q") && !i.equals("q")) {
             System.out.println("\n");
             System.out.println(Colors.RED + "Q -> voltar ao menu principal");
             System.out.print("-> " + Colors.RESET);
         }
     }
 
-    private void printQuery1() throws IOException {
-        String titulo = ("\n" + Colors.BLUE +
-                String.join("", Collections.nCopies(40, "―")) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
-                String.join("", Collections.nCopies(40, "―")) + Colors.RESET + "\n");
-        Pair<List<String>, String> p = Chrono.chronoMe(gestVendasController::getProdutosNuncaComprados);
-        List<String> produtos_nunca_comprados = p.getFirst();
-        Navegador.printer(produtos_nunca_comprados, titulo, p.getSecond());
-        System.err.println("Q1" + p.getSecond());
-
+    private void query1() throws IOException {
+        printQuery1(getQuery1Data());
     }
 
-    private void printQuery2(int mes) {
-        System.out.println("\n" + Colors.BLUE +
-                String.join("", Collections.nCopies(5, "―")) + " Total de vendas realizadas e total de clientes envolvidos num determinado mês " +
+    public Pair<List<String>, String> getQuery1Data() {
+        return Chrono.chronoMe(gestVendasController::getProdutosNuncaComprados);
+    }
+
+    private void printQuery1(Pair<List<String>, String> p) throws IOException {
+        String titulo = ("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(5, "―")) + " Listagem dos códigos de produtos nunca comprados e respetivo total " +
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
-        Pair<Pair<Integer, Integer>, String> p = Chrono.chronoMe(() -> {
+        List<String> produtos_nunca_comprados = p.getFirst();
+        Navegador.printer(produtos_nunca_comprados, titulo, p.getSecond());
+    }
+
+    private void query2(int mes) {
+        printQuery2(getQuery2Data(mes));
+    }
+
+    public Pair<Pair<Integer, Integer>, String> getQuery2Data(int mes) {
+        return Chrono.chronoMe(() -> {
             int total_vendas = gestVendasController.getTotalVendas(mes);
             int total_clientes = gestVendasController.getNumClientesCompraramNoMes(mes);
             return Pair.of(total_vendas, total_clientes);
         });
+    }
+
+    private void printQuery2(Pair<Pair<Integer, Integer>, String> p) {
+        System.out.println("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(5, "―")) + " Total de vendas realizadas e total de clientes envolvidos num determinado mês " +
+                String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
         System.out.println(Colors.YELLOW +
                 "Total de vendas realizadas: " +
                 Colors.RESET +
@@ -175,10 +245,23 @@ public class Manager {
                 Colors.RESET +
                 p.getFirst().getSecond());
         System.out.println(p.getSecond());
-        System.err.println("Q2" + p.getSecond());
     }
 
-    private void printQuery3(String clientID) {
+    private void query3(String clientID) {
+        printQuery3(getQuery3Data(clientID));
+    }
+
+    public Pair<QWithTablesHelper, String> getQuery3Data(String clientID) {
+        return Chrono.chronoMe(() -> {
+            QWithTablesHelper q = new QWithTablesHelper();
+            q.a = gestVendasController.getClientMonthlyBuyings(clientID);
+            q.b = gestVendasController.getClientMonthlyProducts(clientID);
+            q.c = gestVendasController.getMonthlyTotalCost(clientID);
+            return q;
+        });
+    }
+
+    private void printQuery3(Pair<QWithTablesHelper, String> p) {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―")) + " Listagem mensal do número de compras, número de produtos (distintos) e total gasto por um determinado cliente " +
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
@@ -187,13 +270,6 @@ public class Manager {
         System.out.print(Colors.BLUE);
         System.out.println(String.join("", Collections.nCopies(172, "―")));
         System.out.print(Colors.RESET);
-        Pair<QWithTablesHelper, String> p = Chrono.chronoMe(() -> {
-            QWithTablesHelper q = new QWithTablesHelper();
-            q.a = gestVendasController.getClientMonthlyBuyings(clientID);
-            q.b = gestVendasController.getClientMonthlyProducts(clientID);
-            q.c = gestVendasController.getMonthlyTotalCost(clientID);
-            return q;
-        });
         printLineInt(p.getFirst().a,
                 String.format("%10s",
                         Colors.YELLOW + "Nums ｜" + Colors.RESET));
@@ -204,10 +280,23 @@ public class Manager {
                 String.format("%10s",
                         Colors.YELLOW + "Gasto｜" + Colors.RESET));
         System.out.println(p.getSecond());
-        System.err.println("Q3" + p.getSecond());
     }
 
-    private void printQuery4(String productID) {
+    private void query4(String productID) {
+        printQuery4(getQuery4Data(productID));
+    }
+
+    public Pair<QWithTablesHelper, String> getQuery4Data(String productID) {
+        return Chrono.chronoMe(() -> {
+            QWithTablesHelper q = new QWithTablesHelper();
+            q.a = gestVendasController.getProductMonthlyBuyings(productID);
+            q.b = gestVendasController.getProductClients(productID);
+            q.c = gestVendasController.getProductBilling(productID);
+            return q;
+        });
+    }
+
+    private void printQuery4(Pair<QWithTablesHelper, String> p) {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―")) + " Total de vezes que o produto foi comprado, número clientes (distintos) envolvidos e total faturado " +
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
@@ -216,13 +305,6 @@ public class Manager {
         System.out.print(Colors.BLUE);
         System.out.println(String.join("", Collections.nCopies(172, "―")));
         System.out.print(Colors.RESET);
-        Pair<QWithTablesHelper, String> p = Chrono.chronoMe(() -> {
-            QWithTablesHelper q = new QWithTablesHelper();
-            q.a = gestVendasController.getProductMonthlyBuyings(productID);
-            q.b = gestVendasController.getProductClients(productID);
-            q.c = gestVendasController.getProductBilling(productID);
-            return q;
-        });
         printLineInt(p.getFirst().a,
                 String.format("%10s",
                         Colors.YELLOW + "Nums ｜" + Colors.RESET));
@@ -233,36 +315,54 @@ public class Manager {
                 String.format("%10s",
                         Colors.YELLOW + "Fat  ｜" + Colors.RESET));
         System.out.println(p.getSecond());
-        System.err.println("Q4" + p.getSecond());
     }
 
-    private void printQuery5(String clientID) throws IOException {
+    private void query5(String clientID) throws IOException {
+        printQuery5(getQuery5Data(clientID));
+    }
+
+    public Pair<List<String>, String> getQuery5Data(String clientID) {
+        return Chrono.chronoMe(() -> gestVendasController.getClientFavoriteProducts(clientID));
+    }
+
+    private void printQuery5(Pair<List<String>, String> p) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―")) + " Listagem dos códigos de produtos favoritos de um determinado cliente e respetivo total " +
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
-        Pair<List<String>, String> p = Chrono.chronoMe(() -> gestVendasController.getClientFavoriteProducts(clientID));
         List<String> produtos_mais_comprados = p.getFirst();
         Navegador.printer(produtos_mais_comprados, titulo, p.getSecond());
-        System.err.println("Q5" + p.getSecond());
     }
 
-    private void printQuery6(int n) throws IOException {
+    private void query6(int n) throws IOException {
+        printQuery6(getQuery6Data(n));
+    }
+
+    public Pair<List<IProdutoQuantidade>, String> getQuery6Data(int n) {
+        return Chrono.chronoMe(() -> gestVendasController.getTopNProducts(n).stream()
+                .map(ProdutoQuantidade::new)
+                .collect(Collectors.toList()));
+    }
+
+    private void printQuery6(Pair<List<IProdutoQuantidade>, String> p) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(50, "―")) + " Top X produtos que mais clientes distintos compraram " +
                 String.join("", Collections.nCopies(50, "―")) + Colors.RESET + "\n");
-        Pair<List<ProdutoQuantidade>, String> p = Chrono.chronoMe(() -> gestVendasController.getTopNProducts(n).stream()
-                .map(ProdutoQuantidade::new)
-                .collect(Collectors.toList()));
-        List<ProdutoQuantidade> top_n = p.getFirst();
+        List<IProdutoQuantidade> top_n = p.getFirst();
         Navegador.printer(top_n, titulo, p.getSecond());
-        System.err.println("Q6" + p.getSecond());
     }
 
-    private void printQuery7() {
+    private void query7() {
+        printQuery7(getQuery7Data());
+    }
+
+    public Pair<String[][], String> getQuery7Data() {
+        return Chrono.chronoMe(this.gestVendasController::getTop3Buyers);
+    }
+
+    private void printQuery7(Pair<String[][], String> p) {
         System.out.println("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(5, "―")) + " 3 maiores compradores separados por filial " +
                 String.join("", Collections.nCopies(5, "―")) + Colors.RESET + "\n");
-        Pair<String[][], String> p = Chrono.chronoMe(this.gestVendasController::getTop3Buyers);
         String[][] top3 = p.getFirst();
         for (int filial = 0; filial < 3; filial++) {
             System.out.println(Colors.YELLOW + "Filial " + (filial + 1) + Colors.RESET);
@@ -273,41 +373,68 @@ public class Manager {
             System.out.println();
         }
         System.out.println(p.getSecond());
-        System.err.println("Q7" + p.getSecond());
     }
 
-    private void printQuery8(int n) throws IOException {
+    private void query8(int n) throws IOException {
+        printQuery8(getQuery8Data(n));
+    }
+
+    public Pair<List<IClientesQuantidade>, String> getQuery8Data(int n) {
+        return Chrono.chronoMe(() -> gestVendasController.getTopNClients(n).stream()
+                .map(ClientesQuantidade::new)
+                .collect(Collectors.toList()));
+    }
+
+    private void printQuery8(Pair<List<IClientesQuantidade>, String> p) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(50, "―")) + " Top X clientes que compraram mais produtos distintos " +
                 String.join("", Collections.nCopies(50, "―")) + Colors.RESET + "\n");
-        Pair<List<ClientesQuantidade>, String> p = Chrono.chronoMe(() -> gestVendasController.getTopNClients(n).stream()
-                .map(ClientesQuantidade::new)
-                .collect(Collectors.toList()));
-        List<ClientesQuantidade> top_n = p.getFirst();
+        List<IClientesQuantidade> top_n = p.getFirst();
         Navegador.printer(top_n, titulo, p.getSecond());
-        System.err.println("Q8" + p.getSecond());
     }
 
-    private void printQuery9(String productID, int n) throws IOException {
+    private void query9(String productID, int n) throws IOException {
+        printQuery9(getQuery9Data(productID, n));
+    }
+
+    public Pair<List<IClienteFaturacaoNoProduto>, String> getQuery9Data(String productID, int n) {
+        return Chrono.chronoMe(() -> gestVendasController.getTopNClientsOfProduct(productID, n).stream()
+                .map(ClienteFaturacaoNoProduto::new)
+                .collect(Collectors.toList()));
+    }
+
+    private void printQuery9(Pair<List<IClienteFaturacaoNoProduto>, String> p) throws IOException {
         String titulo = ("\n" + Colors.BLUE +
                 String.join("", Collections.nCopies(10, "―")) + " Top X clientes que mais compraram um determinado produto e para cada, o valor gasto " +
                 String.join("", Collections.nCopies(10, "―")) + Colors.RESET + "\n");
-        Pair<List<ClienteFaturacaoNoProduto>, String> p = Chrono.chronoMe(() -> gestVendasController.getTopNClientsOfProduct(productID, n).stream()
-                .map(ClienteFaturacaoNoProduto::new)
-                .collect(Collectors.toList()));
-        List<ClienteFaturacaoNoProduto> top_n = p.getFirst();
+        List<IClienteFaturacaoNoProduto> top_n = p.getFirst();
         Navegador.printer(top_n, titulo, p.getSecond());
-        System.err.println("Q9" + p.getSecond());
     }
 
-    private void printQuery10() {
-        System.out.println("\n" + Colors.BLUE +
-                String.join("", Collections.nCopies(15, "―")) + " Faturação total por mês e por filial " +
-                String.join("", Collections.nCopies(15, "―")) + Colors.RESET + "\n");
-        Pair<Map<String, Map<Integer, Double>>, String> p = Chrono.chronoMe(gestVendasController::getTotalFaturacao);
-        printFaturacaoMesFilial(p.getFirst());
-        System.out.println(p.getSecond());
-        System.err.println("Q10" + p.getSecond());
+    private void query10() throws IOException {
+        Pair<List<Pair<String, List<Double>>>, String> p = getQuery10Data();
+        List<Pair<String, List<Double>>> faturacao_mes_filial = parseQuery10Data(p);
+
+        printQuery10(faturacao_mes_filial, p);
+    }
+
+    public List<Pair<String, List<Double>>> parseQuery10Data(Pair<List<Pair<String, List<Double>>>, String> p) {
+        return p.getFirst()
+                .stream()
+                .filter(par -> par.getSecond().stream().anyMatch(d -> d != 0))
+                .collect(Collectors.toList());
+    }
+
+    public Pair<List<Pair<String, List<Double>>>, String> getQuery10Data() {
+        return Chrono.chronoMe(gestVendasController::getFaturacaoPorProduto);
+    }
+
+    private void printQuery10(List<Pair<String, List<Double>>> faturacao_mes_filial, Pair<List<Pair<String, List<Double>>>, String> p) throws IOException {
+        String titulo = ("\n" + Colors.BLUE +
+                String.join("", Collections.nCopies(69, "―")) + "Faturação total por mês e por filial para cada produto" +
+                String.join("", Collections.nCopies(69, "―")) + Colors.RESET + "\n");
+
+        NavegadorQuery10.printer(faturacao_mes_filial, titulo, p.getSecond());
     }
 
     private void printLastSalesFileInfo() {

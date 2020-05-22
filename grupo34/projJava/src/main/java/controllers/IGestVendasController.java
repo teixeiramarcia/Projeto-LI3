@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface IGestVendasController {
-    void loadSGVFromFiles(String filesFolderPath) throws FileNotFoundException;
+    void loadSGVFromFiles(String filesFolderPath, String sales_file) throws FileNotFoundException;
+
+    void saveProgramStatus(String filesFolderPath);
 
     String getLastSalesFileName();
 
@@ -70,4 +72,6 @@ public interface IGestVendasController {
     String[][] getTop3Buyers();
 
     List<Pair<String, Double>> getTopNClientsOfProduct(String productID, int n);
+
+    List<Pair<String, List<Double>>> getFaturacaoPorProduto();
 }

@@ -1,6 +1,6 @@
 package models;
 
-public class Filiais implements IFiliais {
+public class Filiais extends Model implements IFiliais {
     private final IFilial[] filiais;
 
 
