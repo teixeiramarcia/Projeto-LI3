@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * {@inheritDoc}
+ */
+
 public class Cliente extends Model implements ICliente {
     private final String clientID;
     private final double[] faturacao_filial;

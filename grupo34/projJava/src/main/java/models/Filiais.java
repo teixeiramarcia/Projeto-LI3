@@ -1,5 +1,9 @@
 package models;
 
+/**
+ * {@inheritDoc}
+ */
+
 public class Filiais extends Model implements IFiliais {
     private final IFilial[] filiais;
 

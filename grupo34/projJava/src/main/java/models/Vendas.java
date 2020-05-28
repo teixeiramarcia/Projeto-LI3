@@ -3,6 +3,10 @@ package models;
 import java.io.InvalidClassException;
 import java.util.*;
 
+/**
+ * {@inheritDoc}
+ */
+
 public class Vendas extends Model implements IVendas {
     private final List<List<IVenda>> vendas_por_mes;
 

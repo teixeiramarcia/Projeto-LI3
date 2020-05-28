@@ -5,6 +5,10 @@ import utils.Pair;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * {@inheritDoc}
+ */
+
 public class Produto extends Model implements IProduto {
     private final String productID;
     private final List<Integer> vezes_comprado;

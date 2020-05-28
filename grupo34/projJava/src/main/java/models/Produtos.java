@@ -8,6 +8,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * {@inheritDoc}
+ */
+
 public class Produtos extends Model implements IProdutos {
     private final Map<String, IProduto> produtos;
 

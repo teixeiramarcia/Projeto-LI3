@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * {@inheritDoc}
+ */
+
 public class GestVendas extends Model implements IGestVendas {
     private final IClientes clientes;
     private final IProdutos produtos;

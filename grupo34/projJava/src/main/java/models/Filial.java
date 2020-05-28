@@ -6,6 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * {@inheritDoc}
+ */
+
 public class Filial extends Model implements IFilial {
     private final int filial;
     private List<ICliente> top_3_clientes;
