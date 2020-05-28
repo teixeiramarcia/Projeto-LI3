@@ -14,6 +14,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * {@inheritDoc}
+ */
 public class GestVendasController implements IGestVendasController {
     private IGestVendas gestVendas;
     private String lastVendasFileName;
