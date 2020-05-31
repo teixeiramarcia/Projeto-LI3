@@ -6,6 +6,7 @@ import models.IGestVendas;
 import models.IProduto;
 import utils.Chrono;
 import utils.Pair;
+import views.Colors;
 import views.Meses;
 
 import java.io.*;
@@ -51,7 +52,9 @@ public class GestVendasController implements IGestVendasController {
     private void readFromDatFile(String filesFolderPath) throws FileNotFoundException {
         File tempFile = new File(filesFolderPath + "/gestVendas.dat");
         if (!tempFile.exists()) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException(Colors.RED +
+                    "Não existe nenhum estado do programa guardado.\n" +
+                    Colors.RESET);
         }
 
         try (

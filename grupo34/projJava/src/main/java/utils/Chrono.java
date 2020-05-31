@@ -24,7 +24,7 @@ public class Chrono {
     }
 
     public static String getTimeString() {
-        return Colors.YELLOW + "Elapsed Time: " + Colors.RESET + (elapsedTime / 1.0E09) + " s\n\n";
+        return Colors.YELLOW + "\nElapsed Time: " + Colors.RESET + (elapsedTime / 1.0E09) + " s\n\n";
     }
 
     public static <T> Pair<T, String> chronoMe(Supplier<T> s) {

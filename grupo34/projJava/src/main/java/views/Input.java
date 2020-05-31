@@ -24,7 +24,7 @@ public class Input {
             System.out.print(Colors.RED +
                     "Input inválido.\nIndique um dígito entre 1 e 12\n" +
                     "Input -->  " +
-                    Colors.RED);
+                    Colors.RESET);
         }
         return mes;
     }
@@ -52,7 +52,7 @@ public class Input {
             System.out.print(Colors.RED +
                     "Input inválido.\nIndique um código de cliente válido (1 maiúscula e 4 dígitos) que exista no sistema\n" +
                     "Input -->  " +
-                    Colors.RED);
+                    Colors.RESET);
         }
         return cliente;
     }
@@ -79,7 +79,7 @@ public class Input {
             System.out.print(Colors.RED +
                     "Input inválido.\nIndique um dígito\n" +
                     "Input -->  " +
-                    Colors.RED);
+                    Colors.RESET);
         }
         return n;
     }
@@ -102,7 +102,7 @@ public class Input {
             System.out.print(Colors.RED +
                     "Input inválido.\nIndique um código de produto válido (2 maiúsculas e 4 dígitos) que exista no sistema\n" +
                     "Input -->  " +
-                    Colors.RED);
+                    Colors.RESET);
         }
         return cliente;
     }
